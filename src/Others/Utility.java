@@ -1,8 +1,10 @@
+package Others;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-class Utility {
+public final class Utility {
     public static String getUserInput(String prompt) {
         String inputLine = null;
         System.out.print(prompt + " ");
