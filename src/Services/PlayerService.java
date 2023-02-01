@@ -2,25 +2,26 @@ package Services;
 
 import Models.Player;
 import Others.Repository;
+import Others.Utility;
 import Views.PlayerView;
 
 import java.util.ArrayList;
 
 public class PlayerService {
-    private static PlayerService instance;
+    private static PlayerService playerServiceInstance;
 
     private PlayerService() { }
 
     public static PlayerService getInstance() {
-        if(instance == null) {
-            instance = new PlayerService();
+        if (playerServiceInstance == null) {
+            playerServiceInstance = new PlayerService();
         }
-        return instance;
+        return playerServiceInstance;
     }
 
     public void showBestPerformers(ArrayList<Player> playersList) {
-        if(playersList.size() == 0) {
-            System.out.println("No player data to show !");
+        if (playersList.size() == 0) {
+            Utility.printAndNextLine("No player data to show !");
             return;
         }
 
@@ -35,13 +36,13 @@ public class PlayerService {
         Player bestBowler = playersList.get(0);
         int maximumWicketsTaken = getTotalWicketsTaken(bestBowler);
 
-        for(Player player : playersList) {
+        for (Player player : playersList) {
             int runsScored = getTotalRunsScored(player), wicketsTaken = getTotalWicketsTaken(player);
             if (runsScored > maximumRunsScored) {
                 bestBatsman = player;
                 maximumRunsScored = runsScored;
             }
-            if(wicketsTaken > maximumWicketsTaken) {
+            if (wicketsTaken > maximumWicketsTaken) {
                 bestBowler = player;
                 maximumWicketsTaken = wicketsTaken;
             }
@@ -54,7 +55,7 @@ public class PlayerService {
         int totalRunsScored = 0;
         ArrayList<Integer> runsScoredByMatch = player.getRunsScoredByMatch();
 
-        for(int runsScoredThisMatch : runsScoredByMatch) {
+        for (int runsScoredThisMatch : runsScoredByMatch) {
             totalRunsScored += runsScoredThisMatch;
         }
         return totalRunsScored;
@@ -64,17 +65,17 @@ public class PlayerService {
         int totalWicketsTaken = 0;
         ArrayList<Integer> wicketsTakenByMatch = player.getWicketsTakenByMatch();
 
-        for(int wicketsTakenThisMatch : wicketsTakenByMatch) {
+        for (int wicketsTakenThisMatch : wicketsTakenByMatch) {
             totalWicketsTaken += wicketsTakenThisMatch;
         }
         return totalWicketsTaken;
     }
 
-    public void addBattingFigures(int playerID, int runsScored) {
+    public void addBattingFigure(int playerID, int runsScored) {
         Repository.getInstance().getPlayerByID(playerID).getRunsScoredByMatch().add(runsScored);
     }
 
-    public void addBowlingFigures(int playerID, int wicketsTaken) {
+    public void addBowlingFigure(int playerID, int wicketsTaken) {
         Repository.getInstance().getPlayerByID(playerID).getWicketsTakenByMatch().add(wicketsTaken);
     }
 }

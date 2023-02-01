@@ -1,23 +1,23 @@
 package Services;
 
-import Models.Player;
 import Models.Team;
 import Others.Repository;
+import Others.Utility;
 import Views.TeamView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class TeamService {
-    private static TeamService instance;
+    private static TeamService teamServiceInstance;
 
     private TeamService() { }
 
     public static TeamService getInstance() {
-        if(instance == null) {
-            instance = new TeamService();
+        if (teamServiceInstance == null) {
+            teamServiceInstance = new TeamService();
         }
-        return instance;
+        return teamServiceInstance;
     }
 
     private int getTeamPoints(Team team) {
@@ -30,8 +30,8 @@ public class TeamService {
     }
 
     public void showPointsTable(ArrayList<Team> teamsList) {
-        if(teamsList.size() == 0) {
-            System.out.println("No team data to show !");
+        if (teamsList.size() == 0) {
+            Utility.printAndNextLine("No team data to show !");
             return;
         }
         sortByPoints(teamsList);
@@ -42,7 +42,7 @@ public class TeamService {
         class sortByPointsComparator implements Comparator<Team> {
             @Override
             public int compare(Team team1, Team team2) {
-                if(getTeamPoints(team1) != getTeamPoints(team2))
+                if (getTeamPoints(team1) != getTeamPoints(team2))
                     return getTeamPoints(team2) - getTeamPoints(team1);
                 // if points are equal then the team with lesser number of games played goes on top
                 return getTotalGamesPlayed(team1) - getTotalGamesPlayed(team2);

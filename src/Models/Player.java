@@ -8,7 +8,7 @@ public class Player {
     private ArrayList<Integer> runsScoredByMatch, wicketsTakenByMatch;
 
     // to restrict instantiation without field data
-    private Player() {}
+    private Player() { }
 
     public Player(int playerID, String playerName, ArrayList<Integer> runsScoredByMatch, ArrayList<Integer> wicketsTakenByMatch) {
         this.playerID = playerID;

@@ -1,33 +1,35 @@
 package Views;
 
 import Models.Match;
+import Others.Utility;
 
 public class MatchView {
-    private static MatchView instance;
+    private static MatchView matchViewInstance;
 
     private MatchView() { }
 
     public static MatchView getInstance() {
-        if(instance == null) {
-            instance = new MatchView();
+        if (matchViewInstance == null) {
+            matchViewInstance = new MatchView();
         }
-        return instance;
+        return matchViewInstance;
     }
 
     public void showMatchSummary(Match match) {
-        if(match.getFirstInnings().getRunsScored() > match.getSecondInnings().getRunsScored()) {
-            System.out.println("Hurray, " + match.getTeamA().getTeamName() + " wins !");
-        }
-        else if(match.getFirstInnings().getRunsScored() < match.getSecondInnings().getRunsScored()) {
-            System.out.println("Hurray, " + match.getTeamB().getTeamName() + " wins !");
-        }
-        else {
-            System.out.println("The match as ended a tie !");
+        String messageToDisplay;
+        if (match.getFirstInnings().getRunsScored() > match.getSecondInnings().getRunsScored()) {
+            messageToDisplay = "Hurray, " + match.getTeamA().getTeamName() + " wins !";
+        } else if (match.getFirstInnings().getRunsScored() < match.getSecondInnings().getRunsScored()) {
+            messageToDisplay = "Hurray, " + match.getTeamB().getTeamName() + " wins !";
+        } else {
+            messageToDisplay = "The match as ended a tie !";
         }
 
-        System.out.println("\033[0;1m" + "\nMatch Summary :");
-        System.out.println(match.getTeamA().getTeamName() + " - " + match.getFirstInnings().getRunsScored() + "/" + match.getFirstInnings().getWicketsLost());
-        System.out.println(match.getTeamB().getTeamName() + " - " + match.getSecondInnings().getRunsScored() + "/" + match.getSecondInnings().getWicketsLost());
+        messageToDisplay += "\n\nMatch Summary :\n" +
+                match.getTeamA().getTeamName() + " - " + match.getFirstInnings().getRunsScored() + "/" + match.getFirstInnings().getWicketsLost() + "\n" +
+                match.getTeamB().getTeamName() + " - " + match.getSecondInnings().getRunsScored() + "/" + match.getSecondInnings().getWicketsLost();
+
+        Utility.printAndNextLine(messageToDisplay);
 
         // TODO - player level summary
     }

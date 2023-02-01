@@ -1,24 +1,24 @@
 package Views;
 
 import Models.Player;
+import Others.Utility;
 
 public class PlayerView {
-    private static PlayerView instance;
+    private static PlayerView playerViewInstance;
 
     private PlayerView() { }
 
     public static PlayerView getInstance() {
-        if(instance == null) {
-            instance = new PlayerView();
+        if (playerViewInstance == null) {
+            playerViewInstance = new PlayerView();
         }
-        return instance;
+        return playerViewInstance;
     }
 
     public void printBestPerformers(Player bestBatsman, int runsScored, Player bestBowler, int wicketsTaken) {
-        System.out.println("\nBest Performers : ");
-        System.out.print("\033[0;1m" + "\tBest Batsman - ");
-        System.out.println(bestBatsman.getPlayerName() + " (" + runsScored + " runs)");
-        System.out.print("\033[0;1m" + "\tBest Bowler - ");
-        System.out.println(bestBowler.getPlayerName() + " (" + wicketsTaken + " wickets)");
+        String messageToDisplay = "\nBest Performers : \n" +
+                "\tBest Batsman - " + bestBatsman.getPlayerName() + " (" + runsScored + " runs)\n" +
+                "\tBest Bowler - " + bestBowler.getPlayerName() + " (" + wicketsTaken + " wickets)";
+        Utility.printAndNextLine(messageToDisplay);
     }
 }

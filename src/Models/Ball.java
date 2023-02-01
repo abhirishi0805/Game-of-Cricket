@@ -1,9 +1,12 @@
 package Models;
 
 public class Ball {
-    private final int batsmanID;
-    private final int bowlerID;
-    private final int outcome;    // 0..6 --> equal runs scored, 7 --> wicket falls
+    private int batsmanID;
+    private int bowlerID;
+    private int outcome;    // 0..6 --> equal runs scored, 7 --> wicket falls
+
+    // to restrict instantiation without field data
+    private Ball() { }
 
     public Ball(int batsmanID, int bowlerID, int outcome) {
         this.batsmanID = batsmanID;

@@ -6,9 +6,6 @@ import Services.MatchService;
 import Services.PlayerService;
 import Services.TeamService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Controller {
@@ -30,19 +27,9 @@ public class Controller {
     }
 
     private void loadMainMenu() {
-        System.out.println("\033[0;1m" + "\nMain Menu -");
-        System.out.println("\t1 --> Show points table\n" +
-                "\t2 --> Show best individual performers\n" +
-                "\t3 --> Compete between two teams\n" +
-                "\t4 --> Quit game");
-        System.out.print("\nEnter the option number to proceed : ");
+        Utility.printAndNextLine(Constants.MAIN_MENU);
 
-        String optionNumberSelected = "0";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            optionNumberSelected = bufferedReader.readLine().trim();
-        }
-        catch (IOException e) { System.out.println("IOException: " + e); }
+        String optionNumberSelected = Utility.getUserInput("\nEnter the option number to proceed : ");
 
         // TODO - check for invalid input
 
@@ -73,22 +60,18 @@ public class Controller {
     }
 
     private void showActionCompletedDialog() {
-        System.out.print("\nEnter 1 to go to Main Menu or anything else to exit : ");
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            if(bufferedReader.readLine().trim().equals("1")) {
-                loadMainMenu();
-            }
-            else { showExitMessage(); }
+        if (Utility.getUserInput("\nEnter 1 to go to Main Menu or anything else to exit : ").equals("1")) {
+            loadMainMenu();
+        } else {
+            showExitMessage();
         }
-        catch (IOException e) { System.out.println("IOException: " + e); }
     }
 
     private void showStartMessage() {
-        System.out.println("\033[0;1m" + "\nWelcome to the Cricket Game");
+        Utility.printAndNextLine(Constants.START_MESSAGE);
     }
 
     private void showExitMessage() {
-        System.out.println("\033[0;1m" + "\nThe game has ended !");
+        Utility.printAndNextLine(Constants.EXIT_MESSAGE);
     }
 }

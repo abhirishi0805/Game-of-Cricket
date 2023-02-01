@@ -3,7 +3,6 @@ package Models;
 import java.util.ArrayList;
 
 public class Team {
-    public final static int TEAM_SIZE = 3;
     private int teamID;
     private String teamName;
     private ArrayList<Integer> playerIDs;

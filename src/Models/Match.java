@@ -1,14 +1,14 @@
 package Models;
 
-import java.util.ArrayList;
-
 public class Match {
-    public static final int MATCH_LENGTH_IN_OVERS = 6;
     private Team teamA, teamB;
 
     // first innings --> team A bats, team B bowls
     // second innings --> team A bowls, team B bats
     private Innings firstInnings, secondInnings;
+
+    // to restrict instantiation without field data
+    private Match() { }
 
     public Match(Team teamA, Team teamB) {
         this.teamA = teamA;

@@ -6,16 +6,15 @@ import java.io.InputStreamReader;
 
 public final class Utility {
     public static String getUserInput(String prompt) {
-        String inputLine = null;
-        System.out.print(prompt + " ");
+        String userInput = null;
+        print(prompt + " ");
         try {
-            BufferedReader is = new BufferedReader( new InputStreamReader(System.in));
-            inputLine = is.readLine();
-        }
-        catch (IOException e) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            userInput = bufferedReader.readLine().trim();
+        } catch (IOException e) {
             System.out.println("IOException: " + e);
         }
-        return inputLine;
+        return userInput;
     }
 
     public static void pauseExecution(int timeInMilliseconds) {
@@ -24,5 +23,13 @@ public final class Utility {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void printAndNextLine(String message) {
+        print(message + "\n");
+    }
+
+    public static void print(String message) {
+        System.out.print(message);
     }
 }
