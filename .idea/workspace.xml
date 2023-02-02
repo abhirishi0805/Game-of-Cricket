@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c19a12ed-4af5-4b25-ac51-d538de11acf3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Match.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Team.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Others/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Others/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Others/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Others/Repository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Others/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Others/Utility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Services/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/MatchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/TeamService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Views/MatchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/MatchView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PlayerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PlayerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/TeamView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/TeamView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +73,8 @@
       <workItem from="1675061994678" duration="11563000" />
       <workItem from="1675080753753" duration="25255000" />
       <workItem from="1675145977712" duration="172000" />
-      <workItem from="1675154687478" duration="7604000" />
+      <workItem from="1675154687478" duration="8149000" />
+      <workItem from="1675318370304" duration="7662000" />
     </task>
     <servers />
   </component>

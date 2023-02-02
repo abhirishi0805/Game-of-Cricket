@@ -55,7 +55,7 @@ public class Controller {
 
     private void playMatch() {
         ArrayList<Team> teamsList = repository.getTeamsList();
-        matchService.manageMatch(teamsList);
+        matchService.organizeMatch(teamsList);
         showActionCompletedDialog();
     }
 

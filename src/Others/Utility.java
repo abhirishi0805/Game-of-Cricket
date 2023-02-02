@@ -32,4 +32,8 @@ public final class Utility {
     public static void print(String message) {
         System.out.print(message);
     }
+
+    public static String centerAlignString (int width, String s) {
+        return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+    }
 }
