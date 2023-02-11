@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -23,6 +24,13 @@ public class Team {
         this.gamesLost = gamesLost;
         this.gamesDrawn = gamesDrawn;
         this.points = points;
+    }
+
+    @Override
+    public String toString() {
+        return "Team {" + "\n\tteamId = " + teamId + ", teamName = '" + teamName + '\'' + ",\n\tplayerIds = " +
+               playerIds + ",\n\tgamesWon = " + gamesWon + ", gamesLost = " + gamesLost + ", gamesDrawn = " +
+               gamesDrawn + ", " + "points = " + points + "\n}";
     }
 
     public int getTeamId() {

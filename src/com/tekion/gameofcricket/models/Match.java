@@ -2,6 +2,9 @@ package com.tekion.gameofcricket.models;
 
 import com.tekion.gameofcricket.others.Innings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Match {
 
     private Team teamA, teamB;
@@ -19,6 +22,13 @@ public class Match {
         this.teamB = teamB;
         firstInnings = new Innings();
         secondInnings = new Innings();
+    }
+
+    @Override
+    public String toString() {
+        return "Match {" + "\n\tteamA = " + teamA.getTeamName() + " (id = " + teamA.getTeamId() + "),\n\tteamB = " +
+               teamB.getTeamName() + " (id = " + teamB.getTeamId() + "),\n\tfirstInnings" + " = " + firstInnings +
+               ",\n\tsecondInnings = " + secondInnings + "\n}";
     }
 
     public Innings getFirstInnings() {
