@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class Repository {
 
-    private static Repository repository;
+    private volatile static Repository repository;
     private HashMap<Integer, Player> playerMap;
     private HashMap<Integer, Team> teamMap;
 
@@ -24,7 +24,11 @@ public final class Repository {
 
     public static Repository getInstance() {
         if (repository == null) {
-            repository = new Repository();
+            synchronized (Repository.class) {
+                if (repository == null) {
+                    repository = new Repository();
+                }
+            }
         }
         return repository;
     }

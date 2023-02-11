@@ -8,19 +8,6 @@ import com.tekion.gameofcricket.others.Utility;
 import java.util.HashMap;
 
 public class MatchView {
-
-    private static MatchView matchView;
-
-    private MatchView() {
-    }
-
-    public static MatchView getInstance() {
-        if (matchView == null) {
-            matchView = new MatchView();
-        }
-        return matchView;
-    }
-
     public void showMatchScoreBoard(Match matchPlayed, HashMap<Integer, Integer> runsScoredMap,
                                     HashMap<Integer, Integer> wicketsTakenMap) {
         Utility.printAndNextLine("Match Summary :");

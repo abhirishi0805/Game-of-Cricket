@@ -8,33 +8,20 @@ import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.others.Constants;
 import com.tekion.gameofcricket.others.Utility;
 import com.tekion.gameofcricket.views.MatchView;
-import com.tekion.gameofcricket.views.TeamView;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class MatchService {
 
-    private static MatchService matchService;
     private List<Team> teamsList;
     private Match currentMatch;
     private HashMap<Integer, Integer> runsScoredMap, wicketsTakenMap;
 
-    private MatchService() {
-    }
-
-    public static MatchService getInstance() {
-        if (matchService == null) {
-            matchService = new MatchService();
-        }
-        return matchService;
-    }
-
     public void organizeMatch() {
+        new TeamService().showListOfTeams();
+
         teamsList = Repository.getInstance().getTeamsList();
-
-        TeamView.getInstance().showListOfTeams(teamsList);
-
         Team teamA = selectTeam("\nEnter serial number of the first team : ");
         Team teamB = selectTeam("Enter serial number of the second team : ");
 
@@ -61,7 +48,7 @@ public class MatchService {
 
         addMatchDataToRepository();
 
-        MatchView.getInstance().showMatchScoreBoard(currentMatch, runsScoredMap, wicketsTakenMap);
+        new MatchView().showMatchScoreBoard(currentMatch, runsScoredMap, wicketsTakenMap);
     }
 
     private Team selectTeam(String prompt) {
@@ -135,13 +122,13 @@ public class MatchService {
     }
 
     private void updatePlayerStats() {
-        PlayerService playerService = PlayerService.getInstance();
+        PlayerService playerService = new PlayerService();
         runsScoredMap.forEach(playerService::addBattingFigure);
         wicketsTakenMap.forEach(playerService::addBowlingFigure);
     }
 
     private void updateTeamStats() {
-        TeamService teamService = TeamService.getInstance();
+        TeamService teamService = new TeamService();
         if (currentMatch.getFirstInnings().getRunsScored() > currentMatch.getSecondInnings().getRunsScored()) {
             teamService.incrementGamesWon(currentMatch.getTeamA().getTeamId());
             teamService.incrementGamesLost(currentMatch.getTeamB().getTeamId());

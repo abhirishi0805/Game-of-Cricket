@@ -6,19 +6,6 @@ import com.tekion.gameofcricket.others.Utility;
 import java.util.List;
 
 public class TeamView {
-
-    private static TeamView teamView;
-
-    private TeamView() {
-    }
-
-    public static TeamView getInstance() {
-        if (teamView == null) {
-            teamView = new TeamView();
-        }
-        return teamView;
-    }
-
     public void showPointsTable(List<Team> teamsList) {
         Utility.printAndNextLine("\nPoints Table - \n\nTeam Id\t\tTeam Name\tWon\t\tLost\tDrawn\tPoints");
         for (Team team : teamsList) {

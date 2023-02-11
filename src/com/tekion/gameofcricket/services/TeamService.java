@@ -10,34 +10,25 @@ import java.util.List;
 
 public class TeamService {
 
-    private static TeamService teamService;
-    private List<Team> teamsList;
-
-    private TeamService() {
-    }
-
-    public static TeamService getInstance() {
-        if (teamService == null) {
-            teamService = new TeamService();
-        }
-        return teamService;
-    }
-
     private int getTotalGamesPlayed(Team team) {
         return team.getGamesWon() + team.getGamesLost() + team.getGamesDrawn();
     }
 
+    public void showListOfTeams() {
+        new TeamView().showListOfTeams(Repository.getInstance().getTeamsList());
+    }
+
     public void showPointsTable() {
-        teamsList = Repository.getInstance().getTeamsList();
+        List<Team> teamsList = Repository.getInstance().getTeamsList();
         if (teamsList.size() == 0) {
             Utility.printAndNextLine("No team data to show !");
             return;
         }
-        sortByPoints();
-        TeamView.getInstance().showPointsTable(teamsList);
+        sortByPoints(teamsList);
+        new TeamView().showPointsTable(teamsList);
     }
 
-    private void sortByPoints() {
+    private void sortByPoints(List<Team> teamsList) {
         class SortByPointsComparator implements Comparator<Team> {
 
             @Override

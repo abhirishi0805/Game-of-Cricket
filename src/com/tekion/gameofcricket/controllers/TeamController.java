@@ -5,6 +5,6 @@ import com.tekion.gameofcricket.services.TeamService;
 class TeamController {
 
     public void showPointsTable() {
-        TeamService.getInstance().showPointsTable();
+        new TeamService().showPointsTable();
     }
 }

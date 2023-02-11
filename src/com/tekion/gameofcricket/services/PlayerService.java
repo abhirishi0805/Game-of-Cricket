@@ -9,18 +9,7 @@ import java.util.List;
 
 public class PlayerService {
 
-    private static PlayerService playerService;
     private List<Player> playersList;
-
-    private PlayerService() {
-    }
-
-    public static PlayerService getInstance() {
-        if (playerService == null) {
-            playerService = new PlayerService();
-        }
-        return playerService;
-    }
 
     public void showBestPerformers() {
         playersList = Repository.getInstance().getPlayersList();
@@ -53,7 +42,7 @@ public class PlayerService {
             }
         }
 
-        PlayerView.getInstance().printBestPerformers(bestBatsman, maximumRunsScored, bestBowler, maximumWicketsTaken);
+        new PlayerView().printBestPerformers(bestBatsman, maximumRunsScored, bestBowler, maximumWicketsTaken);
     }
 
     private int getTotalRunsScored(Player player) {
