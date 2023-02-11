@@ -1,27 +1,32 @@
-package Models;
+package com.tekion.gameofcricket.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Team {
-    private int teamID;
+
+    private int teamId;
     private String teamName;
-    private ArrayList<Integer> playerIDs;
+    private List<Integer> playerIds;
     private int gamesWon, gamesLost, gamesDrawn;
+    private int points;
 
     // to restrict instantiation without field data
-    private Team() {}
+    private Team() {
+    }
 
-    public Team(int teamID, String teamName, ArrayList<Integer> playerIDs, int gamesWon, int gamesLost, int gamesDrawn) {
-        this.teamID = teamID;
+    public Team(int teamId, String teamName, List<Integer> playerIds, int gamesWon, int gamesLost, int gamesDrawn,
+                int points) {
+        this.teamId = teamId;
         this.teamName = teamName;
-        this.playerIDs = playerIDs;
+        this.playerIds = playerIds;
         this.gamesWon = gamesWon;
         this.gamesLost = gamesLost;
         this.gamesDrawn = gamesDrawn;
+        this.points = points;
     }
 
-    public int getTeamID() {
-        return teamID;
+    public int getTeamId() {
+        return teamId;
     }
 
     public String getTeamName() {
@@ -52,7 +57,15 @@ public class Team {
         this.gamesDrawn = gamesDrawn;
     }
 
-    public ArrayList<Integer> getPlayerIDs() {
-        return playerIDs;
+    public List<Integer> getPlayerIds() {
+        return playerIds;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

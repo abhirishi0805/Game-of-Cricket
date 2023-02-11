@@ -1,6 +1,9 @@
-package Models;
+package com.tekion.gameofcricket.models;
+
+import com.tekion.gameofcricket.others.Innings;
 
 public class Match {
+
     private Team teamA, teamB;
 
     // first innings --> team A bats, team B bowls
@@ -8,7 +11,8 @@ public class Match {
     private Innings firstInnings, secondInnings;
 
     // to restrict instantiation without field data
-    private Match() { }
+    private Match() {
+    }
 
     public Match(Team teamA, Team teamB) {
         this.teamA = teamA;

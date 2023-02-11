@@ -1,10 +1,11 @@
-package Others;
+package com.tekion.gameofcricket.others;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public final class Utility {
+
     public static String getUserInput(String prompt) {
         String userInput = null;
         print(prompt + " ");
@@ -33,7 +34,7 @@ public final class Utility {
         System.out.print(message);
     }
 
-    public static String centerAlignString (int width, String s) {
-        return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+    public static String centerAlignString(int width, String s) {
+        return String.format("%-" + width + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }

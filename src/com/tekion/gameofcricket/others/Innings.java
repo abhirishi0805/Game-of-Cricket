@@ -1,9 +1,11 @@
-package Models;
+package com.tekion.gameofcricket.others;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Innings {
-    private ArrayList<Ball> ballList;
+
+    private List<Ball> ballList;
     private int runsScored;
     private int wicketsLost;
 
@@ -13,12 +15,8 @@ public class Innings {
         wicketsLost = 0;
     }
 
-    public ArrayList<Ball> getBallList() {
+    public List<Ball> getBallList() {
         return ballList;
-    }
-
-    public void setBallList(ArrayList<Ball> ballList) {
-        this.ballList = ballList;
     }
 
     public int getRunsScored() {

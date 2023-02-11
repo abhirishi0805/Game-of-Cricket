@@ -1,25 +1,27 @@
-package Services;
+package com.tekion.gameofcricket.services;
 
-import Models.Player;
-import Others.Repository;
-import Others.Utility;
-import Views.PlayerView;
+import com.tekion.gameofcricket.models.Player;
+import com.tekion.gameofcricket.Repository;
+import com.tekion.gameofcricket.others.Utility;
+import com.tekion.gameofcricket.views.PlayerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerService {
-    private static PlayerService playerServiceInstance;
 
-    private PlayerService() { }
+    private static PlayerService playerService;
 
-    public static PlayerService getInstance() {
-        if (playerServiceInstance == null) {
-            playerServiceInstance = new PlayerService();
-        }
-        return playerServiceInstance;
+    private PlayerService() {
     }
 
-    public void showBestPerformers(ArrayList<Player> playersList) {
+    public static PlayerService getInstance() {
+        if (playerService == null) {
+            playerService = new PlayerService();
+        }
+        return playerService;
+    }
+
+    public void showBestPerformers(List<Player> playersList) {
         if (playersList.size() == 0) {
             Utility.printAndNextLine("No player data to show !");
             return;
@@ -53,7 +55,7 @@ public class PlayerService {
 
     private int getTotalRunsScored(Player player) {
         int totalRunsScored = 0;
-        ArrayList<Integer> runsScoredByMatch = player.getRunsScoredByMatch();
+        List<Integer> runsScoredByMatch = player.getRunsScoredByMatch();
 
         for (int runsScoredThisMatch : runsScoredByMatch) {
             totalRunsScored += runsScoredThisMatch;
@@ -63,7 +65,7 @@ public class PlayerService {
 
     private int getTotalWicketsTaken(Player player) {
         int totalWicketsTaken = 0;
-        ArrayList<Integer> wicketsTakenByMatch = player.getWicketsTakenByMatch();
+        List<Integer> wicketsTakenByMatch = player.getWicketsTakenByMatch();
 
         for (int wicketsTakenThisMatch : wicketsTakenByMatch) {
             totalWicketsTaken += wicketsTakenThisMatch;
@@ -71,11 +73,11 @@ public class PlayerService {
         return totalWicketsTaken;
     }
 
-    public void addBattingFigure(int playerID, int runsScored) {
-        Repository.getInstance().getPlayerByID(playerID).getRunsScoredByMatch().add(runsScored);
+    public void addBattingFigure(int playerId, int runsScored) {
+        Repository.getInstance().getPlayerById(playerId).getRunsScoredByMatch().add(runsScored);
     }
 
-    public void addBowlingFigure(int playerID, int wicketsTaken) {
-        Repository.getInstance().getPlayerByID(playerID).getWicketsTakenByMatch().add(wicketsTaken);
+    public void addBowlingFigure(int playerId, int wicketsTaken) {
+        Repository.getInstance().getPlayerById(playerId).getWicketsTakenByMatch().add(wicketsTaken);
     }
 }
