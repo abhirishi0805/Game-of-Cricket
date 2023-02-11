@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.services;
 
+import com.tekion.gameofcricket.Repository;
 import com.tekion.gameofcricket.others.Ball;
 import com.tekion.gameofcricket.others.Innings;
 import com.tekion.gameofcricket.models.Match;
@@ -15,6 +16,9 @@ import java.util.List;
 public class MatchService {
 
     private static MatchService matchService;
+    private List<Team> teamsList;
+    private Match currentMatch;
+    private HashMap<Integer, Integer> runsScoredMap, wicketsTakenMap;
 
     private MatchService() {
     }
@@ -26,11 +30,13 @@ public class MatchService {
         return matchService;
     }
 
-    public void organizeMatch(List<Team> teamsList) {
+    public void organizeMatch() {
+        teamsList = Repository.getInstance().getTeamsList();
+
         TeamView.getInstance().showListOfTeams(teamsList);
 
-        Team teamA = selectTeam("\nEnter serial number of the first team : ", teamsList);
-        Team teamB = selectTeam("Enter serial number of the second team : ", teamsList);
+        Team teamA = selectTeam("\nEnter serial number of the first team : ");
+        Team teamB = selectTeam("Enter serial number of the second team : ");
 
         if (teamA != null && teamB != null) {
             Utility.printAndNextLine("\n" + teamA.getTeamName() + " vs " + teamB.getTeamName());
@@ -41,26 +47,24 @@ public class MatchService {
 
         // TODO - edge case when both teams are the same
 
-        Match matchToPlay = new Match(teamA, teamB);
-        simulateMatch(matchToPlay);
-        handlePostMatchEvents(matchToPlay);
+        currentMatch = new Match(teamA, teamB);
+        simulateMatch();
+        handlePostMatchEvents();
     }
 
-    private void handlePostMatchEvents(Match matchPlayed) {
-        HashMap<Integer, Integer> runsScoredMap = new HashMap<>();
-        HashMap<Integer, Integer> wicketsTakenMap = new HashMap<>();
+    private void handlePostMatchEvents() {
+        runsScoredMap = new HashMap<>();
+        wicketsTakenMap = new HashMap<>();
 
-        matchPlayed.getFirstInnings().getBallList()
-                   .forEach((ball) -> updateMatchDataMaps(ball, runsScoredMap, wicketsTakenMap));
-        matchPlayed.getSecondInnings().getBallList()
-                   .forEach((ball) -> updateMatchDataMaps(ball, runsScoredMap, wicketsTakenMap));
+        currentMatch.getFirstInnings().getBallList().forEach(this::updateMatchDataMaps);
+        currentMatch.getSecondInnings().getBallList().forEach(this::updateMatchDataMaps);
 
-        addMatchDataToRepository(matchPlayed, runsScoredMap, wicketsTakenMap);
+        addMatchDataToRepository();
 
-        MatchView.getInstance().showMatchScoreBoard(matchPlayed, runsScoredMap, wicketsTakenMap);
+        MatchView.getInstance().showMatchScoreBoard(currentMatch, runsScoredMap, wicketsTakenMap);
     }
 
-    private Team selectTeam(String prompt, List<Team> teamsList) {
+    private Team selectTeam(String prompt) {
         String userInput = Utility.getUserInput(prompt);
 
         // TODO - check for invalid input
@@ -69,16 +73,17 @@ public class MatchService {
         return teamsList.get(Integer.parseInt(userInput) - 1);
     }
 
-    private void simulateMatch(Match match) {
+    private void simulateMatch() {
         Utility.printAndNextLine("Please wait while the match is being played...\n");
         Utility.pauseExecution(2000);
 
         // simulate first innings - team A bats, team B bowls
-        simulateInnings(match.getFirstInnings(), match.getTeamA(), match.getTeamB(), Integer.MAX_VALUE);
+        simulateInnings(currentMatch.getFirstInnings(), currentMatch.getTeamA(), currentMatch.getTeamB(),
+                Integer.MAX_VALUE);
 
         // simulate second innings - team B bats, team A bowls
-        simulateInnings(match.getSecondInnings(), match.getTeamB(), match.getTeamA(),
-                match.getFirstInnings().getRunsScored() + 1);
+        simulateInnings(currentMatch.getSecondInnings(), currentMatch.getTeamB(), currentMatch.getTeamA(),
+                currentMatch.getFirstInnings().getRunsScored() + 1);
     }
 
     private void simulateInnings(Innings innings, Team battingTeam, Team bowlingTeam, int target) {
@@ -111,14 +116,12 @@ public class MatchService {
         }
     }
 
-    private void addMatchDataToRepository(Match matchPlayed, HashMap<Integer, Integer> runsScoredMap,
-                                          HashMap<Integer, Integer> wicketsTakenMap) {
-        updatePlayerStats(runsScoredMap, wicketsTakenMap);
-        updateTeamStats(matchPlayed);
+    private void addMatchDataToRepository() {
+        updatePlayerStats();
+        updateTeamStats();
     }
 
-    private void updateMatchDataMaps(Ball ball, HashMap<Integer, Integer> runsScoredMap,
-                                     HashMap<Integer, Integer> wicketsTakenMap) {
+    private void updateMatchDataMaps(Ball ball) {
         if (ball.getOutcome() == 7) {
             wicketsTakenMap.put(ball.getBowlerId(), wicketsTakenMap.getOrDefault(ball.getBowlerId(), 0) + 1);
         } else {
@@ -131,25 +134,25 @@ public class MatchService {
         }
     }
 
-    private void updatePlayerStats(HashMap<Integer, Integer> runsScoredMap, HashMap<Integer, Integer> wicketsTakenMap) {
+    private void updatePlayerStats() {
         PlayerService playerService = PlayerService.getInstance();
         runsScoredMap.forEach(playerService::addBattingFigure);
         wicketsTakenMap.forEach(playerService::addBowlingFigure);
     }
 
-    private void updateTeamStats(Match matchPlayed) {
+    private void updateTeamStats() {
         TeamService teamService = TeamService.getInstance();
-        if (matchPlayed.getFirstInnings().getRunsScored() > matchPlayed.getSecondInnings().getRunsScored()) {
-            teamService.incrementGamesWon(matchPlayed.getTeamA().getTeamId());
-            teamService.incrementGamesLost(matchPlayed.getTeamB().getTeamId());
-        } else if (matchPlayed.getFirstInnings().getRunsScored() < matchPlayed.getSecondInnings().getRunsScored()) {
-            teamService.incrementGamesWon(matchPlayed.getTeamB().getTeamId());
-            teamService.incrementGamesLost(matchPlayed.getTeamA().getTeamId());
+        if (currentMatch.getFirstInnings().getRunsScored() > currentMatch.getSecondInnings().getRunsScored()) {
+            teamService.incrementGamesWon(currentMatch.getTeamA().getTeamId());
+            teamService.incrementGamesLost(currentMatch.getTeamB().getTeamId());
+        } else if (currentMatch.getFirstInnings().getRunsScored() < currentMatch.getSecondInnings().getRunsScored()) {
+            teamService.incrementGamesWon(currentMatch.getTeamB().getTeamId());
+            teamService.incrementGamesLost(currentMatch.getTeamA().getTeamId());
         } else {
-            teamService.incrementGamesDrawn(matchPlayed.getTeamA().getTeamId());
-            teamService.incrementGamesDrawn(matchPlayed.getTeamB().getTeamId());
+            teamService.incrementGamesDrawn(currentMatch.getTeamA().getTeamId());
+            teamService.incrementGamesDrawn(currentMatch.getTeamB().getTeamId());
         }
-        teamService.updateTeamPoints(matchPlayed.getTeamA().getTeamId());
-        teamService.updateTeamPoints(matchPlayed.getTeamB().getTeamId());
+        teamService.updateTeamPoints(currentMatch.getTeamA().getTeamId());
+        teamService.updateTeamPoints(currentMatch.getTeamB().getTeamId());
     }
 }

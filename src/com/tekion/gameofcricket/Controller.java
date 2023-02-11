@@ -1,28 +1,12 @@
 package com.tekion.gameofcricket;
 
-import com.tekion.gameofcricket.models.Player;
-import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.others.Constants;
 import com.tekion.gameofcricket.others.Utility;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.services.TeamService;
 
-import java.util.List;
-
 public class Controller {
-
-    private PlayerService playerService;
-    private TeamService teamService;
-    private MatchService matchService;
-    private Repository repository;
-
-    public Controller() {
-        playerService = PlayerService.getInstance();
-        teamService = TeamService.getInstance();
-        matchService = MatchService.getInstance();
-        repository = Repository.getInstance();
-    }
 
     public void startGame() {
         showStartMessage();
@@ -45,20 +29,17 @@ public class Controller {
     }
 
     private void showPointsTable() {
-        List<Team> teamsList = repository.getTeamsList();
-        teamService.showPointsTable(teamsList);
+        TeamService.getInstance().showPointsTable();
         showActionCompletedDialog();
     }
 
     private void showBestPerformers() {
-        List<Player> playersList = repository.getPlayersList();
-        playerService.showBestPerformers(playersList);
+        PlayerService.getInstance().showBestPerformers();
         showActionCompletedDialog();
     }
 
     private void playMatch() {
-        List<Team> teamsList = repository.getTeamsList();
-        matchService.organizeMatch(teamsList);
+        MatchService.getInstance().organizeMatch();
         showActionCompletedDialog();
     }
 

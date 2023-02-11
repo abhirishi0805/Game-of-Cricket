@@ -10,6 +10,7 @@ import java.util.List;
 public class PlayerService {
 
     private static PlayerService playerService;
+    private List<Player> playersList;
 
     private PlayerService() {
     }
@@ -21,7 +22,9 @@ public class PlayerService {
         return playerService;
     }
 
-    public void showBestPerformers(List<Player> playersList) {
+    public void showBestPerformers() {
+        playersList = Repository.getInstance().getPlayersList();
+
         if (playersList.size() == 0) {
             Utility.printAndNextLine("No player data to show !");
             return;

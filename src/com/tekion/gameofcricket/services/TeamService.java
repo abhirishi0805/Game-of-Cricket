@@ -11,6 +11,7 @@ import java.util.List;
 public class TeamService {
 
     private static TeamService teamService;
+    private List<Team> teamsList;
 
     private TeamService() {
     }
@@ -26,16 +27,17 @@ public class TeamService {
         return team.getGamesWon() + team.getGamesLost() + team.getGamesDrawn();
     }
 
-    public void showPointsTable(List<Team> teamsList) {
+    public void showPointsTable() {
+        teamsList = Repository.getInstance().getTeamsList();
         if (teamsList.size() == 0) {
             Utility.printAndNextLine("No team data to show !");
             return;
         }
-        sortByPoints(teamsList);
+        sortByPoints();
         TeamView.getInstance().showPointsTable(teamsList);
     }
 
-    private void sortByPoints(List<Team> teamsList) {
+    private void sortByPoints() {
         class SortByPointsComparator implements Comparator<Team> {
 
             @Override
