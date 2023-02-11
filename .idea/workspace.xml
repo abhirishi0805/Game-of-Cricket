@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c19a12ed-4af5-4b25-ac51-d538de11acf3" name="Changes" comment="" />
+    <list default="true" id="c19a12ed-4af5-4b25-ac51-d538de11acf3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/com/tekion/gameofcricket/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tekion/gameofcricket/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/tekion/gameofcricket/GameLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tekion/gameofcricket/GameLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/tekion/gameofcricket/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tekion/gameofcricket/controllers/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/tekion/gameofcricket/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/tekion/gameofcricket/controllers/TeamController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,11 +54,11 @@
       <recent name="Others.Constants" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.tekion.gameofcricket.controllers" />
       <recent name="com.tekion.gameofcricket.models" />
       <recent name="com.tekion.gameofcricket.others" />
       <recent name="com.tekion.game_of_cricket.dto" />
       <recent name="com.tekion.game_of_cricket" />
-      <recent name="Others" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

@@ -1,14 +1,11 @@
-package com.tekion.gameofcricket;
+package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.others.Constants;
 import com.tekion.gameofcricket.others.Utility;
-import com.tekion.gameofcricket.services.MatchService;
-import com.tekion.gameofcricket.services.PlayerService;
-import com.tekion.gameofcricket.services.TeamService;
 
-public class Controller {
+public class MainController {
 
-    public void startGame() {
+    public void run() {
         showStartMessage();
         loadMainMenu();
     }
@@ -29,17 +26,17 @@ public class Controller {
     }
 
     private void showPointsTable() {
-        TeamService.getInstance().showPointsTable();
+        new TeamController().showPointsTable();
         showActionCompletedDialog();
     }
 
     private void showBestPerformers() {
-        PlayerService.getInstance().showBestPerformers();
+        new PlayerController().showBestPerformers();
         showActionCompletedDialog();
     }
 
     private void playMatch() {
-        MatchService.getInstance().organizeMatch();
+        new MatchController().playMatch();
         showActionCompletedDialog();
     }
 

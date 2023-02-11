@@ -1,9 +1,11 @@
 package com.tekion.gameofcricket;
 
+import com.tekion.gameofcricket.controllers.MainController;
+
 public class GameLauncher {
 
     public static void main(String[] args) {
-        Controller gameController = new Controller();
-        gameController.startGame();
+        MainController mainController = new MainController();
+        mainController.run();
     }
 }
