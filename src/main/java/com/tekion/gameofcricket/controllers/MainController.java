@@ -18,10 +18,10 @@ public class MainController {
         // TODO - check for invalid input
 
         switch (optionNumberSelected) {
-            case "1" -> showPointsTable();
-            case "2" -> showBestPerformers();
-            case "3" -> playMatch();
-            case "4" -> showExitMessage();
+            case "1" : showPointsTable();   break;
+            case "2" : showBestPerformers();    break;
+            case "3" : playMatch();    break;
+            case "4" : showExitMessage();
         }
     }
 
