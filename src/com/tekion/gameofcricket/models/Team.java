@@ -1,19 +1,14 @@
 package com.tekion.gameofcricket.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
 
-    private int teamId;
-    private String teamName;
-    private List<Integer> playerIds;
+    private final int teamId;
+    private final String teamName;
+    private final List<Integer> playerIds;
     private int gamesWon, gamesLost, gamesDrawn;
     private int points;
-
-    // to restrict instantiation without field data
-    private Team() {
-    }
 
     public Team(int teamId, String teamName, List<Integer> playerIds, int gamesWon, int gamesLost, int gamesDrawn,
                 int points) {

@@ -1,17 +1,12 @@
 package com.tekion.gameofcricket.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 
-    private int playerId;
-    private String playerName;
-    private List<Integer> runsScoredByMatch, wicketsTakenByMatch;
-
-    // to restrict instantiation without field data
-    private Player() {
-    }
+    private final int playerId;
+    private final String playerName;
+    private final List<Integer> runsScoredByMatch, wicketsTakenByMatch;
 
     public Player(int playerId, String playerName, List<Integer> runsScoredByMatch, List<Integer> wicketsTakenByMatch) {
         this.playerId = playerId;
