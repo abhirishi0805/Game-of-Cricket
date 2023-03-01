@@ -2,8 +2,11 @@ package com.tekion.gameofcricket.services;
 
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.repositories.PlayerMatchStatRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
@@ -38,5 +41,15 @@ public class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
     @Override
     public void addPlayerMatchStat(PlayerMatchStat playerMatchStat) {
         playerMatchStatRepository.save(playerMatchStat);
+    }
+
+    @Override
+    public List<PlayerMatchStat> getAllPerformancesOfPlayer(ObjectId playerId) {
+        return playerMatchStatRepository.findPlayerMatchStatsByPlayerId(playerId);
+    }
+
+    @Override
+    public PlayerMatchStat getPlayerPerformanceByMatch(ObjectId playerId, ObjectId matchId) {
+        return playerMatchStatRepository.findPlayerMatchStatByPlayerIdAndMatchId(playerId, matchId);
     }
 }

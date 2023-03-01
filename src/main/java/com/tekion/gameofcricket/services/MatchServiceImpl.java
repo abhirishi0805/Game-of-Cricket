@@ -59,7 +59,7 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public List<Match> getMatchByTeam(ObjectId teamId) {
-        return matchRepository.findMatchesByTeam1IdOrTeam2Id(teamId);
+        return matchRepository.findMatchesByTeam1IdOrTeam2Id(teamId, teamId);
     }
 
     @Override

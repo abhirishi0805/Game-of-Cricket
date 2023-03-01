@@ -12,5 +12,5 @@ public interface MatchRepository extends MongoRepository<Match, ObjectId> {
 
     List<Match> findMatchesByMatchDate(String date);
 
-    List<Match> findMatchesByTeam1IdOrTeam2Id(ObjectId teamId);
+    List<Match> findMatchesByTeam1IdOrTeam2Id(ObjectId team1Id, ObjectId team2Id);
 }

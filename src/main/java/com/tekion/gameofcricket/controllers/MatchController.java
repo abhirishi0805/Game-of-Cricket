@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.PlayMatchBody;
+import com.tekion.gameofcricket.helper.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.services.MatchService;
 import org.bson.types.ObjectId;
@@ -36,7 +36,7 @@ public class MatchController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "matches/play")
-    public void playMatch(@RequestBody PlayMatchBody playMatchBody) {
-        matchService.playMatch(playMatchBody.getTeam1Id(), playMatchBody.getTeam2Id());
+    public void playMatch(@RequestBody PlayMatchRequestBody playMatchRequestBody) {
+        matchService.playMatch(playMatchRequestBody.getTeam1Id(), playMatchRequestBody.getTeam2Id());
     }
 }

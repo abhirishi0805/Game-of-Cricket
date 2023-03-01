@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class PlayMatchBody {
+public class PlayMatchRequestBody {
 
     private ObjectId team1Id;
     private ObjectId team2Id;
 
-    public PlayMatchBody() {
+    public PlayMatchRequestBody() {
     }
 
-    public PlayMatchBody(ObjectId team1Id, ObjectId team2Id) {
+    public PlayMatchRequestBody(ObjectId team1Id, ObjectId team2Id) {
         this.team1Id = team1Id;
         this.team2Id = team2Id;
     }
