@@ -2,6 +2,7 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 public class PlayerController {
+
     @Autowired
     private PlayerService playerService;
 
@@ -24,6 +26,6 @@ public class PlayerController {
 
     @RequestMapping("/players/{id}")
     public Player getPlayerById(@PathVariable String id) {
-        return playerService.getPlayerById(id);
+        return playerService.getPlayerById(new ObjectId(id));
     }
 }

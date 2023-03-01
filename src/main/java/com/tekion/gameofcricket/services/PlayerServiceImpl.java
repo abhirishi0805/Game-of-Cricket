@@ -1,6 +1,7 @@
 package com.tekion.gameofcricket.services;
 
 import com.tekion.gameofcricket.models.Player;
+import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.repositories.PlayerRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,16 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player getPlayerById(String id) {
-        return playerRepository.findById(new ObjectId(id)).orElse(null);
+    public Player getPlayerById(ObjectId id) {
+        return playerRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updatePlayerDataPostMatch(ObjectId id, PlayerMatchStat playerMatchStat) {
+        Player player = getPlayerById(id);
+        player.setGamesPlayed(player.getGamesPlayed() + 1);
+        player.setTotalRunsScored(player.getTotalRunsScored() + playerMatchStat.getRunsScored());
+        player.setTotalWicketsTaken(player.getTotalWicketsTaken() + playerMatchStat.getWicketsTaken());
+        playerRepository.save(player);
     }
 }

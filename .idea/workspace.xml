@@ -5,8 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78440ebe-5fc0-4668-a0d1-52ce90c8f2cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/MatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/MatchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerMatchStatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerMatchStatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Match.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/PlayerMatchStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/PlayerMatchStat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/TeamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/TeamRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerMatchStatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerMatchStatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerMatchStatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerMatchStatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/TeamService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/TeamServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/utility/MatchResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/utility/MatchResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +63,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

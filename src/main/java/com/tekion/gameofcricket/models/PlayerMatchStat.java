@@ -26,6 +26,19 @@ public class PlayerMatchStat {
     public PlayerMatchStat() {
     }
 
+    public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId) {
+        this.playerId = playerId;
+        this.matchId = matchId;
+        this.teamId = teamId;
+        runsScored = 0;
+        ballsFaced = 0;
+        sixesHit = 0;
+        foursHit = 0;
+        ballsThrown = 0;
+        wicketsTaken = 0;
+        runsConceded = 0;
+    }
+
     public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId, int runsScored, int ballsFaced,
                            int sixesHit, int foursHit, int ballsThrown, int wicketsTaken, int runsConceded) {
         this.playerId = playerId;

@@ -6,8 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 @Document(collection = "matches")
 public class Match {
 
@@ -16,18 +14,25 @@ public class Match {
     private ObjectId team1Id;
     private ObjectId team2Id;
     @Indexed
-    private Date matchDate;
+    private String matchDate;
     private MatchResult result;
 
     public Match() {
     }
 
-    public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, Date matchDate, MatchResult result) {
+    public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, String matchDate, MatchResult result) {
         this.id = id;
         this.team1Id = team1Id;
         this.team2Id = team2Id;
         this.matchDate = matchDate;
         this.result = result;
+    }
+
+    public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, String matchDate) {
+        this.id = id;
+        this.team1Id = team1Id;
+        this.team2Id = team2Id;
+        this.matchDate = matchDate;
     }
 
     public ObjectId getId() {
@@ -54,11 +59,11 @@ public class Match {
         this.team2Id = team2Id;
     }
 
-    public Date getMatchDate() {
+    public String getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(String matchDate) {
         this.matchDate = matchDate;
     }
 
