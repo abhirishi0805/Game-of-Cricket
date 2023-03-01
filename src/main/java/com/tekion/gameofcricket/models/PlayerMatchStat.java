@@ -1,18 +1,20 @@
 package com.tekion.gameofcricket.models;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 @Document(collection = "player_match_stats")
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PlayerMatchStat {
 
     @Id
     private ObjectId id;
-    @Indexed
     private ObjectId playerId;
-    @Indexed
     private ObjectId matchId;
     private ObjectId teamId;
     private int runsScored;
@@ -24,19 +26,6 @@ public class PlayerMatchStat {
     private int runsConceded;
 
     public PlayerMatchStat() {
-    }
-
-    public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId) {
-        this.playerId = playerId;
-        this.matchId = matchId;
-        this.teamId = teamId;
-        runsScored = 0;
-        ballsFaced = 0;
-        sixesHit = 0;
-        foursHit = 0;
-        ballsThrown = 0;
-        wicketsTaken = 0;
-        runsConceded = 0;
     }
 
     public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId, int runsScored, int ballsFaced,
@@ -131,5 +120,13 @@ public class PlayerMatchStat {
 
     public void setRunsConceded(int runsConceded) {
         this.runsConceded = runsConceded;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerMatchStat{" + "id=" + id + ", playerId=" + playerId + ", matchId=" + matchId + ", teamId=" +
+               teamId + ", runsScored=" + runsScored + ", ballsFaced=" + ballsFaced + ", sixesHit=" + sixesHit +
+               ", foursHit=" + foursHit + ", ballsThrown=" + ballsThrown + ", wicketsTaken=" + wicketsTaken +
+               ", runsConceded=" + runsConceded + '}';
     }
 }

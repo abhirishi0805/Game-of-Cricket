@@ -44,15 +44,13 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void updateTeamDataPostMatch(Team team1, Team team2, MatchResult result) {
-        if(result == MatchResult.TEAM_1_WON) {
+        if (result == MatchResult.TEAM_1_WON) {
             team1.setGamesWon(team1.getGamesWon() + 1);
             team2.setGamesLost(team2.getGamesLost() + 1);
-        }
-        else if(result == MatchResult.TEAM_2_WON) {
+        } else if (result == MatchResult.TEAM_2_WON) {
             team1.setGamesLost(team1.getGamesLost() + 1);
             team2.setGamesWon(team2.getGamesWon() + 1);
-        }
-        else {
+        } else {
             team1.setGamesDrawn(team1.getGamesDrawn() + 1);
             team2.setGamesDrawn(team2.getGamesDrawn() + 1);
         }

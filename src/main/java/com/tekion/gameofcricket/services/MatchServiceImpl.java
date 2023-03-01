@@ -9,12 +9,11 @@ import com.tekion.gameofcricket.repositories.MatchRepository;
 import com.tekion.gameofcricket.utility.Constants;
 import com.tekion.gameofcricket.utility.DateUtils;
 import com.tekion.gameofcricket.utility.MatchResult;
-import org.apache.catalina.core.ApplicationContext;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +29,8 @@ public class MatchServiceImpl implements MatchService {
     private TeamService teamService;
     @Autowired
     private PlayerMatchStatService playerMatchStatService;
+    @Autowired
+    private ApplicationContext applicationContext;
     private Match match;
     @Autowired
     private OngoingMatchData matchData;
@@ -52,7 +53,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> getMatchByDate(Date date) {
+    public List<Match> getMatchByDate(String date) {
         return matchRepository.findMatchesByMatchDate(date);
     }
 
@@ -63,9 +64,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public void playMatch(ObjectId team1Id, ObjectId team2Id) {
-        match = new Match(ObjectId.get(), team1Id, team2Id, DateUtils.getCurrentDate());
         team1 = teamService.getTeamById(team1Id);
         team2 = teamService.getTeamById(team2Id);
+        match = getNewMatchBean();
         matchData.resetInnings();
         generatePlayerStatMap();
         simulateInnings(true, Integer.MAX_VALUE);
@@ -74,12 +75,31 @@ public class MatchServiceImpl implements MatchService {
         storeMatchData();
     }
 
+    private Match getNewMatchBean() {
+        Match match = (Match) applicationContext.getBean("match");
+        match.setId(ObjectId.get());
+        match.setTeam1Id(team1.getId());
+        match.setTeam2Id(team2.getId());
+        match.setMatchDate(DateUtils.getCurrentDate());
+        return match;
+    }
+
     private void generatePlayerStatMap() {
         playerMatchStatMap = new HashMap<>();
-        team1.getPlayerIds().forEach(playerId -> playerMatchStatMap.put(playerId,
-                new PlayerMatchStat(playerId, match.getId(), team1.getId())));
-        team2.getPlayerIds().forEach(playerId -> playerMatchStatMap.put(playerId,
-                new PlayerMatchStat(playerId, match.getId(), team2.getId())));
+        team1.getPlayerIds().forEach(playerId -> {
+            PlayerMatchStat playerMatchStat = (PlayerMatchStat) applicationContext.getBean("playerMatchStat");
+            playerMatchStat.setPlayerId(playerId);
+            playerMatchStat.setTeamId(team1.getId());
+            playerMatchStat.setMatchId(match.getId());
+            playerMatchStatMap.put(playerId, playerMatchStat);
+        });
+        team2.getPlayerIds().forEach(playerId -> {
+            PlayerMatchStat playerMatchStat = (PlayerMatchStat) applicationContext.getBean("playerMatchStat");
+            playerMatchStat.setPlayerId(playerId);
+            playerMatchStat.setTeamId(team2.getId());
+            playerMatchStat.setMatchId(match.getId());
+            playerMatchStatMap.put(playerId, playerMatchStat);
+        });
     }
 
     private void simulateInnings(boolean isFirstInnings, int target) {

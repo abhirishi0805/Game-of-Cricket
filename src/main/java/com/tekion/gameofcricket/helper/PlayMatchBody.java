@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PlayMatchBody {
+
     private ObjectId team1Id;
     private ObjectId team2Id;
 

@@ -76,4 +76,10 @@ public class Team {
     public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" + "id=" + id + ", teamName='" + teamName + '\'' + ", gamesWon=" + gamesWon + ", gamesDrawn=" +
+               gamesDrawn + ", gamesLost=" + gamesLost + ", playerIds=" + playerIds + '}';
+    }
 }

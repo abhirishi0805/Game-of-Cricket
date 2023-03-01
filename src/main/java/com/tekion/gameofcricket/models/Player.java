@@ -64,4 +64,10 @@ public class Player {
     public void setGamesPlayed(int gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" + "id=" + id + ", playerName='" + playerName + '\'' + ", gamesPlayed=" + gamesPlayed +
+               ", totalRunsScored=" + totalRunsScored + ", totalWicketsTaken=" + totalWicketsTaken + '}';
+    }
 }

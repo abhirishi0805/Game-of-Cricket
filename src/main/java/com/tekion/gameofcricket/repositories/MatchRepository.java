@@ -5,13 +5,12 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface MatchRepository extends MongoRepository<Match, ObjectId> {
 
-    public List<Match> findMatchesByMatchDate(Date date);
+    List<Match> findMatchesByMatchDate(String date);
 
-    public List<Match> findMatchesByTeam1IdOrTeam2Id(ObjectId teamId);
+    List<Match> findMatchesByTeam1IdOrTeam2Id(ObjectId teamId);
 }

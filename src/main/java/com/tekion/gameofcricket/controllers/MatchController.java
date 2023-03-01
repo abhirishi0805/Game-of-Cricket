@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class MatchController {
 
     @RequestMapping("/matches/date/{date}")
     public List<Match> getMatchByDate(@PathVariable String date) {
-        return matchService.getMatchByDate(new Date(date));
+        return matchService.getMatchByDate(date);
     }
 
     @RequestMapping("/matches/team/{teamId}")
