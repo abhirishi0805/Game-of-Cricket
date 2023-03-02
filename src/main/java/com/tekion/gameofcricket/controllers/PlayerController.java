@@ -9,23 +9,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/players")
 public class PlayerController {
 
     @Autowired
     private PlayerService playerService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/players")
+    @PostMapping("/")
     public void addPlayer(@RequestBody Player player) {
         playerService.addPlayer(player);
     }
 
-    @RequestMapping("/players")
+    @GetMapping("/")
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }
 
-    @RequestMapping("/players/{id}")
-    public Player getPlayerById(@PathVariable String id) {
-        return playerService.getPlayerById(new ObjectId(id));
+    @GetMapping("/{playerId}")
+    public Player getPlayerById(@PathVariable String playerId) {
+        return playerService.getPlayerById(new ObjectId(playerId));
     }
 }

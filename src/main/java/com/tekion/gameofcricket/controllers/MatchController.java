@@ -10,32 +10,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/matches")
 public class MatchController {
 
     @Autowired
     private MatchService matchService;
 
-    @RequestMapping("/matches")
+    @GetMapping("/")
     public List<Match> getAllMatches() {
         return matchService.getAllMatches();
     }
 
-    @RequestMapping("/matches/{id}")
-    public Match getMatchById(@PathVariable String id) {
-        return matchService.getMatchById(new ObjectId(id));
+    @GetMapping("/{matchId}")
+    public Match getMatchById(@PathVariable String matchId) {
+        return matchService.getMatchById(new ObjectId(matchId));
     }
 
-    @RequestMapping("/matches/date/{date}")
+    @GetMapping("/date/{date}")
     public List<Match> getMatchByDate(@PathVariable String date) {
         return matchService.getMatchByDate(date);
     }
 
-    @RequestMapping("/matches/team/{teamId}")
+    @GetMapping("/team/{teamId}")
     public List<Match> getMatchByTeam(@PathVariable String teamId) {
         return matchService.getMatchByTeam(new ObjectId(teamId));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "matches/play")
+    @PostMapping("/play")
     public void playMatch(@RequestBody PlayMatchRequestBody playMatchRequestBody) {
         matchService.playMatch(playMatchRequestBody.getTeam1Id(), playMatchRequestBody.getTeam2Id());
     }

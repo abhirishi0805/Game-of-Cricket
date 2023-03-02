@@ -10,28 +10,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/teams")
 public class TeamController {
 
     @Autowired
     private TeamService teamService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/teams")
+    @PostMapping("/")
     public void addTeam(@RequestBody Team team) {
         teamService.addTeam(team);
     }
 
-    @RequestMapping("/teams")
+    @GetMapping("/")
     public List<Team> getAllTeams() {
         return teamService.getAllTeams();
     }
 
-    @RequestMapping("/teams/{id}")
-    public Team getTeamById(@PathVariable String id) {
-        return teamService.getTeamById(new ObjectId(id));
+    @GetMapping("/{teamId}")
+    public Team getTeamById(@PathVariable String teamId) {
+        return teamService.getTeamById(new ObjectId(teamId));
     }
 
-    @RequestMapping("/teams/{id}/players")
-    public List<Player> getTeamPlayers(@PathVariable String id) {
-        return teamService.getTeamPlayers(new ObjectId(id));
+    @GetMapping("/{teamId}/players")
+    public List<Player> getTeamPlayers(@PathVariable String teamId) {
+        return teamService.getTeamPlayers(new ObjectId(teamId));
     }
 }
