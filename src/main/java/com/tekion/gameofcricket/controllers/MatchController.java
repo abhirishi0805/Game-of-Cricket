@@ -3,6 +3,7 @@ package com.tekion.gameofcricket.controllers;
 import com.tekion.gameofcricket.helper.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.services.MatchService;
+import com.tekion.gameofcricket.services.PlayMatchService;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class MatchController {
 
     @Autowired
     private MatchService matchService;
+    @Autowired
+    @Lazy
+    private PlayMatchService playMatchService;
 
     @GetMapping()
     public List<Match> getAllMatches() {
@@ -49,6 +53,6 @@ public class MatchController {
     @PostMapping("/play")
     public void playMatch(@RequestBody PlayMatchRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
-        matchService.playMatch(requestBody.getTeam1Id(), requestBody.getTeam2Id());
+        playMatchService.playMatch(requestBody.getTeam1Id(), requestBody.getTeam2Id());
     }
 }

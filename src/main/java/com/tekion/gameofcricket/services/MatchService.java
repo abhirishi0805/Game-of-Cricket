@@ -16,6 +16,4 @@ public interface MatchService {
     List<Match> getMatchByDate(String date);
 
     List<Match> getMatchByTeam(ObjectId teamId);
-
-    void playMatch(ObjectId team1Id, ObjectId team2Id);
 }
