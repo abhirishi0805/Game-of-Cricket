@@ -3,9 +3,11 @@ package com.tekion.gameofcricket.services;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.repositories.PlayerRepository;
-import com.tekion.gameofcricket.utility.LogUtils;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +15,16 @@ import java.util.List;
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
+    @Lazy
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerServiceImpl.class);
+
     @Autowired
     private PlayerRepository playerRepository;
 
     @Override
     public void addPlayer(Player player) {
         playerRepository.save(player);
-        LogUtils.logInfo("New player created : " + player);
+        LOGGER.info("New player created : " + player);
     }
 
     @Override

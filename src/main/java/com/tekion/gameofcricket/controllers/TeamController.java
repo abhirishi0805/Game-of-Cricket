@@ -3,9 +3,11 @@ package com.tekion.gameofcricket.controllers;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
-import com.tekion.gameofcricket.utility.LogUtils;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,30 +16,33 @@ import java.util.List;
 @RequestMapping("/teams")
 public class TeamController {
 
+    @Lazy
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
+
     @Autowired
     private TeamService teamService;
 
-    @PostMapping("/")
+    @PostMapping()
     public void addTeam(@RequestBody Team team) {
-        LogUtils.logApiCall(RequestMethod.POST, "/teams/");
+        LOGGER.info("POST call received : http://localhost:3004/teams");
         teamService.addTeam(team);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Team> getAllTeams() {
-        LogUtils.logApiCall(RequestMethod.GET, "/teams/");
+        LOGGER.info("GET call received : http://localhost:3004/teams");
         return teamService.getAllTeams();
     }
 
     @GetMapping("/{teamId}")
     public Team getTeamById(@PathVariable String teamId) {
-        LogUtils.logApiCall(RequestMethod.GET, "/teams/" + teamId);
+        LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId);
         return teamService.getTeamById(new ObjectId(teamId));
     }
 
     @GetMapping("/{teamId}/players")
     public List<Player> getTeamPlayers(@PathVariable String teamId) {
-        LogUtils.logApiCall(RequestMethod.GET, "/teams/" + teamId + "/players");
+        LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
         return teamService.getTeamPlayers(new ObjectId(teamId));
     }
 }

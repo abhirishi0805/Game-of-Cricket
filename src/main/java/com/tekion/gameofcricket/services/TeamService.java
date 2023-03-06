@@ -15,6 +15,8 @@ public interface TeamService {
 
     Team getTeamById(ObjectId id);
 
+    void updateTeam(Team team);
+
     List<Player> getTeamPlayers(ObjectId id);
 
     void updateTeamDataPostMatch(Team team1, Team team2, MatchResult result);

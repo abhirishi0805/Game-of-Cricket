@@ -6,10 +6,15 @@ import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.MatchRepository;
-import com.tekion.gameofcricket.utility.*;
+import com.tekion.gameofcricket.utility.Constants;
+import com.tekion.gameofcricket.utility.DateUtils;
+import com.tekion.gameofcricket.utility.MatchResult;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -34,6 +39,8 @@ public class MatchServiceImpl implements MatchService {
     private OngoingMatchData matchData;
     private Team team1, team2;
     private Map<ObjectId, PlayerMatchStat> playerMatchStatMap;
+    @Lazy
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchServiceImpl.class);
 
     @Override
     public void addMatch(Match match) {
@@ -64,7 +71,7 @@ public class MatchServiceImpl implements MatchService {
     public void playMatch(ObjectId team1Id, ObjectId team2Id) {
         team1 = teamService.getTeamById(team1Id);
         team2 = teamService.getTeamById(team2Id);
-        LogUtils.logInfo("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
+        LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         match = getNewMatchBean();
         matchData.resetInnings();
         generatePlayerStatMap();
@@ -123,7 +130,8 @@ public class MatchServiceImpl implements MatchService {
             playerMatchStatService.updateBowlingFigure(playerMatchStatMap.get(bowlerId), outcome);
 
             // batting team gets all out or chasing team achieves the target
-            if (currentInnings.getWicketsFallen() == Constants.TEAM_SIZE.getValue() || currentInnings.getRunsScored() >= target) {
+            if (currentInnings.getWicketsFallen() == Constants.TEAM_SIZE.getValue() ||
+                currentInnings.getRunsScored() >= target) {
                 break;
             }
         }

@@ -2,9 +2,11 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
-import com.tekion.gameofcricket.utility.LogUtils;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,24 +15,27 @@ import java.util.List;
 @RequestMapping("/players")
 public class PlayerController {
 
+    @Lazy
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerController.class);
+
     @Autowired
     private PlayerService playerService;
 
-    @PostMapping("/")
+    @PostMapping()
     public void addPlayer(@RequestBody Player player) {
-        LogUtils.logApiCall(RequestMethod.POST, "/players/");
+        LOGGER.info("POST call received : http://localhost:3004/players");
         playerService.addPlayer(player);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Player> getAllPlayers() {
-        LogUtils.logApiCall(RequestMethod.GET, "/players/");
+        LOGGER.info("GET call received : http://localhost:3004/players");
         return playerService.getAllPlayers();
     }
 
     @GetMapping("/{playerId}")
     public Player getPlayerById(@PathVariable String playerId) {
-        LogUtils.logApiCall(RequestMethod.GET, "/players/" + playerId);
+        LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
         return playerService.getPlayerById(new ObjectId(playerId));
     }
 }
