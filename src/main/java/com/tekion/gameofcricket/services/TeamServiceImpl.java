@@ -3,6 +3,7 @@ package com.tekion.gameofcricket.services;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.TeamRepository;
+import com.tekion.gameofcricket.utility.LogUtils;
 import com.tekion.gameofcricket.utility.MatchResult;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void addTeam(Team team) {
         teamRepository.save(team);
+        LogUtils.logInfo("New team created : " + team);
     }
 
     @Override

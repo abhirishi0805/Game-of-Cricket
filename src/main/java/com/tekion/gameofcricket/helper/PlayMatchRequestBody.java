@@ -35,4 +35,9 @@ public class PlayMatchRequestBody {
     public void setTeam2Id(ObjectId team2Id) {
         this.team2Id = team2Id;
     }
+
+    @Override
+    public String toString() {
+        return "Body = {" + "team1Id=" + team1Id + ", team2Id=" + team2Id + '}';
+    }
 }

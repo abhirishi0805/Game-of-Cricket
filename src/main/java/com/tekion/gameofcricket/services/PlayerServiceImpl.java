@@ -3,6 +3,7 @@ package com.tekion.gameofcricket.services;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.repositories.PlayerRepository;
+import com.tekion.gameofcricket.utility.LogUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void addPlayer(Player player) {
         playerRepository.save(player);
+        LogUtils.logInfo("New player created : " + player);
     }
 
     @Override

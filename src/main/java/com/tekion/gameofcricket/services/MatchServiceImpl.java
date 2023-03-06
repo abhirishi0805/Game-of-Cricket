@@ -8,6 +8,7 @@ import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.MatchRepository;
 import com.tekion.gameofcricket.utility.Constants;
 import com.tekion.gameofcricket.utility.DateUtils;
+import com.tekion.gameofcricket.utility.LogUtils;
 import com.tekion.gameofcricket.utility.MatchResult;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +67,12 @@ public class MatchServiceImpl implements MatchService {
     public void playMatch(ObjectId team1Id, ObjectId team2Id) {
         team1 = teamService.getTeamById(team1Id);
         team2 = teamService.getTeamById(team2Id);
+        LogUtils.logInfo("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         match = getNewMatchBean();
         matchData.resetInnings();
         generatePlayerStatMap();
-        simulateInnings(true, Integer.MAX_VALUE);
-        simulateInnings(false, matchData.getFirstInnings().getRunsScored() + 1);
+        simulateInnings(true);
+        simulateInnings(false);
         generateResult();
         storeMatchData();
     }
@@ -102,10 +104,12 @@ public class MatchServiceImpl implements MatchService {
         });
     }
 
-    private void simulateInnings(boolean isFirstInnings, int target) {
+    private void simulateInnings(boolean isFirstInnings) {
         Innings currentInnings = isFirstInnings ? matchData.getFirstInnings() : matchData.getSecondInnings();
         Team battingTeam = isFirstInnings ? team1 : team2;
         Team bowlingTeam = isFirstInnings ? team2 : team1;
+
+        int target = isFirstInnings ? Integer.MAX_VALUE : matchData.getFirstInnings().getRunsScored() + 1;
 
         int ballsSimulated = 0;
         while (ballsSimulated++ < Constants.MATCH_LENGTH_IN_BALLS) {
