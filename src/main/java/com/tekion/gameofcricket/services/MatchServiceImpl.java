@@ -6,10 +6,7 @@ import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.MatchRepository;
-import com.tekion.gameofcricket.utility.Constants;
-import com.tekion.gameofcricket.utility.DateUtils;
-import com.tekion.gameofcricket.utility.LogUtils;
-import com.tekion.gameofcricket.utility.MatchResult;
+import com.tekion.gameofcricket.utility.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -112,11 +109,11 @@ public class MatchServiceImpl implements MatchService {
         int target = isFirstInnings ? Integer.MAX_VALUE : matchData.getFirstInnings().getRunsScored() + 1;
 
         int ballsSimulated = 0;
-        while (ballsSimulated++ < Constants.MATCH_LENGTH_IN_BALLS) {
+        while (ballsSimulated++ < Constants.MATCH_LENGTH_IN_BALLS.getValue()) {
             // every batting team player bats in order, every bowling team player take turn to bowl an over
             ObjectId batsmanId = battingTeam.getPlayerIds().get(currentInnings.getWicketsFallen());
             ObjectId bowlerId = bowlingTeam.getPlayerIds()
-                                           .get((currentInnings.getBallsThrown() / 6) % Constants.TEAM_SIZE);
+                                           .get((currentInnings.getBallsThrown() / 6) % Constants.TEAM_SIZE.getValue());
 
             // 0..6 --> equal run scored,   7 --> wicket falls
             int outcome = (int) (Math.random() * 8);
@@ -126,7 +123,7 @@ public class MatchServiceImpl implements MatchService {
             playerMatchStatService.updateBowlingFigure(playerMatchStatMap.get(bowlerId), outcome);
 
             // batting team gets all out or chasing team achieves the target
-            if (currentInnings.getWicketsFallen() == Constants.TEAM_SIZE || currentInnings.getRunsScored() >= target) {
+            if (currentInnings.getWicketsFallen() == Constants.TEAM_SIZE.getValue() || currentInnings.getRunsScored() >= target) {
                 break;
             }
         }
