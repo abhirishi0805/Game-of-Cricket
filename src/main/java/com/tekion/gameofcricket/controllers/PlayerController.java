@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.controllers;
 
+import com.tekion.gameofcricket.helper.CreatePlayerRequestBody;
 import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
@@ -44,9 +45,9 @@ public class PlayerController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> addPlayer(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<Void> addPlayer(@RequestBody CreatePlayerRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/players");
-        playerService.addPlayer(requestBody.getName());
+        playerService.addPlayer(requestBody.getPlayerName());
         return ResponseEntity.created(null).build();
     }
 }
