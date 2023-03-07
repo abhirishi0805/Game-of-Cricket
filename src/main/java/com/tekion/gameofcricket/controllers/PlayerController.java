@@ -1,12 +1,13 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.ByNameRequestBody;
+import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,6 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
-    @PostMapping()
-    public void addPlayer(@RequestBody Player player) {
-        LOGGER.info("POST call received : http://localhost:3004/players");
-        playerService.addPlayer(player);
-    }
-
     @GetMapping()
     public List<Player> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
@@ -41,8 +36,14 @@ public class PlayerController {
     }
 
     @GetMapping("/byName")
-    public Player getPlayerByName(@RequestBody ByNameRequestBody requestBody) {
+    public Player getPlayerByName(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/players/byName for \"" + requestBody.getName() + '\"');
         return playerService.getPlayerByName(requestBody.getName());
+    }
+
+    @PostMapping()
+    public void addPlayer(@RequestBody NameRequestBody requestBody) {
+        LOGGER.info("POST call received : http://localhost:3004/players");
+        playerService.addPlayer(requestBody.getName());
     }
 }

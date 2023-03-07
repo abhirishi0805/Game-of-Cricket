@@ -10,11 +10,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerMatchStatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/PlayerMatchStatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/controllers/TeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/PlayMatchRequestBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/PlayMatchRequestBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/ByNameRequestBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/NameRequestBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/Innings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/Innings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/OngoingMatchData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/helper/OngoingMatchData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/models/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/PlayerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/TeamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/repositories/TeamRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayMatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayMatchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/MatchServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayMatchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayMatchServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tekion/gameofcricket/services/PlayerServiceImpl.java" afterDir="false" />
@@ -95,7 +97,20 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.GameOfCricketApp">
+    <configuration name="DatabaseInitializer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tekion.gameofcricket.utility.DatabaseInitializer" />
+      <module name="GameofCricket-using-SpringBoot.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.tekion.gameofcricket.utility.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GameOfCricketApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="GameofCricket-using-SpringBoot.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.tekion.gameofcricket.GameOfCricketApp" />
@@ -112,6 +127,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.GameOfCricketApp" />
+        <item itemvalue="Application.DatabaseInitializer" />
       </list>
     </recent_temporary>
   </component>

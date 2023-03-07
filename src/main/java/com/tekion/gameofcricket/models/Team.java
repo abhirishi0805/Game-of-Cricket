@@ -1,7 +1,6 @@
 package com.tekion.gameofcricket.models;
 
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
@@ -19,12 +18,9 @@ public class Team {
     private ObjectId id;
     private String teamName;
     private List<ObjectId> playerIds;
-    @Value("0")
-    private int gamesWon;
-    @Value("0")
-    private int gamesDrawn;
-    @Value("0")
-    private int gamesLost;
+    private int gamesWon = 0;
+    private int gamesDrawn = 0;
+    private int gamesLost = 0;
 
     public Team() {
     }
@@ -88,7 +84,7 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" + "id=" + id + ", teamName='" + teamName + '\'' + ", gamesWon=" + gamesWon + ", gamesDrawn=" +
+        return "Team{id=" + id + ", teamName='" + teamName + '\'' + ", gamesWon=" + gamesWon + ", gamesDrawn=" +
                gamesDrawn + ", gamesLost=" + gamesLost + ", playerIds=" + playerIds + '}';
     }
 }

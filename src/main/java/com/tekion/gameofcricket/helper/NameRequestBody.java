@@ -1,10 +1,10 @@
 package com.tekion.gameofcricket.helper;
 
-public class ByNameRequestBody {
+public class NameRequestBody {
 
     private String name;
 
-    public ByNameRequestBody() {
+    public NameRequestBody() {
     }
 
     public String getName() {

@@ -1,6 +1,5 @@
 package com.tekion.gameofcricket.helper;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -9,12 +8,9 @@ import org.springframework.stereotype.Component;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Innings {
 
-    @Value("0")
-    private int runsScored;
-    @Value("0")
-    private int ballsThrown;
-    @Value("0")
-    private int wicketsFallen;
+    private int runsScored = 0;
+    private int ballsThrown = 0;
+    private int wicketsFallen = 0;
 
     public Innings() {
     }

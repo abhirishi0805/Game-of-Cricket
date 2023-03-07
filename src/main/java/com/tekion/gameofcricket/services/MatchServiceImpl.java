@@ -14,16 +14,10 @@ import java.util.List;
 @Service
 public class MatchServiceImpl implements MatchService {
 
-    @Autowired
-    private MatchRepository matchRepository;
-
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchServiceImpl.class);
-
-    @Override
-    public void addMatch(Match match) {
-        matchRepository.save(match);
-    }
+    @Autowired
+    private MatchRepository matchRepository;
 
     @Override
     public List<Match> getAllMatches() {
@@ -36,12 +30,18 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public List<Match> getMatchByTeam(ObjectId teamId) {
+        return matchRepository.findMatchesByTeam1IdOrTeam2Id(teamId, teamId);
+    }
+
+    @Override
     public List<Match> getMatchByDate(String date) {
         return matchRepository.findMatchesByMatchDate(date);
     }
 
     @Override
-    public List<Match> getMatchByTeam(ObjectId teamId) {
-        return matchRepository.findMatchesByTeam1IdOrTeam2Id(teamId, teamId);
+    public void addMatch(Match match) {
+        matchRepository.save(match);
+        LOGGER.info("New match created : " + match);
     }
 }

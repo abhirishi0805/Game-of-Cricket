@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.ByNameRequestBody;
+import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.helper.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Team;
@@ -44,23 +44,23 @@ public class MatchController {
         return matchService.getMatchById(new ObjectId(matchId));
     }
 
-    @GetMapping("/date/{date}")
-    public List<Match> getMatchByDate(@PathVariable String date) {
-        LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
-        return matchService.getMatchByDate(date);
-    }
-
     @GetMapping("/team/{teamId}")
-    public List<Match> getMatchByTeam(@PathVariable String teamId) {
+    public List<Match> getMatchByTeamId(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
         return matchService.getMatchByTeam(new ObjectId(teamId));
     }
 
     @GetMapping("/team/byName")
-    public List<Match> getMatchByTeam(@RequestBody ByNameRequestBody requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
-        ObjectId teamId = teamService.getTeamByName(requestBody.getName()).getId();
-        return matchService.getMatchByTeam(teamId);
+    public List<Match> getMatchByTeamName(@RequestBody NameRequestBody requestBody) {
+        LOGGER.info(
+                "GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
+        return matchService.getMatchByTeam(teamService.getTeamByName(requestBody.getName()).getId());
+    }
+
+    @GetMapping("/date/{date}")
+    public List<Match> getMatchByDate(@PathVariable String date) {
+        LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
+        return matchService.getMatchByDate(date);
     }
 
     @PostMapping("/play")

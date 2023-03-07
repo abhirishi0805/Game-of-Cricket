@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.ByNameRequestBody;
+import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.services.PlayerMatchStatService;
 import com.tekion.gameofcricket.services.PlayerService;
@@ -19,7 +19,6 @@ public class PlayerMatchStatController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerMatchStatController.class);
-
     @Autowired
     private PlayerMatchStatService playerMatchStatService;
     @Autowired
@@ -27,28 +26,35 @@ public class PlayerMatchStatController {
     private PlayerService playerService;
 
     @GetMapping("/{playerId}")
-    private List<PlayerMatchStat> getAllPerformancesOfPlayer(@PathVariable String playerId) {
+    private List<PlayerMatchStat> getAllStatsOfPlayer(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
-        return playerMatchStatService.getAllPerformancesOfPlayer(new ObjectId(playerId));
+        return playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId));
     }
 
     @GetMapping("/byName")
-    private List<PlayerMatchStat> getAllPerformancesOfPlayer(@RequestBody ByNameRequestBody requestBody) {
+    private List<PlayerMatchStat> getAllStatsOfPlayer(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getName() + '\"');
         ObjectId playerId = playerService.getPlayerByName(requestBody.getName()).getId();
-        return playerMatchStatService.getAllPerformancesOfPlayer(playerId);
+        return playerMatchStatService.getAllStatsOfPlayer(playerId);
+    }
+
+    @GetMapping("/match/{matchId}")
+    private List<PlayerMatchStat> getAllStatsOfMatch(@PathVariable String matchId) {
+        LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
+        return playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId));
     }
 
     @GetMapping("/{playerId}/{matchId}")
     private PlayerMatchStat getPlayerStatByMatch(@PathVariable String playerId, @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId + '/' + matchId);
-        return playerMatchStatService.getPlayerPerformanceByMatch(new ObjectId(playerId), new ObjectId(matchId));
+        return playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId));
     }
 
     @GetMapping("/byName/{matchId}")
-    private PlayerMatchStat getPlayerStatByMatch(@RequestBody ByNameRequestBody requestBody, @PathVariable String matchId) {
+    private PlayerMatchStat getPlayerStatByMatch(@RequestBody NameRequestBody requestBody,
+                                                 @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" + requestBody.getName() + '\"');
         ObjectId playerId = playerService.getPlayerByName(requestBody.getName()).getId();
-        return playerMatchStatService.getPlayerPerformanceByMatch(playerId, new ObjectId(matchId));
+        return playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId));
     }
 }

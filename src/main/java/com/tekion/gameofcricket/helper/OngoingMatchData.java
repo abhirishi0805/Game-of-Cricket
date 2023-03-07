@@ -10,10 +10,10 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class OngoingMatchData {
 
-    private Innings firstInnings;
-    private Innings secondInnings;
     @Autowired
     private ApplicationContext applicationContext;
+    private Innings firstInnings;
+    private Innings secondInnings;
 
     public OngoingMatchData() {
     }
@@ -35,7 +35,7 @@ public class OngoingMatchData {
     }
 
     public void resetInnings() {
-        firstInnings = (Innings) applicationContext.getBean("innings");
-        secondInnings = (Innings) applicationContext.getBean("innings");
+        firstInnings = applicationContext.getBean(Innings.class);
+        secondInnings = applicationContext.getBean(Innings.class);
     }
 }

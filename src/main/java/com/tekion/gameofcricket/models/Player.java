@@ -1,18 +1,23 @@
 package com.tekion.gameofcricket.models;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 @Document(collection = "players")
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Player {
 
     @Id
     private ObjectId id;
     private String playerName;
-    private int totalRunsScored;
-    private int totalWicketsTaken;
-    private int gamesPlayed;
+    private int totalRunsScored = 0;
+    private int totalWicketsTaken = 0;
+    private int gamesPlayed = 0;
 
     public Player() {
     }
@@ -67,7 +72,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" + "id=" + id + ", playerName='" + playerName + '\'' + ", gamesPlayed=" + gamesPlayed +
+        return "Player{id=" + id + ", playerName='" + playerName + '\'' + ", gamesPlayed=" + gamesPlayed +
                ", totalRunsScored=" + totalRunsScored + ", totalWicketsTaken=" + totalWicketsTaken + '}';
     }
 }

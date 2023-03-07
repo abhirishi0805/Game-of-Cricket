@@ -7,13 +7,15 @@ import java.util.List;
 
 public interface PlayerMatchStatService {
 
-    void updateBattingFigure(PlayerMatchStat playerMatchStat, int outcome);
+    List<PlayerMatchStat> getAllStatsOfPlayer(ObjectId playerId);
 
-    void updateBowlingFigure(PlayerMatchStat playerMatchStat, int outcome);
+    List<PlayerMatchStat> getAllStatsOfMatch(ObjectId matchId);
+
+    PlayerMatchStat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId);
 
     void addPlayerMatchStat(PlayerMatchStat playerMatchStat);
 
-    List<PlayerMatchStat> getAllPerformancesOfPlayer(ObjectId playerId);
+    void updateBattingFigure(PlayerMatchStat playerMatchStat, int outcome);
 
-    PlayerMatchStat getPlayerPerformanceByMatch(ObjectId playerId, ObjectId matchId);
+    void updateBowlingFigure(PlayerMatchStat playerMatchStat, int outcome);
 }

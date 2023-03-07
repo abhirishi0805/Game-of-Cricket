@@ -15,6 +15,26 @@ public class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
     private PlayerMatchStatRepository playerMatchStatRepository;
 
     @Override
+    public List<PlayerMatchStat> getAllStatsOfPlayer(ObjectId playerId) {
+        return playerMatchStatRepository.findPlayerMatchStatsByPlayerId(playerId);
+    }
+
+    @Override
+    public List<PlayerMatchStat> getAllStatsOfMatch(ObjectId matchId) {
+        return playerMatchStatRepository.findPlayerMatchStatsByMatchId(matchId);
+    }
+
+    @Override
+    public PlayerMatchStat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId) {
+        return playerMatchStatRepository.findPlayerMatchStatByPlayerIdAndMatchId(playerId, matchId);
+    }
+
+    @Override
+    public void addPlayerMatchStat(PlayerMatchStat playerMatchStat) {
+        playerMatchStatRepository.save(playerMatchStat);
+    }
+
+    @Override
     public void updateBattingFigure(PlayerMatchStat playerMatchStat, int outcome) {
         playerMatchStat.setBallsFaced(playerMatchStat.getBallsFaced() + 1);
         if (outcome != 7) {
@@ -36,20 +56,5 @@ public class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
         } else {
             playerMatchStat.setRunsConceded(playerMatchStat.getRunsConceded() + 1);
         }
-    }
-
-    @Override
-    public void addPlayerMatchStat(PlayerMatchStat playerMatchStat) {
-        playerMatchStatRepository.save(playerMatchStat);
-    }
-
-    @Override
-    public List<PlayerMatchStat> getAllPerformancesOfPlayer(ObjectId playerId) {
-        return playerMatchStatRepository.findPlayerMatchStatsByPlayerId(playerId);
-    }
-
-    @Override
-    public PlayerMatchStat getPlayerPerformanceByMatch(ObjectId playerId, ObjectId matchId) {
-        return playerMatchStatRepository.findPlayerMatchStatByPlayerIdAndMatchId(playerId, matchId);
     }
 }

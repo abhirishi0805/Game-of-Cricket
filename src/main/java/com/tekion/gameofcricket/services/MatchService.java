@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface MatchService {
 
-    void addMatch(Match match);
-
     List<Match> getAllMatches();
 
     Match getMatchById(ObjectId id);
 
+    List<Match> getMatchByTeam(ObjectId teamId);
+
     List<Match> getMatchByDate(String date);
 
-    List<Match> getMatchByTeam(ObjectId teamId);
+    void addMatch(Match match);
 }

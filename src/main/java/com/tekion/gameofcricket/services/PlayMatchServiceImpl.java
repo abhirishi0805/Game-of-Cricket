@@ -3,6 +3,7 @@ package com.tekion.gameofcricket.services;
 import com.tekion.gameofcricket.helper.Innings;
 import com.tekion.gameofcricket.helper.OngoingMatchData;
 import com.tekion.gameofcricket.models.Match;
+import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.utility.Constants;
@@ -22,6 +23,8 @@ import java.util.Map;
 @Service
 public class PlayMatchServiceImpl implements PlayMatchService {
 
+    @Lazy
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayMatchServiceImpl.class);
     @Autowired
     private TeamService teamService;
     @Autowired
@@ -34,18 +37,17 @@ public class PlayMatchServiceImpl implements PlayMatchService {
     private ApplicationContext applicationContext;
     @Autowired
     private OngoingMatchData matchData;
-    @Lazy
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayMatchServiceImpl.class);
+    @Autowired
     private Match match;
     private Team team1, team2;
     private Map<ObjectId, PlayerMatchStat> playerMatchStatMap;
 
     @Override
     public void playMatch(Team team1, Team team2) {
+        LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         this.team1 = team1;
         this.team2 = team2;
-        LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
-        match = getNewMatchBean();
+        configureMatchData();
         matchData.resetInnings();
         generatePlayerStatMap();
         simulateInnings(true);
@@ -54,26 +56,24 @@ public class PlayMatchServiceImpl implements PlayMatchService {
         storeMatchData();
     }
 
-    private Match getNewMatchBean() {
-        Match match = (Match) applicationContext.getBean("match");
+    private void configureMatchData() {
         match.setId(ObjectId.get());
         match.setTeam1Id(team1.getId());
         match.setTeam2Id(team2.getId());
         match.setMatchDate(DateUtils.getCurrentDate());
-        return match;
     }
 
     private void generatePlayerStatMap() {
         playerMatchStatMap = new HashMap<>();
         team1.getPlayerIds().forEach(playerId -> {
-            PlayerMatchStat playerMatchStat = (PlayerMatchStat) applicationContext.getBean("playerMatchStat");
+            PlayerMatchStat playerMatchStat = applicationContext.getBean(PlayerMatchStat.class);
             playerMatchStat.setPlayerId(playerId);
             playerMatchStat.setTeamId(team1.getId());
             playerMatchStat.setMatchId(match.getId());
             playerMatchStatMap.put(playerId, playerMatchStat);
         });
         team2.getPlayerIds().forEach(playerId -> {
-            PlayerMatchStat playerMatchStat = (PlayerMatchStat) applicationContext.getBean("playerMatchStat");
+            PlayerMatchStat playerMatchStat = applicationContext.getBean(PlayerMatchStat.class);
             playerMatchStat.setPlayerId(playerId);
             playerMatchStat.setTeamId(team2.getId());
             playerMatchStat.setMatchId(match.getId());
@@ -108,6 +108,8 @@ public class PlayMatchServiceImpl implements PlayMatchService {
                 break;
             }
         }
+        LOGGER.info(battingTeam.getTeamName() + " : " + currentInnings.getRunsScored() + '/' +
+                    currentInnings.getWicketsFallen());
     }
 
     private void generateResult() {
@@ -125,10 +127,33 @@ public class PlayMatchServiceImpl implements PlayMatchService {
 
     private void storeMatchData() {
         matchService.addMatch(match);
-        teamService.updateTeamDataPostMatch(team1, team2, match.getResult());
-        playerMatchStatMap.forEach((key, value) -> {
-            playerMatchStatService.addPlayerMatchStat(value);
-            playerService.updatePlayerDataPostMatch(key, value);
+        updateTeamDataPostMatch();
+        playerMatchStatMap.forEach((playerId, playerMatchStat) -> {
+            playerMatchStatService.addPlayerMatchStat(playerMatchStat);
+            updatePlayerDataPostMatch(playerId, playerMatchStat);
         });
+    }
+
+    private void updateTeamDataPostMatch() {
+        if (match.getResult() == MatchResult.TEAM_1_WON) {
+            team1.setGamesWon(team1.getGamesWon() + 1);
+            team2.setGamesLost(team2.getGamesLost() + 1);
+        } else if (match.getResult() == MatchResult.TEAM_2_WON) {
+            team1.setGamesLost(team1.getGamesLost() + 1);
+            team2.setGamesWon(team2.getGamesWon() + 1);
+        } else {
+            team1.setGamesDrawn(team1.getGamesDrawn() + 1);
+            team2.setGamesDrawn(team2.getGamesDrawn() + 1);
+        }
+        teamService.updateTeam(team1);
+        teamService.updateTeam(team2);
+    }
+
+    private void updatePlayerDataPostMatch(ObjectId playerId, PlayerMatchStat playerMatchStat) {
+        Player player = playerService.getPlayerById(playerId);
+        player.setGamesPlayed(player.getGamesPlayed() + 1);
+        player.setTotalRunsScored(player.getTotalRunsScored() + playerMatchStat.getRunsScored());
+        player.setTotalWicketsTaken(player.getTotalWicketsTaken() + playerMatchStat.getWicketsTaken());
+        playerService.updatePlayer(player);
     }
 }

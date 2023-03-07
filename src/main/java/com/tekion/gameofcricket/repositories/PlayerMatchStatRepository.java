@@ -13,4 +13,6 @@ public interface PlayerMatchStatRepository extends MongoRepository<PlayerMatchSt
     List<PlayerMatchStat> findPlayerMatchStatsByPlayerId(ObjectId playerId);
 
     PlayerMatchStat findPlayerMatchStatByPlayerIdAndMatchId(ObjectId playerId, ObjectId matchId);
+
+    List<PlayerMatchStat> findPlayerMatchStatsByMatchId(ObjectId matchId);
 }

@@ -3,6 +3,7 @@ package com.tekion.gameofcricket.helper;
 import java.util.List;
 
 public class CreateTeamRequestBody {
+
     private String teamName;
     List<String> playerNames;
 
