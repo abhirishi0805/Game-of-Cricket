@@ -15,4 +15,6 @@ public interface PlayerService {
     Player getPlayerById(ObjectId id);
 
     void updatePlayerDataPostMatch(ObjectId id, PlayerMatchStat playerMatchStat);
+
+    Player getPlayerByName(String playerName);
 }

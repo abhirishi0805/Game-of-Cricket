@@ -45,4 +45,9 @@ public class PlayerServiceImpl implements PlayerService {
         player.setTotalWicketsTaken(player.getTotalWicketsTaken() + playerMatchStat.getWicketsTaken());
         playerRepository.save(player);
     }
+
+    @Override
+    public Player getPlayerByName(String playerName) {
+        return playerRepository.findPlayerByPlayerName(playerName);
+    }
 }

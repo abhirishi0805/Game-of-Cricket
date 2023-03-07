@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.controllers;
 
+import com.tekion.gameofcricket.helper.ByNameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import org.bson.types.ObjectId;
@@ -37,5 +38,11 @@ public class PlayerController {
     public Player getPlayerById(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
         return playerService.getPlayerById(new ObjectId(playerId));
+    }
+
+    @GetMapping("/byName")
+    public Player getPlayerByName(@RequestBody ByNameRequestBody requestBody) {
+        LOGGER.info("GET call received : http://localhost:3004/players/byName for \"" + requestBody.getName() + '\"');
+        return playerService.getPlayerByName(requestBody.getName());
     }
 }

@@ -1,20 +1,29 @@
 package com.tekion.gameofcricket.models;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Document(collection = "teams")
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Team {
 
     @Id
     private ObjectId id;
     private String teamName;
     private List<ObjectId> playerIds;
+    @Value("0")
     private int gamesWon;
+    @Value("0")
     private int gamesDrawn;
+    @Value("0")
     private int gamesLost;
 
     public Team() {

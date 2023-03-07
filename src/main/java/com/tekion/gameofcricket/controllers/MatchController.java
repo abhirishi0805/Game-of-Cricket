@@ -1,9 +1,12 @@
 package com.tekion.gameofcricket.controllers;
 
+import com.tekion.gameofcricket.helper.ByNameRequestBody;
 import com.tekion.gameofcricket.helper.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
+import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
+import com.tekion.gameofcricket.services.TeamService;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,9 @@ public class MatchController {
     @Autowired
     @Lazy
     private PlayMatchService playMatchService;
+    @Autowired
+    @Lazy
+    private TeamService teamService;
 
     @GetMapping()
     public List<Match> getAllMatches() {
@@ -50,9 +56,18 @@ public class MatchController {
         return matchService.getMatchByTeam(new ObjectId(teamId));
     }
 
+    @GetMapping("/team/byName")
+    public List<Match> getMatchByTeam(@RequestBody ByNameRequestBody requestBody) {
+        LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
+        ObjectId teamId = teamService.getTeamByName(requestBody.getName()).getId();
+        return matchService.getMatchByTeam(teamId);
+    }
+
     @PostMapping("/play")
     public void playMatch(@RequestBody PlayMatchRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
-        playMatchService.playMatch(requestBody.getTeam1Id(), requestBody.getTeam2Id());
+        Team team1 = teamService.getTeamByName(requestBody.getTeam1Name());
+        Team team2 = teamService.getTeamByName(requestBody.getTeam2Name());
+        playMatchService.playMatch(team1, team2);
     }
 }

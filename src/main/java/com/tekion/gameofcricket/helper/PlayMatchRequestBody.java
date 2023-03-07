@@ -9,35 +9,30 @@ import org.springframework.stereotype.Component;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PlayMatchRequestBody {
 
-    private ObjectId team1Id;
-    private ObjectId team2Id;
+    private String team1Name;
+    private String team2Name;
 
     public PlayMatchRequestBody() {
     }
 
-    public PlayMatchRequestBody(ObjectId team1Id, ObjectId team2Id) {
-        this.team1Id = team1Id;
-        this.team2Id = team2Id;
+    public String getTeam1Name() {
+        return team1Name;
     }
 
-    public ObjectId getTeam1Id() {
-        return team1Id;
+    public void setTeam1Name(String team1Name) {
+        this.team1Name = team1Name;
     }
 
-    public void setTeam1Id(ObjectId team1Id) {
-        this.team1Id = team1Id;
+    public String getTeam2Name() {
+        return team2Name;
     }
 
-    public ObjectId getTeam2Id() {
-        return team2Id;
-    }
-
-    public void setTeam2Id(ObjectId team2Id) {
-        this.team2Id = team2Id;
+    public void setTeam2Name(String team2Name) {
+        this.team2Name = team2Name;
     }
 
     @Override
     public String toString() {
-        return "Body = {" + "team1Id=" + team1Id + ", team2Id=" + team2Id + '}';
+        return "Body = {" + "team1=" + team1Name + ", team2=" + team2Name + '}';
     }
 }

@@ -41,9 +41,9 @@ public class PlayMatchServiceImpl implements PlayMatchService {
     private Map<ObjectId, PlayerMatchStat> playerMatchStatMap;
 
     @Override
-    public void playMatch(ObjectId team1Id, ObjectId team2Id) {
-        team1 = teamService.getTeamById(team1Id);
-        team2 = teamService.getTeamById(team2Id);
+    public void playMatch(Team team1, Team team2) {
+        this.team1 = team1;
+        this.team2 = team2;
         LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         match = getNewMatchBean();
         matchData.resetInnings();
@@ -112,13 +112,13 @@ public class PlayMatchServiceImpl implements PlayMatchService {
 
     private void generateResult() {
         if (matchData.getFirstInnings().getRunsScored() > matchData.getSecondInnings().getRunsScored()) {
-            LOGGER.info(team1.getTeamName() + " won!");
+            LOGGER.info("Result : " + team1.getTeamName() + " won!");
             match.setResult(MatchResult.TEAM_1_WON);
         } else if (matchData.getFirstInnings().getRunsScored() < matchData.getSecondInnings().getRunsScored()) {
-            LOGGER.info(team2.getTeamName() + " won!");
+            LOGGER.info("Result : " + team2.getTeamName() + " won!");
             match.setResult(MatchResult.TEAM_2_WON);
         } else {
-            LOGGER.info("Match drawn!");
+            LOGGER.info("Result : Match drawn!");
             match.setResult(MatchResult.DRAW);
         }
     }

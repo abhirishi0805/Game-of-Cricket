@@ -1,5 +1,7 @@
 package com.tekion.gameofcricket.controllers;
 
+import com.tekion.gameofcricket.helper.ByNameRequestBody;
+import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
@@ -18,14 +20,13 @@ public class TeamController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
-
     @Autowired
     private TeamService teamService;
 
     @PostMapping()
-    public void addTeam(@RequestBody Team team) {
+    public void addTeam(@RequestBody CreateTeamRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/teams");
-        teamService.addTeam(team);
+        teamService.addTeam(requestBody);
     }
 
     @GetMapping()
@@ -44,5 +45,17 @@ public class TeamController {
     public List<Player> getTeamPlayers(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
         return teamService.getTeamPlayers(new ObjectId(teamId));
+    }
+
+    @GetMapping("/byName")
+    public Team getTeamByName(@RequestBody ByNameRequestBody requestBody) {
+        LOGGER.info("GET call received : http://localhost:3004/teams/byName for \"" + requestBody.getName() + '\"');
+        return teamService.getTeamByName(requestBody.getName());
+    }
+
+    @GetMapping("/byName/players")
+    public List<Player> getTeamPlayers(@RequestBody ByNameRequestBody requestBody) {
+        LOGGER.info("GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getName() + '\"');
+        return teamService.getTeamPlayers(requestBody.getName());
     }
 }

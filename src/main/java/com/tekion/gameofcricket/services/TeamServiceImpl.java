@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.services;
 
+import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.TeamRepository;
@@ -8,11 +9,13 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -25,9 +28,18 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     @Lazy
     private PlayerService playerService;
+    @Autowired
+    @Lazy
+    private ApplicationContext applicationContext;
 
     @Override
-    public void addTeam(Team team) {
+    public void addTeam(CreateTeamRequestBody requestBody) {
+        Team team = applicationContext.getBean(Team.class);
+        team.setTeamName(requestBody.getTeamName());
+        List<ObjectId> playerIds = requestBody.getPlayerNames().stream()
+                                              .map(playerName -> playerService.getPlayerByName(playerName).getId())
+                                              .collect(Collectors.toList());
+        team.setPlayerIds(playerIds);
         teamRepository.save(team);
         LOGGER.info("New team created : " + team);
     }
@@ -49,10 +61,17 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Player> getTeamPlayers(ObjectId id) {
-        List<ObjectId> playerIds = getTeamById(id).getPlayerIds();
-        List<Player> players = new ArrayList<>();
-        playerIds.forEach(playerId -> players.add(playerService.getPlayerById(playerId)));
-        return players;
+        return generateDeatiledTeamPlayerList(getTeamById(id));
+    }
+
+    @Override
+    public Team getTeamByName(String teamName) {
+        return teamRepository.getTeamByTeamName(teamName);
+    }
+
+    @Override
+    public List<Player> getTeamPlayers(String teamName) {
+        return generateDeatiledTeamPlayerList(getTeamByName(teamName));
     }
 
     @Override
@@ -69,5 +88,12 @@ public class TeamServiceImpl implements TeamService {
         }
         updateTeam(team1);
         updateTeam(team2);
+    }
+
+    private List<Player> generateDeatiledTeamPlayerList(Team team) {
+        List<ObjectId> playerIds = team.getPlayerIds();
+        List<Player> players = new ArrayList<>();
+        playerIds.forEach(playerId -> players.add(playerService.getPlayerById(playerId)));
+        return players;
     }
 }
