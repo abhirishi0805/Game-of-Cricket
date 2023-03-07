@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerRepository extends MongoRepository<Player, ObjectId> {
 
-    Player findPlayerByPlayerName(String playerName);
+    Player findPlayerByPlayerNameEqualsIgnoreCase(String playerName);
 }

@@ -42,7 +42,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team getTeamByName(String teamName) {
-        return teamRepository.getTeamByTeamName(teamName);
+        return teamRepository.getTeamByTeamNameEqualsIgnoreCase(teamName);
     }
 
     @Override

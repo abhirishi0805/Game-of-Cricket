@@ -35,7 +35,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player getPlayerByName(String playerName) {
-        return playerRepository.findPlayerByPlayerName(playerName);
+        return playerRepository.findPlayerByPlayerNameEqualsIgnoreCase(playerName);
     }
 
     @Override
