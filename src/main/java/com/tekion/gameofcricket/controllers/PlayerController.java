@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,26 +26,27 @@ public class PlayerController {
     private PlayerService playerService;
 
     @GetMapping()
-    public List<Player> getAllPlayers() {
+    public ResponseEntity<List<Player>> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
-        return playerService.getAllPlayers();
+        return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
     @GetMapping("/{playerId}")
-    public Player getPlayerById(@PathVariable String playerId) {
+    public ResponseEntity<Player> getPlayerById(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
-        return playerService.getPlayerById(new ObjectId(playerId));
+        return ResponseEntity.ok(playerService.getPlayerById(new ObjectId(playerId)));
     }
 
     @GetMapping("/byName")
-    public Player getPlayerByName(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<Player> getPlayerByName(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/players/byName for \"" + requestBody.getName() + '\"');
-        return playerService.getPlayerByName(requestBody.getName());
+        return ResponseEntity.ok(playerService.getPlayerByName(requestBody.getName()));
     }
 
     @PostMapping()
-    public void addPlayer(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<Void> addPlayer(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/players");
         playerService.addPlayer(requestBody.getName());
+        return ResponseEntity.created(null).build();
     }
 }

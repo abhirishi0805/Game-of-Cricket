@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,39 +25,40 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping()
-    public List<Team> getAllTeams() {
+    public ResponseEntity<List<Team>> getAllTeams() {
         LOGGER.info("GET call received : http://localhost:3004/teams");
-        return teamService.getAllTeams();
+        return ResponseEntity.ok(teamService.getAllTeams());
     }
 
     @GetMapping("/{teamId}")
-    public Team getTeamById(@PathVariable String teamId) {
+    public ResponseEntity<Team> getTeamById(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId);
-        return teamService.getTeamById(new ObjectId(teamId));
+        return ResponseEntity.ok(teamService.getTeamById(new ObjectId(teamId)));
     }
 
     @GetMapping("/byName")
-    public Team getTeamByName(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<Team> getTeamByName(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/teams/byName for \"" + requestBody.getName() + '\"');
-        return teamService.getTeamByName(requestBody.getName());
+        return ResponseEntity.ok(teamService.getTeamByName(requestBody.getName()));
     }
 
     @GetMapping("/{teamId}/players")
-    public List<Player> getTeamPlayers(@PathVariable String teamId) {
+    public ResponseEntity<List<Player>> getTeamPlayers(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
-        return teamService.getTeamPlayers(new ObjectId(teamId));
+        return ResponseEntity.ok(teamService.getTeamPlayers(new ObjectId(teamId)));
     }
 
     @GetMapping("/byName/players")
-    public List<Player> getTeamPlayers(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<List<Player>> getTeamPlayers(@RequestBody NameRequestBody requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getName() + '\"');
-        return teamService.getTeamPlayers(teamService.getTeamByName(requestBody.getName()).getId());
+        return ResponseEntity.ok(teamService.getTeamPlayers(teamService.getTeamByName(requestBody.getName()).getId()));
     }
 
     @PostMapping()
-    public void addTeam(@RequestBody CreateTeamRequestBody requestBody) {
+    public ResponseEntity<Void> addTeam(@RequestBody CreateTeamRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/teams");
         teamService.addTeam(requestBody);
+        return ResponseEntity.created(null).build();
     }
 }

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,35 +27,35 @@ public class PlayerMatchStatController {
     private PlayerService playerService;
 
     @GetMapping("/{playerId}")
-    private List<PlayerMatchStat> getAllStatsOfPlayer(@PathVariable String playerId) {
+    private ResponseEntity<List<PlayerMatchStat>> getAllStatsOfPlayer(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
-        return playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId));
+        return ResponseEntity.ok(playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId)));
     }
 
     @GetMapping("/byName")
-    private List<PlayerMatchStat> getAllStatsOfPlayer(@RequestBody NameRequestBody requestBody) {
+    private ResponseEntity<List<PlayerMatchStat>> getAllStatsOfPlayer(@RequestBody NameRequestBody requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getName() + '\"');
         ObjectId playerId = playerService.getPlayerByName(requestBody.getName()).getId();
-        return playerMatchStatService.getAllStatsOfPlayer(playerId);
+        return ResponseEntity.ok(playerMatchStatService.getAllStatsOfPlayer(playerId));
     }
 
     @GetMapping("/match/{matchId}")
-    private List<PlayerMatchStat> getAllStatsOfMatch(@PathVariable String matchId) {
+    private ResponseEntity<List<PlayerMatchStat>> getAllStatsOfMatch(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
-        return playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId));
+        return ResponseEntity.ok(playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId)));
     }
 
     @GetMapping("/{playerId}/{matchId}")
-    private PlayerMatchStat getPlayerStatByMatch(@PathVariable String playerId, @PathVariable String matchId) {
+    private ResponseEntity<PlayerMatchStat> getPlayerStatByMatch(@PathVariable String playerId, @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId + '/' + matchId);
-        return playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId));
+        return ResponseEntity.ok(playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId)));
     }
 
     @GetMapping("/byName/{matchId}")
-    private PlayerMatchStat getPlayerStatByMatch(@RequestBody NameRequestBody requestBody,
+    private ResponseEntity<PlayerMatchStat> getPlayerStatByMatch(@RequestBody NameRequestBody requestBody,
                                                  @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" + requestBody.getName() + '\"');
         ObjectId playerId = playerService.getPlayerByName(requestBody.getName()).getId();
-        return playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId));
+        return ResponseEntity.ok(playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId)));
     }
 }

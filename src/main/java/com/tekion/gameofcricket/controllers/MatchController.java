@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,41 +35,42 @@ public class MatchController {
     private TeamService teamService;
 
     @GetMapping()
-    public List<Match> getAllMatches() {
+    public ResponseEntity<List<Match>> getAllMatches() {
         LOGGER.info("GET call received : http://localhost:3004/matches");
-        return matchService.getAllMatches();
+        return ResponseEntity.ok(matchService.getAllMatches());
     }
 
     @GetMapping("/{matchId}")
-    public Match getMatchById(@PathVariable String matchId) {
+    public ResponseEntity<Match> getMatchById(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/" + matchId);
-        return matchService.getMatchById(new ObjectId(matchId));
+        return ResponseEntity.ok(matchService.getMatchById(new ObjectId(matchId)));
     }
 
     @GetMapping("/team/{teamId}")
-    public List<Match> getMatchByTeamId(@PathVariable String teamId) {
+    public ResponseEntity<List<Match>> getMatchByTeamId(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
-        return matchService.getMatchByTeam(new ObjectId(teamId));
+        return ResponseEntity.ok(matchService.getMatchByTeam(new ObjectId(teamId)));
     }
 
     @GetMapping("/team/byName")
-    public List<Match> getMatchByTeamName(@RequestBody NameRequestBody requestBody) {
+    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody NameRequestBody requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
-        return matchService.getMatchByTeam(teamService.getTeamByName(requestBody.getName()).getId());
+        return ResponseEntity.ok(matchService.getMatchByTeam(teamService.getTeamByName(requestBody.getName()).getId()));
     }
 
     @GetMapping("/date/{date}")
-    public List<Match> getMatchByDate(@PathVariable String date) {
+    public ResponseEntity<List<Match>> getMatchByDate(@PathVariable String date) {
         LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
-        return matchService.getMatchByDate(date);
+        return ResponseEntity.ok(matchService.getMatchByDate(date));
     }
 
     @PostMapping("/play")
-    public void playMatch(@RequestBody PlayMatchRequestBody requestBody) {
+    public ResponseEntity<Void> playMatch(@RequestBody PlayMatchRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
         Team team1 = teamService.getTeamByName(requestBody.getTeam1Name());
         Team team2 = teamService.getTeamByName(requestBody.getTeam2Name());
         playMatchService.playMatch(team1, team2);
+        return ResponseEntity.accepted().build();
     }
 }
