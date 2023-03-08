@@ -7,12 +7,14 @@ import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
+import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,9 @@ public class MatchController {
     @Autowired
     @Lazy
     private TeamService teamService;
+    @Autowired
+    @Lazy
+    private ApplicationContext applicationContext;
 
     @GetMapping()
     public ResponseEntity<List<Match>> getAllMatches() {
@@ -66,11 +71,14 @@ public class MatchController {
     }
 
     @PostMapping("/play")
-    public ResponseEntity<Void> playMatch(@RequestBody PlayMatchRequestBody requestBody) {
+    public ResponseEntity<ApiResponse> playMatch(@RequestBody PlayMatchRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
         Team team1 = teamService.getTeamByName(requestBody.getTeam1Name());
         Team team2 = teamService.getTeamByName(requestBody.getTeam2Name());
         playMatchService.playMatch(team1, team2);
-        return ResponseEntity.accepted().build();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        response.setStatus(ResponseStatus.SUCCESS);
+        response.setMessage("Match successfully played");
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,14 +1,17 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
+import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
+import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,9 @@ public class TeamController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
     @Autowired
     private TeamService teamService;
+    @Autowired
+    @Lazy
+    private ApplicationContext applicationContext;
 
     @GetMapping()
     public ResponseEntity<List<Team>> getAllTeams() {
@@ -56,9 +62,12 @@ public class TeamController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> addTeam(@RequestBody CreateTeamRequestBody requestBody) {
+    public ResponseEntity<ApiResponse> addTeam(@RequestBody CreateTeamRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/teams");
         teamService.addTeam(requestBody);
-        return ResponseEntity.created(null).build();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        response.setStatus(ResponseStatus.SUCCESS);
+        response.setMessage("Team successfully created");
+        return ResponseEntity.ok(response);
     }
 }

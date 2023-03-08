@@ -4,13 +4,14 @@ import com.tekion.gameofcricket.helper.CreatePlayerRequestBody;
 import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
+import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,9 @@ public class PlayerController {
 
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    @Lazy
+    private ApplicationContext applicationContext;
 
     @GetMapping()
     public ResponseEntity<List<Player>> getAllPlayers() {
@@ -45,9 +49,12 @@ public class PlayerController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> addPlayer(@RequestBody CreatePlayerRequestBody requestBody) {
+    public ResponseEntity<ApiResponse> addPlayer(@RequestBody CreatePlayerRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/players");
         playerService.addPlayer(requestBody.getPlayerName());
-        return ResponseEntity.created(null).build();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        response.setStatus(ResponseStatus.SUCCESS);
+        response.setMessage("Player successfully created");
+        return ResponseEntity.ok(response);
     }
 }
