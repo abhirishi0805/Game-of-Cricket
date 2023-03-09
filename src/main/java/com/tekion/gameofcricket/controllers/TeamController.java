@@ -6,6 +6,7 @@ import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class TeamController {
     @GetMapping("/{teamId}")
     public ResponseEntity<Team> getTeamById(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId);
+        InputVerifier.verifyTeamId(teamId);
         return ResponseEntity.ok(teamService.getTeamById(new ObjectId(teamId)));
     }
 
@@ -51,6 +53,7 @@ public class TeamController {
     @GetMapping("/{teamId}/players")
     public ResponseEntity<List<Player>> getTeamPlayers(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
+        InputVerifier.verifyTeamId(teamId);
         return ResponseEntity.ok(teamService.getTeamPlayers(new ObjectId(teamId)));
     }
 

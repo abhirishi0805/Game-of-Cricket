@@ -5,6 +5,7 @@ import com.tekion.gameofcricket.helper.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class PlayerController {
     @GetMapping("/{playerId}")
     public ResponseEntity<Player> getPlayerById(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
+        InputVerifier.verifyPlayerId(playerId);
         return ResponseEntity.ok(playerService.getPlayerById(new ObjectId(playerId)));
     }
 

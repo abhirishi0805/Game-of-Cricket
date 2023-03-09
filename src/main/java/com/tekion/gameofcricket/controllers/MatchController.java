@@ -8,6 +8,7 @@ import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.ApiResponse;
+import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -48,12 +49,14 @@ public class MatchController {
     @GetMapping("/{matchId}")
     public ResponseEntity<Match> getMatchById(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/" + matchId);
+        InputVerifier.verifyMatchId(matchId);
         return ResponseEntity.ok(matchService.getMatchById(new ObjectId(matchId)));
     }
 
     @GetMapping("/team/{teamId}")
     public ResponseEntity<List<Match>> getMatchByTeamId(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
+        InputVerifier.verifyTeamId(teamId);
         return ResponseEntity.ok(matchService.getMatchByTeam(new ObjectId(teamId)));
     }
 
