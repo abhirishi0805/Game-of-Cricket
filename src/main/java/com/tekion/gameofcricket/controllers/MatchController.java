@@ -1,15 +1,15 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.utility.requestbody.NameRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
+import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
+import com.tekion.gameofcricket.utility.requestbody.PlayMatchRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.TeamRequestBody;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,34 +49,37 @@ public class MatchController {
     @GetMapping("/{matchId}")
     public ResponseEntity<Match> getMatchById(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/" + matchId);
-        InputVerifier.verifyMatchId(matchId);
+        InputVerifier.validateMatchId(matchId);
         return ResponseEntity.ok(matchService.getMatchById(new ObjectId(matchId)));
     }
 
     @GetMapping("/team/{teamId}")
     public ResponseEntity<List<Match>> getMatchByTeamId(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
-        InputVerifier.verifyTeamId(teamId);
+        InputVerifier.validateTeamId(teamId);
         return ResponseEntity.ok(matchService.getMatchByTeam(new ObjectId(teamId)));
     }
 
     @GetMapping("/team/byName")
-    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody NameRequestBody requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
-        ObjectId teamId = teamService.getTeamByName(requestBody.getName()).getId();
+    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody TeamRequestBody requestBody) {
+        LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getTeamName() +
+                    '\"');
+        InputVerifier.validateTeamRequestBody(requestBody);
+        ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         return ResponseEntity.ok(matchService.getMatchByTeam(teamId));
     }
 
     @GetMapping("/date/{date}")
     public ResponseEntity<List<Match>> getMatchByDate(@PathVariable String date) {
         LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
+        InputVerifier.validateDate(date);
         return ResponseEntity.ok(matchService.getMatchByDate(date));
     }
 
     @PostMapping("/play")
     public ResponseEntity<ApiResponse> playMatch(@RequestBody PlayMatchRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
+        InputVerifier.validatePlayMatchRequestBody(requestBody);
         Team team1 = teamService.getTeamByName(requestBody.getTeam1Name());
         Team team2 = teamService.getTeamByName(requestBody.getTeam2Name());
         playMatchService.playMatch(team1, team2);

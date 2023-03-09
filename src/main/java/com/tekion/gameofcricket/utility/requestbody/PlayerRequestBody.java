@@ -1,9 +1,9 @@
 package com.tekion.gameofcricket.utility.requestbody;
 
-public class CreatePlayerRequestBody {
+public class PlayerRequestBody {
     private String playerName;
 
-    public CreatePlayerRequestBody() {
+    public PlayerRequestBody() {
     }
 
     public String getPlayerName() {

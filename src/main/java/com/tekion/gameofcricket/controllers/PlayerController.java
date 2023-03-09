@@ -1,12 +1,11 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.utility.requestbody.CreatePlayerRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
+import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
+import com.tekion.gameofcricket.utility.requestbody.PlayerRequestBody;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,19 +39,22 @@ public class PlayerController {
     @GetMapping("/{playerId}")
     public ResponseEntity<Player> getPlayerById(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
-        InputVerifier.verifyPlayerId(playerId);
+        InputVerifier.validatePlayerId(playerId);
         return ResponseEntity.ok(playerService.getPlayerById(new ObjectId(playerId)));
     }
 
     @GetMapping("/byName")
-    public ResponseEntity<Player> getPlayerByName(@RequestBody NameRequestBody requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/players/byName for \"" + requestBody.getName() + '\"');
-        return ResponseEntity.ok(playerService.getPlayerByName(requestBody.getName()));
+    public ResponseEntity<Player> getPlayerByName(@RequestBody PlayerRequestBody requestBody) {
+        LOGGER.info(
+                "GET call received : http://localhost:3004/players/byName for \"" + requestBody.getPlayerName() + '\"');
+        InputVerifier.validatePlayerRequestBody(requestBody);
+        return ResponseEntity.ok(playerService.getPlayerByName(requestBody.getPlayerName()));
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponse> addPlayer(@RequestBody CreatePlayerRequestBody requestBody) {
+    public ResponseEntity<ApiResponse> addPlayer(@RequestBody PlayerRequestBody requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/players");
+        InputVerifier.validatePlayerRequestBody(requestBody);
         playerService.addPlayer(requestBody.getPlayerName());
         ApiResponse response = applicationContext.getBean(ApiResponse.class);
         response.setStatus(ResponseStatus.SUCCESS);

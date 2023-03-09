@@ -33,4 +33,22 @@ public class GlobalExceptionHandler {
         response.setMessage(exception.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InvalidRequestBodyException.class)
+    public ResponseEntity<ApiResponse> handleInvalidRequestBodyException(InvalidRequestBodyException exception) {
+        exception.printStackTrace();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        response.setStatus(ResponseStatus.FAILED);
+        response.setMessage(exception.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    public ResponseEntity<ApiResponse> handleInvalidDateException(InvalidDateException exception) {
+        exception.printStackTrace();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        response.setStatus(ResponseStatus.FAILED);
+        response.setMessage(exception.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
 }
