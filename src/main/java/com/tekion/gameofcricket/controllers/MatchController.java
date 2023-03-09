@@ -1,14 +1,14 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.NameRequestBody;
-import com.tekion.gameofcricket.helper.PlayMatchRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.NameRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.PlayMatchRequestBody;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.InputVerifier;
+import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -64,7 +64,8 @@ public class MatchController {
     public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody NameRequestBody requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getName() + '\"');
-        return ResponseEntity.ok(matchService.getMatchByTeam(teamService.getTeamByName(requestBody.getName()).getId()));
+        ObjectId teamId = teamService.getTeamByName(requestBody.getName()).getId();
+        return ResponseEntity.ok(matchService.getMatchByTeam(teamId));
     }
 
     @GetMapping("/date/{date}")

@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.TeamRepository;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,12 +39,20 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team getTeamById(ObjectId id) {
-        return teamRepository.findById(id).orElse(null);
+        Optional<Team> team = teamRepository.findById(id);
+        if (team.isEmpty()) {
+            throw new NoSuchElementException("No team available with id = " + id);
+        }
+        return team.get();
     }
 
     @Override
     public Team getTeamByName(String teamName) {
-        return teamRepository.getTeamByTeamNameEqualsIgnoreCase(teamName);
+        Team team = teamRepository.getTeamByTeamNameEqualsIgnoreCase(teamName);
+        if (team == null) {
+            throw new NoSuchElementException("No team available with name = " + teamName);
+        }
+        return team;
     }
 
     @Override

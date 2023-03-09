@@ -1,5 +1,6 @@
-package com.tekion.gameofcricket.utility;
+package com.tekion.gameofcricket.utility.exceptionhandling;
 
+import com.tekion.gameofcricket.utility.exceptionhandling.InvalidObjectIdException;
 import org.bson.types.ObjectId;
 
 public class InputVerifier {

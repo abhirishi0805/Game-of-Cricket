@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -30,12 +32,20 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player getPlayerById(ObjectId id) {
-        return playerRepository.findById(id).orElse(null);
+        Optional<Player> player = playerRepository.findById(id);
+        if (player.isEmpty()) {
+            throw new NoSuchElementException("No player available with id = " + id);
+        }
+        return player.get();
     }
 
     @Override
     public Player getPlayerByName(String playerName) {
-        return playerRepository.findPlayerByPlayerNameEqualsIgnoreCase(playerName);
+        Player player = playerRepository.findPlayerByPlayerNameEqualsIgnoreCase(playerName);
+        if (player == null) {
+            throw new NoSuchElementException("No player available with name = " + playerName);
+        }
+        return player;
     }
 
     @Override

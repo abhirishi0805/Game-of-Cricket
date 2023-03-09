@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import org.bson.types.ObjectId;

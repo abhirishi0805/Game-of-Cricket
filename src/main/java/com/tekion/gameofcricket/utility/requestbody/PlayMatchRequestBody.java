@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.helper;
+package com.tekion.gameofcricket.utility.requestbody;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;

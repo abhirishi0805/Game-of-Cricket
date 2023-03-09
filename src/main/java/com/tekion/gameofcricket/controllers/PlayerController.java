@@ -1,11 +1,11 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.CreatePlayerRequestBody;
-import com.tekion.gameofcricket.helper.NameRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.CreatePlayerRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.InputVerifier;
+import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;

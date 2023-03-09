@@ -1,12 +1,12 @@
 package com.tekion.gameofcricket.controllers;
 
-import com.tekion.gameofcricket.helper.CreateTeamRequestBody;
-import com.tekion.gameofcricket.helper.NameRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
+import com.tekion.gameofcricket.utility.requestbody.NameRequestBody;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.InputVerifier;
+import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -61,7 +61,8 @@ public class TeamController {
     public ResponseEntity<List<Player>> getTeamPlayers(@RequestBody NameRequestBody requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getName() + '\"');
-        return ResponseEntity.ok(teamService.getTeamPlayers(teamService.getTeamByName(requestBody.getName()).getId()));
+        ObjectId teamId = teamService.getTeamByName(requestBody.getName()).getId();
+        return ResponseEntity.ok(teamService.getTeamPlayers(teamId));
     }
 
     @PostMapping()

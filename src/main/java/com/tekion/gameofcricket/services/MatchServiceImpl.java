@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -26,7 +28,11 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Match getMatchById(ObjectId id) {
-        return matchRepository.findById(id).orElse(null);
+        Optional<Match> match = matchRepository.findById(id);
+        if (match.isEmpty()) {
+            throw new NoSuchElementException("No match available with id = " + id);
+        }
+        return match.get();
     }
 
     @Override
