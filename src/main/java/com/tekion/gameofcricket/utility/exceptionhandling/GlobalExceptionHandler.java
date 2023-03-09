@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.utility.exceptionhandling;
 
+import com.mongodb.MongoWriteException;
 import com.tekion.gameofcricket.utility.ApiResponse;
 import com.tekion.gameofcricket.utility.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -50,5 +52,16 @@ public class GlobalExceptionHandler {
         response.setStatus(ResponseStatus.FAILED);
         response.setMessage(exception.getMessage());
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(MongoWriteException.class)
+    public ResponseEntity<ApiResponse> handleMongoWriteException(MongoWriteException exception) {
+        exception.printStackTrace();
+        ApiResponse response = applicationContext.getBean(ApiResponse.class);
+        if (exception.getCode() == 11000) {
+            response.setStatus(ResponseStatus.FAILED);
+            response.setMessage("This name has already been used. Try something different");
+        }
+        return ResponseEntity.ok().body(response);
     }
 }
