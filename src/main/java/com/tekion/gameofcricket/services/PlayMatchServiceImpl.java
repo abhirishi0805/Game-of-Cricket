@@ -20,8 +20,11 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is a concrete implementation for the PlayMatchService interface
+ */
 @Service
-public class PlayMatchServiceImpl implements PlayMatchService {
+public final class PlayMatchServiceImpl implements PlayMatchService {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayMatchServiceImpl.class);

@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This is the controller to handle team related API requests
+ */
 @RestController
 @RequestMapping("/teams")
-public class TeamController {
+public final class TeamController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);

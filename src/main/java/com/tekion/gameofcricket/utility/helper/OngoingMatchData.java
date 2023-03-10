@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
+/**
+ * This is a bean to temporarily store match data while it is being played
+ */
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class OngoingMatchData {
+public final class OngoingMatchData {
 
     @Autowired
     private ApplicationContext applicationContext;

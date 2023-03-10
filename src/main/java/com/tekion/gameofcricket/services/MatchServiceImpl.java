@@ -13,8 +13,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * This is a concrete implementation for the MatchService interface
+ */
 @Service
-public class MatchServiceImpl implements MatchService {
+public final class MatchServiceImpl implements MatchService {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchServiceImpl.class);

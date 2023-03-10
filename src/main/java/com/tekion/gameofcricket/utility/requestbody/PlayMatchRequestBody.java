@@ -1,12 +1,9 @@
 package com.tekion.gameofcricket.utility.requestbody;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-@Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class PlayMatchRequestBody {
+/**
+ * This represents the body that client needs to pass while requesting for a match to be played
+ */
+public final class PlayMatchRequestBody {
 
     private String team1Name;
     private String team2Name;

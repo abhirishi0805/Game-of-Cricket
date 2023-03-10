@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * This is the repository to access match related data
+ */
 @Repository
 public interface MatchRepository extends MongoRepository<Match, ObjectId> {
 

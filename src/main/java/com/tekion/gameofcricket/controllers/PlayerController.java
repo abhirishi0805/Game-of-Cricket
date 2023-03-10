@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This is the controller to handle player related API requests
+ */
 @RestController
 @RequestMapping("/players")
-public class PlayerController {
+public final class PlayerController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerController.class);

@@ -4,6 +4,10 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is a bean to temporarily store innings related data
+ * It is non-final as there is a scope to extend it for different innings in different kinds of matches
+ */
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class Innings {

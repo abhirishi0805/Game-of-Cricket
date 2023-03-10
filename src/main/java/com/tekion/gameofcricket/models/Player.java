@@ -7,10 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is the model class to represent a player
+ */
 @Document(collection = "players")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Player {
+public final class Player {
 
     @Id
     private ObjectId id;

@@ -18,8 +18,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This is a concrete implementation for the TeamService interface
+ */
 @Service
-public class TeamServiceImpl implements TeamService {
+public final class TeamServiceImpl implements TeamService {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamServiceImpl.class);

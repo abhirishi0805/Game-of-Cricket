@@ -1,6 +1,9 @@
 package com.tekion.gameofcricket.utility.exceptionhandling;
 
-public class InvalidDateException extends RuntimeException {
+/**
+ * This is a user-defined exception for date related anomalies
+ */
+public final class InvalidDateException extends RuntimeException {
 
     public InvalidDateException(String message) {
         super(message);

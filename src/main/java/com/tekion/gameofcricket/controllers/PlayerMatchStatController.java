@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This is the controller to handle stats related API requests
+ */
 @RestController
 @RequestMapping("/stats")
-public class PlayerMatchStatController {
+public final class PlayerMatchStatController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerMatchStatController.class);

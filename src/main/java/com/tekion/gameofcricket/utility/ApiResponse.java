@@ -2,8 +2,11 @@ package com.tekion.gameofcricket.utility;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * This represents the response that is returned in case of exceptions or for all requests other than GET
+ */
 @Component
-public class ApiResponse {
+public final class ApiResponse {
 
     private ResponseStatus status;
     private String message;

@@ -1,6 +1,9 @@
 package com.tekion.gameofcricket.utility.requestbody;
 
-public class TeamRequestBody {
+/**
+ * This represents the body that client needs to pass while requesting for a team by its name
+ */
+public final class TeamRequestBody {
 
     private String teamName;
 

@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This is the controller to handle match related API requests
+ */
 @RestController
 @RequestMapping("/matches")
-public class MatchController {
+public final class MatchController {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchController.class);

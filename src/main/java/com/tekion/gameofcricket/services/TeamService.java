@@ -7,6 +7,9 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/**
+ * This interface declares methods to perform team related operations
+ */
 public interface TeamService {
 
     List<Team> getAllTeams();

@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This is a concrete implementation for the PlayerMatchStatService interface
+ */
 @Service
-public class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
+public final class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
 
     @Autowired
     private PlayerMatchStatRepository playerMatchStatRepository;

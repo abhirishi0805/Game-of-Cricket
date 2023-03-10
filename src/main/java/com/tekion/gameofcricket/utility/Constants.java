@@ -1,5 +1,8 @@
 package com.tekion.gameofcricket.utility;
 
+/**
+ * This contains all the constants
+ */
 public enum Constants {
     MATCH_LENGTH_IN_OVERS(10),
     MATCH_LENGTH_IN_BALLS(MATCH_LENGTH_IN_OVERS.value() * 6),

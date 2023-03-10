@@ -5,6 +5,9 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/**
+ * This interface declares methods to perform player related operations
+ */
 public interface PlayerService {
 
     List<Player> getAllPlayers();

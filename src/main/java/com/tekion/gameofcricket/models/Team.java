@@ -9,10 +9,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * This is the model class to represent a team
+ */
 @Document(collection = "teams")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Team {
+public final class Team {
 
     @Id
     private ObjectId id;

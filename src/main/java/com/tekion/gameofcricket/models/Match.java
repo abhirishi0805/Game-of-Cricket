@@ -8,6 +8,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is the model class to represent a match
+ * Not a final class as in future it can be extended to One Day Match, T20 Match, Test Match
+ */
 @Document(collection = "matches")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)

@@ -5,6 +5,9 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/**
+ * This interface declares methods to perform stats related operations
+ */
 public interface PlayerMatchStatService {
 
     List<PlayerMatchStat> getAllStatsOfPlayer(ObjectId playerId);

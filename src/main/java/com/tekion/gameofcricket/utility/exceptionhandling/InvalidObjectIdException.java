@@ -1,7 +1,10 @@
 package com.tekion.gameofcricket.utility.exceptionhandling;
 
-public class InvalidObjectIdException extends RuntimeException {
-    private final String title;
+/**
+ * This is a user-defined exception for object id related anomalies
+ */
+public final class InvalidObjectIdException extends RuntimeException {
+    private String title;
     public InvalidObjectIdException(String title, String message) {
         super(message);
         this.title = title;

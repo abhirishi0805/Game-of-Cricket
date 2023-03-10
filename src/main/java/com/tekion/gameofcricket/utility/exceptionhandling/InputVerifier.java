@@ -8,7 +8,11 @@ import com.tekion.gameofcricket.utility.requestbody.PlayerRequestBody;
 import com.tekion.gameofcricket.utility.requestbody.TeamRequestBody;
 import org.bson.types.ObjectId;
 
-public class InputVerifier {
+/**
+ * This validates all the inputs that are received from client during API calls
+ * If anything is invalid then it throws the corresponding exception
+ */
+public final class InputVerifier {
 
     public static void validatePlayerId(String playerId) {
         if (!ObjectId.isValid(playerId)) {

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * This is the repository to access stats related data
+ */
 @Repository
 public interface PlayerMatchStatRepository extends MongoRepository<PlayerMatchStat, ObjectId> {
 

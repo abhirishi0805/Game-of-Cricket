@@ -7,16 +7,20 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is the model class to represent any player's performance stat of a particular match
+ */
 @Document(collection = "player_match_stats")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class PlayerMatchStat {
+public final class PlayerMatchStat {
 
     @Id
     private ObjectId id;
     private ObjectId playerId;
     private ObjectId matchId;
     private ObjectId teamId;
+    // TODO - add opponent team ID
     private int runsScored;
     private int ballsFaced;
     private int sixesHit;

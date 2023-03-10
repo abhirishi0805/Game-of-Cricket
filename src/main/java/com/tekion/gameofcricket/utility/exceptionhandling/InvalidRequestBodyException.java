@@ -1,6 +1,9 @@
 package com.tekion.gameofcricket.utility.exceptionhandling;
 
-public class InvalidRequestBodyException extends RuntimeException {
+/**
+ * This is a user-defined exception for client sending invalid request body while making any API call
+ */
+public final class InvalidRequestBodyException extends RuntimeException {
 
     public InvalidRequestBodyException(String message) {
         super(message);

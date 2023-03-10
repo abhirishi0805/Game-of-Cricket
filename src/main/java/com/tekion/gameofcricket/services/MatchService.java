@@ -5,6 +5,9 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/**
+ * This interface declares methods to perform match related operations (except starting a new match)
+ */
 public interface MatchService {
 
     List<Match> getAllMatches();

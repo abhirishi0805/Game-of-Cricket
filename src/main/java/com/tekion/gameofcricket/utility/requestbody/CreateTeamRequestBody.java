@@ -2,7 +2,10 @@ package com.tekion.gameofcricket.utility.requestbody;
 
 import java.util.List;
 
-public class CreateTeamRequestBody {
+/**
+ * This represents the body that client needs to pass while requesting to create a new team
+ */
+public final class CreateTeamRequestBody {
 
     private String teamName;
     List<String> playerNames;

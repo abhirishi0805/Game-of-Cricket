@@ -14,8 +14,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * This is a concrete implementation for the PlayerService interface
+ */
 @Service
-public class PlayerServiceImpl implements PlayerService {
+public final class PlayerServiceImpl implements PlayerService {
 
     @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerServiceImpl.class);
