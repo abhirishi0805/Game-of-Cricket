@@ -1,20 +1,14 @@
 package com.tekion.gameofcricket.utility;
 
 /**
- * This contains all the constants
+ * This is a non-instantiable class containing all the constants
  */
-public enum Constants {
-    MATCH_LENGTH_IN_OVERS(10),
-    MATCH_LENGTH_IN_BALLS(MATCH_LENGTH_IN_OVERS.value() * 6),
-    TEAM_SIZE(5);
+public class Constants {
 
-    private final int value;
+    public static final int MATCH_LENGTH_IN_OVERS = 10;
+    public static final int MATCH_LENGTH_IN_BALLS = MATCH_LENGTH_IN_OVERS * 6;
+    public static final int TEAM_SIZE = 5;
 
-    Constants(int value) {
-        this.value = value;
-    }
-
-    public int value() {
-        return value;
+    private Constants() {
     }
 }

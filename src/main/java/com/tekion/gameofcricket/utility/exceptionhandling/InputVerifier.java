@@ -54,8 +54,8 @@ public final class InputVerifier {
         if (requestBody.getPlayerNames() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'playerNames' field");
         }
-        if (requestBody.getPlayerNames().size() != Constants.TEAM_SIZE.value()) {
-            throw new InvalidRequestBodyException("Team must contain " + Constants.TEAM_SIZE.value() + " players");
+        if (requestBody.getPlayerNames().size() != Constants.TEAM_SIZE) {
+            throw new InvalidRequestBodyException("Team must contain " + Constants.TEAM_SIZE + " players");
         }
     }
 
