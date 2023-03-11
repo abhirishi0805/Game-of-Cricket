@@ -9,6 +9,7 @@ import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.utility.Constants;
 import com.tekion.gameofcricket.utility.DateUtils;
 import com.tekion.gameofcricket.utility.MatchResult;
+import com.tekion.gameofcricket.utility.responsebody.PlayMatchResponseDTO;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private Map<ObjectId, PlayerMatchStat> playerMatchStatMap;
 
     @Override
-    public void playMatch(Team team1, Team team2) {
+    public PlayMatchResponseDTO playMatch(Team team1, Team team2) {
         LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         this.team1 = team1;
         this.team2 = team2;
@@ -57,6 +58,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         simulateInnings(false);
         generateResult();
         storeMatchData();
+        return getResponseDTO();
     }
 
     private void configureMatchData() {
@@ -158,5 +160,24 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         player.setTotalRunsScored(player.getTotalRunsScored() + playerMatchStat.getRunsScored());
         player.setTotalWicketsTaken(player.getTotalWicketsTaken() + playerMatchStat.getWicketsTaken());
         playerService.updatePlayer(player);
+    }
+
+    private PlayMatchResponseDTO getResponseDTO() {
+        PlayMatchResponseDTO responseDTO = applicationContext.getBean(PlayMatchResponseDTO.class);
+        responseDTO.setFirstInnings(team1.getTeamName() + " : " + matchData.getFirstInnings().getRunsScored() + '/' +
+                                    matchData.getFirstInnings().getWicketsFallen());
+        responseDTO.setSecondInnings(team2.getTeamName() + " : " + matchData.getSecondInnings().getRunsScored() + '/' +
+                                     matchData.getSecondInnings().getWicketsFallen());
+        switch (match.getResult()) {
+            case TEAM_1_WON:
+                responseDTO.setResult(team1.getTeamName() + " won!");
+                break;
+            case TEAM_2_WON:
+                responseDTO.setResult(team2.getTeamName() + " won!");
+                break;
+            case DRAW:
+                responseDTO.setResult("Match drawn!");
+        }
+        return responseDTO;
     }
 }
