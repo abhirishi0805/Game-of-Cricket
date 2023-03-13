@@ -6,9 +6,9 @@ import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
-import com.tekion.gameofcricket.utility.requestbody.PlayMatchRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.TeamRequestBody;
-import com.tekion.gameofcricket.utility.responsebody.PlayMatchResponseDTO;
+import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
+import com.tekion.gameofcricket.requestbody.TeamRequestDto;
+import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public final class MatchController {
     }
 
     @GetMapping("/team/byName")
-    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody TeamRequestBody requestBody) {
+    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getTeamName() +
                     '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
@@ -75,7 +75,7 @@ public final class MatchController {
     }
 
     @PostMapping("/play")
-    public ResponseEntity<PlayMatchResponseDTO> playMatch(@RequestBody PlayMatchRequestBody requestBody) {
+    public ResponseEntity<PlayMatchResponseDto> playMatch(@RequestBody PlayMatchRequestDto requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/matches/play");
         InputVerifier.validatePlayMatchRequestBody(requestBody);
         Team team1 = teamService.getTeamByName(requestBody.getTeam1Name());

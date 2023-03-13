@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.requestbody;
+package com.tekion.gameofcricket.requestbody;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
  * This represents the body that client needs to pass while requesting for a match to be played
  */
 @Getter
-public final class PlayMatchRequestBody {
+public final class PlayMatchRequestDto {
 
     private String team1Name;
     private String team2Name;

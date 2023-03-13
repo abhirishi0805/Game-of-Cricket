@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.requestbody;
+package com.tekion.gameofcricket.requestbody;
 
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ import lombok.Getter;
  *                                   • requesting for a player by its name
  */
 @Getter
-public final class PlayerRequestBody {
+public final class PlayerRequestDto {
 
     private String playerName;
 }

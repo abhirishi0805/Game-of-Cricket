@@ -3,11 +3,11 @@ package com.tekion.gameofcricket.controllers;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.services.TeamService;
-import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.ResponseStatus;
+import com.tekion.gameofcricket.responsebody.GenericResponseDto;
+import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
-import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.TeamRequestBody;
+import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
+import com.tekion.gameofcricket.requestbody.TeamRequestDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public final class TeamController {
     }
 
     @GetMapping("/byName")
-    public ResponseEntity<Team> getTeamByName(@RequestBody TeamRequestBody requestBody) {
+    public ResponseEntity<Team> getTeamByName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/teams/byName for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         return ResponseEntity.ok(teamService.getTeamByName(requestBody.getTeamName()));
@@ -58,7 +58,7 @@ public final class TeamController {
     }
 
     @GetMapping("/byName/players")
-    public ResponseEntity<List<Player>> getTeamPlayers(@RequestBody TeamRequestBody requestBody) {
+    public ResponseEntity<List<Player>> getTeamPlayers(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getTeamName() +
                 '\"');
@@ -68,12 +68,12 @@ public final class TeamController {
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponse> addTeam(@RequestBody CreateTeamRequestBody requestBody) {
+    public ResponseEntity<GenericResponseDto> addTeam(@RequestBody CreateTeamRequestDto requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/teams");
         InputVerifier.validateCreateTeamRequestBody(requestBody);
         teamService.addTeam(requestBody);
-        ApiResponse response = ApiResponse.builder().status(ResponseStatus.SUCCESS)
-                                          .message("Team successfully " + "created").build();
+        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.SUCCESS)
+                                                        .message("Team successfully " + "created").build();
         return ResponseEntity.ok(response);
     }
 }

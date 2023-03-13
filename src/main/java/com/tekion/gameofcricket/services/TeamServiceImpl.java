@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
+import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.TeamRepository;
@@ -67,7 +67,7 @@ public final class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void addTeam(CreateTeamRequestBody requestBody) {
+    public void addTeam(CreateTeamRequestDto requestBody) {
         Team team = applicationContext.getBean(Team.class);
         team.setTeamName(requestBody.getTeamName());
         List<ObjectId> playerIds = requestBody.getPlayerNames().stream()

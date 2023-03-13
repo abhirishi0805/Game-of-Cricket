@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.helper;
+package com.tekion.gameofcricket.helperbeans;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

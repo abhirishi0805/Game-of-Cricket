@@ -1,5 +1,6 @@
-package com.tekion.gameofcricket.utility;
+package com.tekion.gameofcricket.responsebody;
 
+import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.Setter;
  */
 @Builder
 @Getter
-public final class ApiResponse {
+public final class GenericResponseDto {
 
     private ResponseStatus status;
     @Setter

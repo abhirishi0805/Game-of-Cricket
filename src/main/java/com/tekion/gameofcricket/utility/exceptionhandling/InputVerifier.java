@@ -2,10 +2,10 @@ package com.tekion.gameofcricket.utility.exceptionhandling;
 
 import com.tekion.gameofcricket.utility.Constants;
 import com.tekion.gameofcricket.utility.DateUtils;
-import com.tekion.gameofcricket.utility.requestbody.CreateTeamRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.PlayMatchRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.PlayerRequestBody;
-import com.tekion.gameofcricket.utility.requestbody.TeamRequestBody;
+import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
+import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
+import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
+import com.tekion.gameofcricket.requestbody.TeamRequestDto;
 import org.bson.types.ObjectId;
 
 /**
@@ -13,6 +13,10 @@ import org.bson.types.ObjectId;
  * If anything is invalid then it throws the corresponding exception
  */
 public final class InputVerifier {
+
+    // private constructor to make this class non-instantiable
+    private InputVerifier() {
+    }
 
     public static void validatePlayerId(String playerId) {
         if (!ObjectId.isValid(playerId)) {
@@ -35,19 +39,19 @@ public final class InputVerifier {
         }
     }
 
-    public static void validatePlayerRequestBody(PlayerRequestBody requestBody) {
+    public static void validatePlayerRequestBody(PlayerRequestDto requestBody) {
         if (requestBody.getPlayerName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'playerName' field");
         }
     }
 
-    public static void validateTeamRequestBody(TeamRequestBody requestBody) {
+    public static void validateTeamRequestBody(TeamRequestDto requestBody) {
         if (requestBody.getTeamName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'teamName' field");
         }
     }
 
-    public static void validateCreateTeamRequestBody(CreateTeamRequestBody requestBody) {
+    public static void validateCreateTeamRequestBody(CreateTeamRequestDto requestBody) {
         if (requestBody.getTeamName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'teamName' field");
         }
@@ -59,7 +63,7 @@ public final class InputVerifier {
         }
     }
 
-    public static void validatePlayMatchRequestBody(PlayMatchRequestBody requestBody) {
+    public static void validatePlayMatchRequestBody(PlayMatchRequestDto requestBody) {
         if (requestBody.getTeam1Name() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'team1Name' field");
         }

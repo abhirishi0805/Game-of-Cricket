@@ -4,7 +4,7 @@ import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.services.PlayerMatchStatService;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
-import com.tekion.gameofcricket.utility.requestbody.PlayerRequestBody;
+import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public final class PlayerMatchStatController {
     }
 
     @GetMapping("/byName")
-    private ResponseEntity<List<PlayerMatchStat>> getAllStatsOfPlayer(@RequestBody PlayerRequestBody requestBody) {
+    private ResponseEntity<List<PlayerMatchStat>> getAllStatsOfPlayer(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
@@ -64,7 +64,7 @@ public final class PlayerMatchStatController {
     }
 
     @GetMapping("/byName/{matchId}")
-    private ResponseEntity<PlayerMatchStat> getPlayerStatByMatch(@RequestBody PlayerRequestBody requestBody,
+    private ResponseEntity<PlayerMatchStat> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
                                                                  @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" +
                     requestBody.getPlayerName() + '\"');

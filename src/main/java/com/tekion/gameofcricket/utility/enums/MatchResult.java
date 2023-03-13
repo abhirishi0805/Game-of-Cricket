@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility;
+package com.tekion.gameofcricket.utility.enums;
 
 /**
  * This enum denotes the match result

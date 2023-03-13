@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.responsebody;
+package com.tekion.gameofcricket.responsebody;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Builder
 @Getter
-public final class PlayMatchResponseDTO {
+public final class PlayMatchResponseDto {
 
     private String firstInnings;
     private String secondInnings;

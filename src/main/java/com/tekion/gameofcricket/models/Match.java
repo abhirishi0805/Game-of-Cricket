@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.models;
 
-import com.tekion.gameofcricket.utility.MatchResult;
+import com.tekion.gameofcricket.utility.enums.MatchResult;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;

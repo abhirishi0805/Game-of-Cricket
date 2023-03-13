@@ -2,12 +2,12 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
-import com.tekion.gameofcricket.utility.ApiResponse;
-import com.tekion.gameofcricket.utility.ModelToResponseDtoMapper;
-import com.tekion.gameofcricket.utility.ResponseStatus;
+import com.tekion.gameofcricket.responsebody.GenericResponseDto;
+import com.tekion.gameofcricket.utility.ModelToResponseBodyMapper;
+import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
-import com.tekion.gameofcricket.utility.requestbody.PlayerRequestBody;
-import com.tekion.gameofcricket.utility.responsebody.PlayerResponseDTO;
+import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
+import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,36 +33,36 @@ public final class PlayerController {
     private PlayerService playerService;
 
     @GetMapping()
-    public ResponseEntity<List<PlayerResponseDTO>> getAllPlayers() {
+    public ResponseEntity<List<PlayerResponseDto>> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
         List<Player> result = playerService.getAllPlayers();
-        return ResponseEntity.ok(result.stream().map(ModelToResponseDtoMapper::mapPlayer).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(ModelToResponseBodyMapper::mapPlayer).collect(Collectors.toList()));
     }
 
     @GetMapping("/{playerId}")
-    public ResponseEntity<PlayerResponseDTO> getPlayerById(@PathVariable String playerId) {
+    public ResponseEntity<PlayerResponseDto> getPlayerById(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
         InputVerifier.validatePlayerId(playerId);
         Player result = playerService.getPlayerById(new ObjectId(playerId));
-        return ResponseEntity.ok(ModelToResponseDtoMapper.mapPlayer(result));
+        return ResponseEntity.ok(ModelToResponseBodyMapper.mapPlayer(result));
     }
 
     @GetMapping("/byName")
-    public ResponseEntity<PlayerResponseDTO> getPlayerByName(@RequestBody PlayerRequestBody requestBody) {
+    public ResponseEntity<PlayerResponseDto> getPlayerByName(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/players/byName for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         Player result = playerService.getPlayerByName(requestBody.getPlayerName());
-        return ResponseEntity.ok(ModelToResponseDtoMapper.mapPlayer(result));
+        return ResponseEntity.ok(ModelToResponseBodyMapper.mapPlayer(result));
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponse> addPlayer(@RequestBody PlayerRequestBody requestBody) {
+    public ResponseEntity<GenericResponseDto> addPlayer(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info("POST call received : http://localhost:3004/players");
         InputVerifier.validatePlayerRequestBody(requestBody);
         playerService.addPlayer(requestBody.getPlayerName());
-        ApiResponse response = ApiResponse.builder().status(ResponseStatus.SUCCESS)
-                                          .message("Player successfully " + "created").build();
+        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.SUCCESS)
+                                                        .message("Player successfully " + "created").build();
         return ResponseEntity.ok(response);
     }
 }

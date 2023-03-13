@@ -2,15 +2,15 @@ package com.tekion.gameofcricket.services;
 
 import static com.tekion.gameofcricket.utility.Constants.*;
 
-import com.tekion.gameofcricket.utility.helper.Innings;
-import com.tekion.gameofcricket.utility.helper.OngoingMatchData;
+import com.tekion.gameofcricket.helperbeans.Innings;
+import com.tekion.gameofcricket.helperbeans.OngoingMatchData;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.PlayerMatchStat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.utility.DateUtils;
-import com.tekion.gameofcricket.utility.MatchResult;
-import com.tekion.gameofcricket.utility.responsebody.PlayMatchResponseDTO;
+import com.tekion.gameofcricket.utility.enums.MatchResult;
+import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private Map<ObjectId, PlayerMatchStat> playerMatchStatMap;
 
     @Override
-    public PlayMatchResponseDTO playMatch(Team team1, Team team2) {
+    public PlayMatchResponseDto playMatch(Team team1, Team team2) {
         LOGGER.info("Match requested : " + team1.getTeamName() + " vs " + team2.getTeamName());
         this.team1 = team1;
         this.team2 = team2;
@@ -161,7 +161,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         playerService.updatePlayer(player);
     }
 
-    private PlayMatchResponseDTO getResponseDTO() {
+    private PlayMatchResponseDto getResponseDTO() {
 
         String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInnings().getRunsScored() + '/' +
                               matchData.getFirstInnings().getWicketsFallen();
@@ -170,7 +170,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!" :
                         (match.getResult() == MatchResult.TEAM_2_WON ? team2.getTeamName() + " won!" : "Match drawn!");
 
-        return PlayMatchResponseDTO.builder()
+        return PlayMatchResponseDto.builder()
                                    .firstInnings(firstInnings)
                                    .secondInnings(secondInnings)
                                    .result(result)
