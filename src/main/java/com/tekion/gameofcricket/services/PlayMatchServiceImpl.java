@@ -162,21 +162,18 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     }
 
     private PlayMatchResponseDTO getResponseDTO() {
-        PlayMatchResponseDTO responseDTO = applicationContext.getBean(PlayMatchResponseDTO.class);
-        responseDTO.setFirstInnings(team1.getTeamName() + " : " + matchData.getFirstInnings().getRunsScored() + '/' +
-                                    matchData.getFirstInnings().getWicketsFallen());
-        responseDTO.setSecondInnings(team2.getTeamName() + " : " + matchData.getSecondInnings().getRunsScored() + '/' +
-                                     matchData.getSecondInnings().getWicketsFallen());
-        switch (match.getResult()) {
-            case TEAM_1_WON:
-                responseDTO.setResult(team1.getTeamName() + " won!");
-                break;
-            case TEAM_2_WON:
-                responseDTO.setResult(team2.getTeamName() + " won!");
-                break;
-            case DRAW:
-                responseDTO.setResult("Match drawn!");
-        }
-        return responseDTO;
+
+        String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInnings().getRunsScored() + '/' +
+                              matchData.getFirstInnings().getWicketsFallen();
+        String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInnings().getRunsScored() + '/' +
+                               matchData.getSecondInnings().getWicketsFallen();
+        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!" :
+                        (match.getResult() == MatchResult.TEAM_2_WON ? team2.getTeamName() + " won!" : "Match drawn!");
+
+        return PlayMatchResponseDTO.builder()
+                                   .firstInnings(firstInnings)
+                                   .secondInnings(secondInnings)
+                                   .result(result)
+                                   .build();
     }
 }

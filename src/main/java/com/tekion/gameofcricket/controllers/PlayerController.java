@@ -12,7 +12,6 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +31,6 @@ public final class PlayerController {
 
     @Autowired
     private PlayerService playerService;
-    @Autowired
-    @Lazy
-    private ApplicationContext applicationContext;
 
     @GetMapping()
     public ResponseEntity<List<PlayerResponseDTO>> getAllPlayers() {
@@ -65,9 +61,8 @@ public final class PlayerController {
         LOGGER.info("POST call received : http://localhost:3004/players");
         InputVerifier.validatePlayerRequestBody(requestBody);
         playerService.addPlayer(requestBody.getPlayerName());
-        ApiResponse response = applicationContext.getBean(ApiResponse.class);
-        response.setStatus(ResponseStatus.SUCCESS);
-        response.setMessage("Player successfully created");
+        ApiResponse response = ApiResponse.builder().status(ResponseStatus.SUCCESS)
+                                          .message("Player successfully " + "created").build();
         return ResponseEntity.ok(response);
     }
 }

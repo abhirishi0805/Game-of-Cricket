@@ -1,32 +1,19 @@
 package com.tekion.gameofcricket.utility;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 /**
  * This represents the response that is returned in case of exceptions or for all requests other than GET
  */
-@Component
+@Builder
 public final class ApiResponse {
 
+    @Getter
     private ResponseStatus status;
+    @Getter
+    @Setter
     private String message;
-
-    public ApiResponse() {
-    }
-
-    public ResponseStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ResponseStatus status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
