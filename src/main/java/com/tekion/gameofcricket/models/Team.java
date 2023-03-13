@@ -1,5 +1,7 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +17,8 @@ import java.util.List;
 @Document(collection = "teams")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Getter
+@Setter
 public final class Team {
 
     @Id
@@ -34,54 +38,6 @@ public final class Team {
         this.playerIds = playerIds;
         this.gamesWon = gamesWon;
         this.gamesDrawn = gamesDrawn;
-        this.gamesLost = gamesLost;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public List<ObjectId> getPlayerIds() {
-        return playerIds;
-    }
-
-    public void setPlayerIds(List<ObjectId> playerIds) {
-        this.playerIds = playerIds;
-    }
-
-    public int getGamesWon() {
-        return gamesWon;
-    }
-
-    public void setGamesWon(int gamesWon) {
-        this.gamesWon = gamesWon;
-    }
-
-    public int getGamesDrawn() {
-        return gamesDrawn;
-    }
-
-    public void setGamesDrawn(int gamesDrawn) {
-        this.gamesDrawn = gamesDrawn;
-    }
-
-    public int getGamesLost() {
-        return gamesLost;
-    }
-
-    public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
     }
 

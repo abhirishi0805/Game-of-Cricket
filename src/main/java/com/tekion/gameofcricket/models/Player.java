@@ -1,5 +1,7 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Document(collection = "players")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Getter
+@Setter
 public final class Player {
 
     @Id
@@ -30,46 +34,6 @@ public final class Player {
         this.playerName = playerName;
         this.totalRunsScored = totalRunsScored;
         this.totalWicketsTaken = totalWicketsTaken;
-        this.gamesPlayed = gamesPlayed;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public int getTotalRunsScored() {
-        return totalRunsScored;
-    }
-
-    public void setTotalRunsScored(int totalRunsScored) {
-        this.totalRunsScored = totalRunsScored;
-    }
-
-    public int getTotalWicketsTaken() {
-        return totalWicketsTaken;
-    }
-
-    public void setTotalWicketsTaken(int totalWicketsTaken) {
-        this.totalWicketsTaken = totalWicketsTaken;
-    }
-
-    public int getGamesPlayed() {
-        return gamesPlayed;
-    }
-
-    public void setGamesPlayed(int gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
 

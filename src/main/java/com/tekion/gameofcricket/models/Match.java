@@ -1,6 +1,8 @@
 package com.tekion.gameofcricket.models;
 
 import com.tekion.gameofcricket.utility.MatchResult;
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Component;
 @Document(collection = "matches")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Getter
+@Setter
 public class Match {
 
     @Id
@@ -32,46 +36,6 @@ public class Match {
         this.team1Id = team1Id;
         this.team2Id = team2Id;
         this.matchDate = matchDate;
-        this.result = result;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public ObjectId getTeam1Id() {
-        return team1Id;
-    }
-
-    public void setTeam1Id(ObjectId team1Id) {
-        this.team1Id = team1Id;
-    }
-
-    public ObjectId getTeam2Id() {
-        return team2Id;
-    }
-
-    public void setTeam2Id(ObjectId team2Id) {
-        this.team2Id = team2Id;
-    }
-
-    public String getMatchDate() {
-        return matchDate;
-    }
-
-    public void setMatchDate(String matchDate) {
-        this.matchDate = matchDate;
-    }
-
-    public MatchResult getResult() {
-        return result;
-    }
-
-    public void setResult(MatchResult result) {
         this.result = result;
     }
 

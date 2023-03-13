@@ -1,5 +1,7 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Document(collection = "player_match_stats")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Getter
+@Setter
 public final class PlayerMatchStat {
 
     @Id
@@ -43,86 +47,6 @@ public final class PlayerMatchStat {
         this.foursHit = foursHit;
         this.ballsThrown = ballsThrown;
         this.wicketsTaken = wicketsTaken;
-        this.runsConceded = runsConceded;
-    }
-
-    public ObjectId getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(ObjectId playerId) {
-        this.playerId = playerId;
-    }
-
-    public ObjectId getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(ObjectId matchId) {
-        this.matchId = matchId;
-    }
-
-    public ObjectId getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(ObjectId teamId) {
-        this.teamId = teamId;
-    }
-
-    public int getRunsScored() {
-        return runsScored;
-    }
-
-    public void setRunsScored(int runsScored) {
-        this.runsScored = runsScored;
-    }
-
-    public int getBallsFaced() {
-        return ballsFaced;
-    }
-
-    public void setBallsFaced(int ballsFaced) {
-        this.ballsFaced = ballsFaced;
-    }
-
-    public int getSixesHit() {
-        return sixesHit;
-    }
-
-    public void setSixesHit(int sixesHit) {
-        this.sixesHit = sixesHit;
-    }
-
-    public int getFoursHit() {
-        return foursHit;
-    }
-
-    public void setFoursHit(int foursHit) {
-        this.foursHit = foursHit;
-    }
-
-    public int getBallsThrown() {
-        return ballsThrown;
-    }
-
-    public void setBallsThrown(int ballsThrown) {
-        this.ballsThrown = ballsThrown;
-    }
-
-    public int getWicketsTaken() {
-        return wicketsTaken;
-    }
-
-    public void setWicketsTaken(int wicketsTaken) {
-        this.wicketsTaken = wicketsTaken;
-    }
-
-    public int getRunsConceded() {
-        return runsConceded;
-    }
-
-    public void setRunsConceded(int runsConceded) {
         this.runsConceded = runsConceded;
     }
 
