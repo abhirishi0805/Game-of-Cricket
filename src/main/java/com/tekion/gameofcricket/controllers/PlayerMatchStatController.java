@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/stats")
 public final class PlayerMatchStatController {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerMatchStatController.class);
     @Autowired
     private PlayerMatchStatService playerMatchStatService;

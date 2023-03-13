@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/players")
 public final class PlayerController {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerController.class);
 
     @Autowired

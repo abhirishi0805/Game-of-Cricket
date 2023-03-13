@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/matches")
 public final class MatchController {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchController.class);
 
     @Autowired

@@ -2,6 +2,9 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
+import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
+import com.tekion.gameofcricket.responsebody.TeamResponseDto;
+import com.tekion.gameofcricket.services.ResponseMappingService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.responsebody.GenericResponseDto;
 import com.tekion.gameofcricket.utility.enums.ResponseStatus;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This is the controller to handle team related API requests
@@ -25,46 +29,55 @@ import java.util.List;
 @RequestMapping("/teams")
 public final class TeamController {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private ResponseMappingService responseMappingService;
 
     @GetMapping()
-    public ResponseEntity<List<Team>> getAllTeams() {
+    public ResponseEntity<List<TeamResponseDto>> getAllTeams() {
         LOGGER.info("GET call received : http://localhost:3004/teams");
-        return ResponseEntity.ok(teamService.getAllTeams());
+        List<Team> result = teamService.getAllTeams();
+        return ResponseEntity.ok(
+                result.stream().map(team -> responseMappingService.mapTeam(team)).collect(Collectors.toList()));
     }
 
     @GetMapping("/{teamId}")
-    public ResponseEntity<Team> getTeamById(@PathVariable String teamId) {
+    public ResponseEntity<TeamResponseDto> getTeamById(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId);
         InputVerifier.validateTeamId(teamId);
-        return ResponseEntity.ok(teamService.getTeamById(new ObjectId(teamId)));
+        Team result = teamService.getTeamById(new ObjectId(teamId));
+        return ResponseEntity.ok(responseMappingService.mapTeam(result));
     }
 
     @GetMapping("/byName")
-    public ResponseEntity<Team> getTeamByName(@RequestBody TeamRequestDto requestBody) {
+    public ResponseEntity<TeamResponseDto> getTeamByName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/teams/byName for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
-        return ResponseEntity.ok(teamService.getTeamByName(requestBody.getTeamName()));
+        Team result = teamService.getTeamByName(requestBody.getTeamName());
+        return ResponseEntity.ok(responseMappingService.mapTeam(result));
     }
 
     @GetMapping("/{teamId}/players")
-    public ResponseEntity<List<Player>> getTeamPlayers(@PathVariable String teamId) {
+    public ResponseEntity<List<PlayerResponseDto>> getTeamPlayers(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
         InputVerifier.validateTeamId(teamId);
-        return ResponseEntity.ok(teamService.getTeamPlayers(new ObjectId(teamId)));
+        List<Player> result = teamService.getTeamPlayers(new ObjectId(teamId));
+        return ResponseEntity.ok(
+                result.stream().map(player -> responseMappingService.mapPlayer(player)).collect(Collectors.toList()));
     }
 
     @GetMapping("/byName/players")
-    public ResponseEntity<List<Player>> getTeamPlayers(@RequestBody TeamRequestDto requestBody) {
+    public ResponseEntity<List<PlayerResponseDto>> getTeamPlayers(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getTeamName() +
                 '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
-        return ResponseEntity.ok(teamService.getTeamPlayers(teamId));
+        List<Player> result = teamService.getTeamPlayers(teamId);
+        return ResponseEntity.ok(
+                result.stream().map(player -> responseMappingService.mapPlayer(player)).collect(Collectors.toList()));
     }
 
     @PostMapping()
