@@ -7,7 +7,7 @@ import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
 import com.tekion.gameofcricket.services.ResponseMappingServiceImpl;
-import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
+import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
 import com.tekion.gameofcricket.requestbody.TeamRequestDto;
 import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;

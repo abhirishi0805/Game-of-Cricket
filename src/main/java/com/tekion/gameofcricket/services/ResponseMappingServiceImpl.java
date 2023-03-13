@@ -26,10 +26,6 @@ public final class ResponseMappingServiceImpl implements ResponseMappingService 
     @Lazy
     private TeamService teamService;
 
-    // private constructor to make this class non-instantiable
-    private ResponseMappingServiceImpl() {
-    }
-
     @Override
     public PlayerResponseDto mapPlayer(Player player) {
         return new PlayerResponseDto(player.getPlayerName(), player.getGamesPlayed(), player.getTotalRunsScored(),
