@@ -13,5 +13,4 @@ public final class PlayMatchResponseDto {
     private String firstInnings;
     private String secondInnings;
     private String result;
-
 }

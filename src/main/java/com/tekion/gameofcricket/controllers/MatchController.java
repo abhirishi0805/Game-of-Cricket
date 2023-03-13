@@ -2,9 +2,11 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Team;
+import com.tekion.gameofcricket.responsebody.MatchResponseDto;
 import com.tekion.gameofcricket.services.MatchService;
 import com.tekion.gameofcricket.services.PlayMatchService;
 import com.tekion.gameofcricket.services.TeamService;
+import com.tekion.gameofcricket.services.ResponseMappingServiceImpl;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
 import com.tekion.gameofcricket.requestbody.TeamRequestDto;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This is the controller to handle match related API requests
@@ -37,41 +40,52 @@ public final class MatchController {
     @Autowired
     @Lazy
     private TeamService teamService;
+    @Autowired
+    private ResponseMappingServiceImpl responseMappingService;
 
     @GetMapping()
-    public ResponseEntity<List<Match>> getAllMatches() {
+    public ResponseEntity<List<MatchResponseDto>> getAllMatches() {
         LOGGER.info("GET call received : http://localhost:3004/matches");
-        return ResponseEntity.ok(matchService.getAllMatches());
+        List<Match> result = matchService.getAllMatches();
+        return ResponseEntity.ok(
+                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
     }
 
     @GetMapping("/{matchId}")
-    public ResponseEntity<Match> getMatchById(@PathVariable String matchId) {
+    public ResponseEntity<MatchResponseDto> getMatchById(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/" + matchId);
         InputVerifier.validateMatchId(matchId);
-        return ResponseEntity.ok(matchService.getMatchById(new ObjectId(matchId)));
+        Match result = matchService.getMatchById(new ObjectId(matchId));
+        return ResponseEntity.ok(responseMappingService.mapMatch(result));
     }
 
     @GetMapping("/team/{teamId}")
-    public ResponseEntity<List<Match>> getMatchByTeamId(@PathVariable String teamId) {
+    public ResponseEntity<List<MatchResponseDto>> getMatchByTeamId(@PathVariable String teamId) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
         InputVerifier.validateTeamId(teamId);
-        return ResponseEntity.ok(matchService.getMatchByTeam(new ObjectId(teamId)));
+        List<Match> result = matchService.getMatchByTeam(new ObjectId(teamId));
+        return ResponseEntity.ok(
+                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
     }
 
     @GetMapping("/team/byName")
-    public ResponseEntity<List<Match>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
+    public ResponseEntity<List<MatchResponseDto>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getTeamName() +
                     '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
-        return ResponseEntity.ok(matchService.getMatchByTeam(teamId));
+        List<Match> result = matchService.getMatchByTeam(teamId);
+        return ResponseEntity.ok(
+                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<Match>> getMatchByDate(@PathVariable String date) {
+    public ResponseEntity<List<MatchResponseDto>> getMatchByDate(@PathVariable String date) {
         LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
         InputVerifier.validateDate(date);
-        return ResponseEntity.ok(matchService.getMatchByDate(date));
+        List<Match> result = matchService.getMatchByDate(date);
+        return ResponseEntity.ok(
+                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
     }
 
     @PostMapping("/play")

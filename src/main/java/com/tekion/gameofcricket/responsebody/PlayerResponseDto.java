@@ -3,7 +3,7 @@ package com.tekion.gameofcricket.responsebody;
 import lombok.Getter;
 
 /**
- * This represents the response body returned whenever client requests for a player
+ * This represents the response body returned whenever client fetches a player
  */
 @Getter
 public final class PlayerResponseDto {

@@ -3,7 +3,8 @@ package com.tekion.gameofcricket.controllers;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.responsebody.GenericResponseDto;
-import com.tekion.gameofcricket.utility.ModelToResponseBodyMapper;
+import com.tekion.gameofcricket.services.ResponseMappingService;
+import com.tekion.gameofcricket.services.ResponseMappingServiceImpl;
 import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import com.tekion.gameofcricket.utility.exceptionhandling.InputVerifier;
 import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
@@ -31,12 +32,15 @@ public final class PlayerController {
 
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private ResponseMappingService responseMappingService;
 
     @GetMapping()
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
         List<Player> result = playerService.getAllPlayers();
-        return ResponseEntity.ok(result.stream().map(ModelToResponseBodyMapper::mapPlayer).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                result.stream().map(player -> responseMappingService.mapPlayer(player)).collect(Collectors.toList()));
     }
 
     @GetMapping("/{playerId}")
@@ -44,7 +48,7 @@ public final class PlayerController {
         LOGGER.info("GET call received : http://localhost:3004/players/" + playerId);
         InputVerifier.validatePlayerId(playerId);
         Player result = playerService.getPlayerById(new ObjectId(playerId));
-        return ResponseEntity.ok(ModelToResponseBodyMapper.mapPlayer(result));
+        return ResponseEntity.ok(responseMappingService.mapPlayer(result));
     }
 
     @GetMapping("/byName")
@@ -53,7 +57,7 @@ public final class PlayerController {
                 "GET call received : http://localhost:3004/players/byName for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         Player result = playerService.getPlayerByName(requestBody.getPlayerName());
-        return ResponseEntity.ok(ModelToResponseBodyMapper.mapPlayer(result));
+        return ResponseEntity.ok(responseMappingService.mapPlayer(result));
     }
 
     @PostMapping()
