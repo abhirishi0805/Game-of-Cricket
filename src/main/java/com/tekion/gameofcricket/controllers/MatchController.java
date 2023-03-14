@@ -47,7 +47,7 @@ public final class MatchController {
         LOGGER.info("GET call received : http://localhost:3004/matches");
         List<Match> result = matchService.getAllMatches();
         return ResponseEntity.ok(
-                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
+                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/{matchId}")
@@ -64,7 +64,7 @@ public final class MatchController {
         InputVerifier.validateTeamId(teamId);
         List<Match> result = matchService.getMatchByTeam(new ObjectId(teamId));
         return ResponseEntity.ok(
-                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
+                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/team/byName")
@@ -75,7 +75,7 @@ public final class MatchController {
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Match> result = matchService.getMatchByTeam(teamId);
         return ResponseEntity.ok(
-                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
+                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/date/{date}")
@@ -84,7 +84,7 @@ public final class MatchController {
         InputVerifier.validateDate(date);
         List<Match> result = matchService.getMatchByDate(date);
         return ResponseEntity.ok(
-                result.stream().map(match -> responseMappingService.mapMatch(match)).collect(Collectors.toList()));
+                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @PostMapping("/play")
