@@ -56,7 +56,7 @@ public final class ResponseMappingServiceImpl implements ResponseMappingService 
     }
 
     @Override
-    public StatResponseDto mapPlayerMatchStat(Stat stat) {
+    public StatResponseDto mapStat(Stat stat) {
         String teamName = teamService.getTeamById(stat.getTeamId()).getTeamName();
         String opponentTeamName = "NA";
         // for backward compatibility - initially opponent wasn't being stored

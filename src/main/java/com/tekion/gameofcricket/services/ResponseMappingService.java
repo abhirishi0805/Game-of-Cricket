@@ -20,5 +20,5 @@ public interface ResponseMappingService {
 
     MatchResponseDto mapMatch(Match match);
 
-    StatResponseDto mapPlayerMatchStat(Stat stat);
+    StatResponseDto mapStat(Stat stat);
 }

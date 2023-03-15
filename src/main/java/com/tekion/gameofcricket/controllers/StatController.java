@@ -35,10 +35,11 @@ public final class StatController {
     private ResponseMappingService responseMappingService;
 
     @GetMapping("/{playerId}")
-    private ResponseEntity<List<Stat>> getAllStatsOfPlayer(@PathVariable String playerId) {
+    private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
         InputVerifier.validatePlayerId(playerId);
-        return ResponseEntity.ok(playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId)));
+        List<Stat> result = playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
     @GetMapping("/player-name")
@@ -48,34 +49,36 @@ public final class StatController {
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
         List<Stat> result = playerMatchStatService.getAllStatsOfPlayer(playerId);
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayerMatchStat).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
     @GetMapping("/match/{matchId}")
-    private ResponseEntity<List<Stat>> getAllStatsOfMatch(@PathVariable String matchId) {
+    private ResponseEntity<List<StatResponseDto>> getAllStatsOfMatch(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
         InputVerifier.validateMatchId(matchId);
-        return ResponseEntity.ok(playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId)));
+        List<Stat> result = playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
     @GetMapping("/{playerId}/{matchId}")
-    private ResponseEntity<Stat> getPlayerStatByMatch(@PathVariable String playerId, @PathVariable String matchId) {
+    private ResponseEntity<StatResponseDto> getPlayerStatByMatch(@PathVariable String playerId,
+                                                                 @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId + '/' + matchId);
         InputVerifier.validatePlayerId(playerId);
         InputVerifier.validateMatchId(matchId);
-        return ResponseEntity.ok(
-                playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId)));
+        Stat result = playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId));
+        return ResponseEntity.ok(responseMappingService.mapStat(result));
     }
 
     @GetMapping("/player-name/{matchId}")
-    private ResponseEntity<Stat> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
-                                                      @PathVariable String matchId) {
+    private ResponseEntity<StatResponseDto> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
+                                                                 @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" +
                     requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         InputVerifier.validateMatchId(matchId);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
-        return ResponseEntity.ok(playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId)));
+        Stat result = playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId));
+        return ResponseEntity.ok(responseMappingService.mapStat(result));
     }
 }
