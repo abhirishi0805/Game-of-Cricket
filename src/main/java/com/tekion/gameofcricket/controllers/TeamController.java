@@ -50,7 +50,7 @@ public final class TeamController {
         return ResponseEntity.ok(responseMappingService.mapTeam(result));
     }
 
-    @GetMapping("/byName")
+    @GetMapping("/team-name")
     public ResponseEntity<TeamResponseDto> getTeamByName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/teams/byName for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
@@ -67,7 +67,7 @@ public final class TeamController {
                 result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
     }
 
-    @GetMapping("/byName/players")
+    @GetMapping("/team-name/players")
     public ResponseEntity<List<PlayerResponseDto>> getTeamPlayers(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/teams/byName/players for \"" + requestBody.getTeamName() +

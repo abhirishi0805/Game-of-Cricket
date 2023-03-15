@@ -67,7 +67,7 @@ public final class MatchController {
                 result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
-    @GetMapping("/team/byName")
+    @GetMapping("/team/team-name")
     public ResponseEntity<List<MatchResponseDto>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getTeamName() +
                     '\"');

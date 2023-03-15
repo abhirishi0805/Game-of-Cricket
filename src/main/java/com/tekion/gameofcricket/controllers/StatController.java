@@ -41,7 +41,7 @@ public final class StatController {
         return ResponseEntity.ok(playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId)));
     }
 
-    @GetMapping("/byName")
+    @GetMapping("/player-name")
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getPlayerName() + '\"');
@@ -68,7 +68,7 @@ public final class StatController {
                 playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId)));
     }
 
-    @GetMapping("/byName/{matchId}")
+    @GetMapping("/player-name/{matchId}")
     private ResponseEntity<Stat> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
                                                       @PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" +

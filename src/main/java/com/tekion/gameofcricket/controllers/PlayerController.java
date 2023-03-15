@@ -48,7 +48,7 @@ public final class PlayerController {
         return ResponseEntity.ok(responseMappingService.mapPlayer(result));
     }
 
-    @GetMapping("/byName")
+    @GetMapping("/player-name")
     public ResponseEntity<PlayerResponseDto> getPlayerByName(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
                 "GET call received : http://localhost:3004/players/byName for \"" + requestBody.getPlayerName() + '\"');
