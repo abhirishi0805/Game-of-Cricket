@@ -39,7 +39,7 @@ public final class TeamController {
         LOGGER.info("GET call received : http://localhost:3004/teams");
         List<Team> result = teamService.getAllTeams();
         return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapTeam).collect(Collectors.toList()));
+                result.parallelStream().map(responseMappingService::mapTeam).collect(Collectors.toList()));
     }
 
     @GetMapping("/{teamId}")
@@ -64,7 +64,7 @@ public final class TeamController {
         InputVerifier.validateTeamId(teamId);
         List<Player> result = teamService.getTeamPlayers(new ObjectId(teamId));
         return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
+                result.parallelStream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
     }
 
     @GetMapping("/team-name/players")
@@ -76,7 +76,7 @@ public final class TeamController {
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Player> result = teamService.getTeamPlayers(teamId);
         return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
+                result.parallelStream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
     }
 
     @PostMapping()
