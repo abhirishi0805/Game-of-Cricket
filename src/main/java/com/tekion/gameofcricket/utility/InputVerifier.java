@@ -44,11 +44,17 @@ public final class InputVerifier {
         if (requestBody.getPlayerName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'playerName' field");
         }
+        if (requestBody.getPlayerName().isBlank()) {
+            throw new InvalidRequestBodyException("playerName cannot be blank");
+        }
     }
 
     public static void validateTeamRequestBody(TeamRequestDto requestBody) {
         if (requestBody.getTeamName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'teamName' field");
+        }
+        if (requestBody.getTeamName().isBlank()) {
+            throw new InvalidRequestBodyException("teamName cannot be blank");
         }
     }
 
@@ -56,12 +62,20 @@ public final class InputVerifier {
         if (requestBody.getTeamName() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'teamName' field");
         }
+        if (requestBody.getTeamName().isBlank()) {
+            throw new InvalidRequestBodyException("teamName cannot be blank");
+        }
         if (requestBody.getPlayerNames() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'playerNames' field");
         }
         if (requestBody.getPlayerNames().size() != Constants.TEAM_SIZE) {
             throw new InvalidRequestBodyException("Team must contain " + Constants.TEAM_SIZE + " players");
         }
+        requestBody.getPlayerNames().forEach(playerName -> {
+            if (playerName.isBlank()) {
+                throw new InvalidRequestBodyException("player name cannot be blank");
+            }
+        });
     }
 
     public static void validatePlayMatchRequestBody(PlayMatchRequestDto requestBody) {
@@ -70,6 +84,9 @@ public final class InputVerifier {
         }
         if (requestBody.getTeam2Name() == null) {
             throw new InvalidRequestBodyException("Request body must contain 'team2Name' field");
+        }
+        if (requestBody.getTeam1Name().isBlank() || requestBody.getTeam2Name().isBlank()) {
+            throw new InvalidRequestBodyException("teamName cannot be blank");
         }
     }
 
