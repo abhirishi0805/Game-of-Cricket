@@ -1,26 +1,26 @@
 package com.tekion.gameofcricket.services;
 
-import static com.tekion.gameofcricket.utility.Constants.*;
-
 import com.tekion.gameofcricket.helperbeans.Innings;
 import com.tekion.gameofcricket.helperbeans.OngoingMatchData;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.models.Team;
+import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
 import com.tekion.gameofcricket.utility.DateUtils;
 import com.tekion.gameofcricket.utility.enums.MatchResult;
-import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.tekion.gameofcricket.utility.Constants.MATCH_LENGTH_IN_BALLS;
+import static com.tekion.gameofcricket.utility.Constants.TEAM_SIZE;
 
 /**
  * This is a concrete implementation for the PlayMatchService interface
@@ -38,8 +38,6 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private MatchService matchService;
     @Autowired
     private PlayerService playerService;
-    @Autowired
-    private ApplicationContext applicationContext;
     @Autowired
     private OngoingMatchData matchData;
     @Autowired

@@ -46,8 +46,7 @@ public final class MatchController {
     public ResponseEntity<List<MatchResponseDto>> getAllMatches() {
         LOGGER.info("GET call received : http://localhost:3004/matches");
         List<Match> result = matchService.getAllMatches();
-        return ResponseEntity.ok(
-                result.parallelStream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/{matchId}")
@@ -63,8 +62,7 @@ public final class MatchController {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
         InputVerifier.validateTeamId(teamId);
         List<Match> result = matchService.getMatchByTeam(new ObjectId(teamId));
-        return ResponseEntity.ok(
-                result.parallelStream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/team/team-name")
@@ -74,8 +72,7 @@ public final class MatchController {
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Match> result = matchService.getMatchByTeam(teamId);
-        return ResponseEntity.ok(
-                result.parallelStream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @GetMapping("/date/{date}")
@@ -83,8 +80,7 @@ public final class MatchController {
         LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
         InputVerifier.validateDate(date);
         List<Match> result = matchService.getMatchByDate(date);
-        return ResponseEntity.ok(
-                result.parallelStream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toList()));
     }
 
     @PostMapping("/play")
