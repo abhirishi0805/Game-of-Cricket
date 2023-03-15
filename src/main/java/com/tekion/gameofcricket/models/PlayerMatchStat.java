@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Document(collection = "player_match_stats")
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Builder
 @Getter
 @Setter
 public final class PlayerMatchStat {
@@ -24,7 +26,7 @@ public final class PlayerMatchStat {
     private ObjectId playerId;
     private ObjectId matchId;
     private ObjectId teamId;
-    // TODO - add opponent team ID
+    private ObjectId opponentTeamId;
     private int runsScored;
     private int ballsFaced;
     private int sixesHit;
@@ -36,11 +38,13 @@ public final class PlayerMatchStat {
     public PlayerMatchStat() {
     }
 
-    public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId, int runsScored, int ballsFaced,
-                           int sixesHit, int foursHit, int ballsThrown, int wicketsTaken, int runsConceded) {
+    public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId, ObjectId opponentTeamId,
+                           int runsScored, int ballsFaced, int sixesHit, int foursHit, int ballsThrown,
+                           int wicketsTaken, int runsConceded) {
         this.playerId = playerId;
         this.matchId = matchId;
         this.teamId = teamId;
+        this.opponentTeamId = opponentTeamId;
         this.runsScored = runsScored;
         this.ballsFaced = ballsFaced;
         this.sixesHit = sixesHit;
@@ -53,8 +57,8 @@ public final class PlayerMatchStat {
     @Override
     public String toString() {
         return "PlayerMatchStat{" + "id=" + id + ", playerId=" + playerId + ", matchId=" + matchId + ", teamId=" +
-               teamId + ", runsScored=" + runsScored + ", ballsFaced=" + ballsFaced + ", sixesHit=" + sixesHit +
-               ", foursHit=" + foursHit + ", ballsThrown=" + ballsThrown + ", wicketsTaken=" + wicketsTaken +
-               ", runsConceded=" + runsConceded + '}';
+               teamId + ", opponentTeamId=" + opponentTeamId + ", runsScored=" + runsScored + ", ballsFaced=" +
+               ballsFaced + ", sixesHit=" + sixesHit + ", foursHit=" + foursHit + ", ballsThrown=" + ballsThrown +
+               ", wicketsTaken=" + wicketsTaken + ", runsConceded=" + runsConceded + '}';
     }
 }

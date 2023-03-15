@@ -72,17 +72,15 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private void generatePlayerStatMap() {
         playerMatchStatMap = new HashMap<>();
         team1.getPlayerIds().forEach(playerId -> {
-            PlayerMatchStat playerMatchStat = applicationContext.getBean(PlayerMatchStat.class);
-            playerMatchStat.setPlayerId(playerId);
-            playerMatchStat.setTeamId(team1.getId());
-            playerMatchStat.setMatchId(match.getId());
+            PlayerMatchStat playerMatchStat = PlayerMatchStat.builder().playerId(playerId).teamId(team1.getId())
+                                                             .opponentTeamId(team2.getId()).matchId(match.getId())
+                                                             .build();
             playerMatchStatMap.put(playerId, playerMatchStat);
         });
         team2.getPlayerIds().forEach(playerId -> {
-            PlayerMatchStat playerMatchStat = applicationContext.getBean(PlayerMatchStat.class);
-            playerMatchStat.setPlayerId(playerId);
-            playerMatchStat.setTeamId(team2.getId());
-            playerMatchStat.setMatchId(match.getId());
+            PlayerMatchStat playerMatchStat = PlayerMatchStat.builder().playerId(playerId).teamId(team2.getId())
+                                                             .opponentTeamId(team1.getId()).matchId(match.getId())
+                                                             .build();
             playerMatchStatMap.put(playerId, playerMatchStat);
         });
     }
@@ -167,13 +165,11 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
                               matchData.getFirstInnings().getWicketsFallen();
         String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInnings().getRunsScored() + '/' +
                                matchData.getSecondInnings().getWicketsFallen();
-        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!" :
-                        (match.getResult() == MatchResult.TEAM_2_WON ? team2.getTeamName() + " won!" : "Match drawn!");
+        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!"
+                                                                    : (match.getResult() == MatchResult.TEAM_2_WON ?
+                                                                       team2.getTeamName() + " won!" : "Match drawn!");
 
-        return PlayMatchResponseDto.builder()
-                                   .firstInnings(firstInnings)
-                                   .secondInnings(secondInnings)
-                                   .result(result)
+        return PlayMatchResponseDto.builder().firstInnings(firstInnings).secondInnings(secondInnings).result(result)
                                    .build();
     }
 }
