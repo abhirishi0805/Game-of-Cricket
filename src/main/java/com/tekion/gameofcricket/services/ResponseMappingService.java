@@ -2,8 +2,10 @@ package com.tekion.gameofcricket.services;
 
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Player;
+import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.responsebody.MatchResponseDto;
+import com.tekion.gameofcricket.responsebody.StatResponseDto;
 import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
 import com.tekion.gameofcricket.responsebody.TeamResponseDto;
 
@@ -17,4 +19,6 @@ public interface ResponseMappingService {
     TeamResponseDto mapTeam(Team team);
 
     MatchResponseDto mapMatch(Match match);
+
+    StatResponseDto mapPlayerMatchStat(Stat stat);
 }

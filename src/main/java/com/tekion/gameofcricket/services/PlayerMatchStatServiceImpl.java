@@ -1,7 +1,7 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.models.PlayerMatchStat;
-import com.tekion.gameofcricket.repositories.PlayerMatchStatRepository;
+import com.tekion.gameofcricket.models.Stat;
+import com.tekion.gameofcricket.repositories.StatRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,49 +15,49 @@ import java.util.List;
 public final class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
 
     @Autowired
-    private PlayerMatchStatRepository playerMatchStatRepository;
+    private StatRepository statRepository;
 
     @Override
-    public List<PlayerMatchStat> getAllStatsOfPlayer(ObjectId playerId) {
-        return playerMatchStatRepository.findPlayerMatchStatsByPlayerId(playerId);
+    public List<Stat> getAllStatsOfPlayer(ObjectId playerId) {
+        return statRepository.findPlayerMatchStatsByPlayerId(playerId);
     }
 
     @Override
-    public List<PlayerMatchStat> getAllStatsOfMatch(ObjectId matchId) {
-        return playerMatchStatRepository.findPlayerMatchStatsByMatchId(matchId);
+    public List<Stat> getAllStatsOfMatch(ObjectId matchId) {
+        return statRepository.findPlayerMatchStatsByMatchId(matchId);
     }
 
     @Override
-    public PlayerMatchStat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId) {
-        return playerMatchStatRepository.findPlayerMatchStatByPlayerIdAndMatchId(playerId, matchId);
+    public Stat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId) {
+        return statRepository.findPlayerMatchStatByPlayerIdAndMatchId(playerId, matchId);
     }
 
     @Override
-    public void addPlayerMatchStat(PlayerMatchStat playerMatchStat) {
-        playerMatchStatRepository.save(playerMatchStat);
+    public void addPlayerMatchStat(Stat stat) {
+        statRepository.save(stat);
     }
 
     @Override
-    public void updateBattingFigure(PlayerMatchStat playerMatchStat, int outcome) {
-        playerMatchStat.setBallsFaced(playerMatchStat.getBallsFaced() + 1);
+    public void updateBattingFigure(Stat stat, int outcome) {
+        stat.setBallsFaced(stat.getBallsFaced() + 1);
         if (outcome != 7) {
-            playerMatchStat.setRunsScored(playerMatchStat.getRunsScored() + outcome);
+            stat.setRunsScored(stat.getRunsScored() + outcome);
         }
         if (outcome == 6) {
-            playerMatchStat.setSixesHit(playerMatchStat.getSixesHit() + 1);
+            stat.setSixesHit(stat.getSixesHit() + 1);
         }
         if (outcome == 4) {
-            playerMatchStat.setFoursHit(playerMatchStat.getFoursHit() + 1);
+            stat.setFoursHit(stat.getFoursHit() + 1);
         }
     }
 
     @Override
-    public void updateBowlingFigure(PlayerMatchStat playerMatchStat, int outcome) {
-        playerMatchStat.setBallsThrown(playerMatchStat.getBallsThrown() + 1);
+    public void updateBowlingFigure(Stat stat, int outcome) {
+        stat.setBallsThrown(stat.getBallsThrown() + 1);
         if (outcome == 7) {
-            playerMatchStat.setWicketsTaken(playerMatchStat.getWicketsTaken() + 1);
+            stat.setWicketsTaken(stat.getWicketsTaken() + 1);
         } else {
-            playerMatchStat.setRunsConceded(playerMatchStat.getRunsConceded() + 1);
+            stat.setRunsConceded(stat.getRunsConceded() + 1);
         }
     }
 }

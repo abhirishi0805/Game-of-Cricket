@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Builder
 @Getter
 @Setter
-public final class PlayerMatchStat {
+public final class Stat {
 
     @Id
     private ObjectId id;
@@ -34,25 +34,6 @@ public final class PlayerMatchStat {
     private int ballsThrown;
     private int wicketsTaken;
     private int runsConceded;
-
-    public PlayerMatchStat() {
-    }
-
-    public PlayerMatchStat(ObjectId playerId, ObjectId matchId, ObjectId teamId, ObjectId opponentTeamId,
-                           int runsScored, int ballsFaced, int sixesHit, int foursHit, int ballsThrown,
-                           int wicketsTaken, int runsConceded) {
-        this.playerId = playerId;
-        this.matchId = matchId;
-        this.teamId = teamId;
-        this.opponentTeamId = opponentTeamId;
-        this.runsScored = runsScored;
-        this.ballsFaced = ballsFaced;
-        this.sixesHit = sixesHit;
-        this.foursHit = foursHit;
-        this.ballsThrown = ballsThrown;
-        this.wicketsTaken = wicketsTaken;
-        this.runsConceded = runsConceded;
-    }
 
     @Override
     public String toString() {

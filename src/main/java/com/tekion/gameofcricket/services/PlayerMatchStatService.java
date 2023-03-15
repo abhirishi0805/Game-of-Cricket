@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.models.PlayerMatchStat;
+import com.tekion.gameofcricket.models.Stat;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public interface PlayerMatchStatService {
 
-    List<PlayerMatchStat> getAllStatsOfPlayer(ObjectId playerId);
+    List<Stat> getAllStatsOfPlayer(ObjectId playerId);
 
-    List<PlayerMatchStat> getAllStatsOfMatch(ObjectId matchId);
+    List<Stat> getAllStatsOfMatch(ObjectId matchId);
 
-    PlayerMatchStat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId);
+    Stat getPlayerStatByMatch(ObjectId playerId, ObjectId matchId);
 
-    void addPlayerMatchStat(PlayerMatchStat playerMatchStat);
+    void addPlayerMatchStat(Stat stat);
 
-    void updateBattingFigure(PlayerMatchStat playerMatchStat, int outcome);
+    void updateBattingFigure(Stat stat, int outcome);
 
-    void updateBowlingFigure(PlayerMatchStat playerMatchStat, int outcome);
+    void updateBowlingFigure(Stat stat, int outcome);
 }
