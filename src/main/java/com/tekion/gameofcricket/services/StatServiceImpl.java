@@ -12,7 +12,7 @@ import java.util.List;
  * This is a concrete implementation for the PlayerMatchStatService interface
  */
 @Service
-public final class PlayerMatchStatServiceImpl implements PlayerMatchStatService {
+public final class StatServiceImpl implements StatService {
 
     @Autowired
     private StatRepository statRepository;
@@ -35,29 +35,5 @@ public final class PlayerMatchStatServiceImpl implements PlayerMatchStatService 
     @Override
     public void addPlayerMatchStat(Stat stat) {
         statRepository.save(stat);
-    }
-
-    @Override
-    public void updateBattingFigure(Stat stat, int outcome) {
-        stat.setBallsFaced(stat.getBallsFaced() + 1);
-        if (outcome != 7) {
-            stat.setRunsScored(stat.getRunsScored() + outcome);
-        }
-        if (outcome == 6) {
-            stat.setSixesHit(stat.getSixesHit() + 1);
-        }
-        if (outcome == 4) {
-            stat.setFoursHit(stat.getFoursHit() + 1);
-        }
-    }
-
-    @Override
-    public void updateBowlingFigure(Stat stat, int outcome) {
-        stat.setBallsThrown(stat.getBallsThrown() + 1);
-        if (outcome == 7) {
-            stat.setWicketsTaken(stat.getWicketsTaken() + 1);
-        } else {
-            stat.setRunsConceded(stat.getRunsConceded() + 1);
-        }
     }
 }

@@ -33,7 +33,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     @Autowired
     private TeamService teamService;
     @Autowired
-    private PlayerMatchStatService playerMatchStatService;
+    private StatService statService;
     @Autowired
     private MatchService matchService;
     @Autowired
@@ -98,8 +98,8 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
             int outcome = (int) (Math.random() * 8);
             currentInnings.addBall(outcome);
 
-            playerMatchStatService.updateBattingFigure(playerMatchStatMap.get(batsmanId), outcome);
-            playerMatchStatService.updateBowlingFigure(playerMatchStatMap.get(bowlerId), outcome);
+            updateBattingFigure(playerMatchStatMap.get(batsmanId), outcome);
+            updateBowlingFigure(playerMatchStatMap.get(bowlerId), outcome);
 
             // batting team gets all out or chasing team achieves the target
             if (currentInnings.getWicketsFallen() == TEAM_SIZE || currentInnings.getRunsScored() >= target) {
@@ -108,6 +108,28 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         }
         LOGGER.info(battingTeam.getTeamName() + " : " + currentInnings.getRunsScored() + '/' +
                     currentInnings.getWicketsFallen());
+    }
+
+    private void updateBattingFigure(Stat stat, int outcome) {
+        stat.setBallsFaced(stat.getBallsFaced() + 1);
+        if (outcome != 7) {
+            stat.setRunsScored(stat.getRunsScored() + outcome);
+        }
+        if (outcome == 6) {
+            stat.setSixesHit(stat.getSixesHit() + 1);
+        }
+        if (outcome == 4) {
+            stat.setFoursHit(stat.getFoursHit() + 1);
+        }
+    }
+
+    private void updateBowlingFigure(Stat stat, int outcome) {
+        stat.setBallsThrown(stat.getBallsThrown() + 1);
+        if (outcome == 7) {
+            stat.setWicketsTaken(stat.getWicketsTaken() + 1);
+        } else {
+            stat.setRunsConceded(stat.getRunsConceded() + 1);
+        }
     }
 
     private void generateResult() {
@@ -127,7 +149,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         matchService.addMatch(match);
         updateTeamDataPostMatch();
         playerMatchStatMap.forEach((playerId, playerMatchStat) -> {
-            playerMatchStatService.addPlayerMatchStat(playerMatchStat);
+            statService.addPlayerMatchStat(playerMatchStat);
             updatePlayerDataPostMatch(playerId, playerMatchStat);
         });
     }

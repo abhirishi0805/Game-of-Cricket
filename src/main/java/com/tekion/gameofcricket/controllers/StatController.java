@@ -2,7 +2,7 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.responsebody.StatResponseDto;
-import com.tekion.gameofcricket.services.PlayerMatchStatService;
+import com.tekion.gameofcricket.services.StatService;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.services.ResponseMappingService;
 import com.tekion.gameofcricket.utility.InputVerifier;
@@ -27,7 +27,7 @@ public final class StatController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatController.class);
     @Autowired
-    private PlayerMatchStatService playerMatchStatService;
+    private StatService statService;
     @Autowired
     @Lazy
     private PlayerService playerService;
@@ -38,7 +38,7 @@ public final class StatController {
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@PathVariable String playerId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
         InputVerifier.validatePlayerId(playerId);
-        List<Stat> result = playerMatchStatService.getAllStatsOfPlayer(new ObjectId(playerId));
+        List<Stat> result = statService.getAllStatsOfPlayer(new ObjectId(playerId));
         return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
@@ -48,7 +48,7 @@ public final class StatController {
                 "GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
-        List<Stat> result = playerMatchStatService.getAllStatsOfPlayer(playerId);
+        List<Stat> result = statService.getAllStatsOfPlayer(playerId);
         return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
@@ -56,7 +56,7 @@ public final class StatController {
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfMatch(@PathVariable String matchId) {
         LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
         InputVerifier.validateMatchId(matchId);
-        List<Stat> result = playerMatchStatService.getAllStatsOfMatch(new ObjectId(matchId));
+        List<Stat> result = statService.getAllStatsOfMatch(new ObjectId(matchId));
         return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
     }
 
@@ -66,7 +66,7 @@ public final class StatController {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId + '/' + matchId);
         InputVerifier.validatePlayerId(playerId);
         InputVerifier.validateMatchId(matchId);
-        Stat result = playerMatchStatService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId));
+        Stat result = statService.getPlayerStatByMatch(new ObjectId(playerId), new ObjectId(matchId));
         return ResponseEntity.ok(responseMappingService.mapStat(result));
     }
 
@@ -78,7 +78,7 @@ public final class StatController {
         InputVerifier.validatePlayerRequestBody(requestBody);
         InputVerifier.validateMatchId(matchId);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
-        Stat result = playerMatchStatService.getPlayerStatByMatch(playerId, new ObjectId(matchId));
+        Stat result = statService.getPlayerStatByMatch(playerId, new ObjectId(matchId));
         return ResponseEntity.ok(responseMappingService.mapStat(result));
     }
 }
