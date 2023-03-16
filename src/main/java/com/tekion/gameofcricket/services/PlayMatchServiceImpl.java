@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.tekion.gameofcricket.utility.Constants.MATCH_LENGTH_IN_BALLS;
 import static com.tekion.gameofcricket.utility.Constants.TEAM_SIZE;
@@ -95,7 +96,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
             ObjectId bowlerId = bowlingTeam.getPlayerIds().get((currentInnings.getBallsThrown() / 6) % TEAM_SIZE);
 
             // 0..6 --> equal run scored,   7 --> wicket falls
-            int outcome = (int) (Math.random() * 8);
+            int outcome = ThreadLocalRandom.current().nextInt(8);
             currentInnings.addBall(outcome);
 
             updateBattingFigure(playerMatchStatMap.get(batsmanId), outcome);
