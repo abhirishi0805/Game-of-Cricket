@@ -39,7 +39,8 @@ public final class StatController {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
         InputVerifier.validatePlayerId(playerId);
         List<Stat> result = statService.getAllStatsOfPlayer(new ObjectId(playerId));
-        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/player-name")
@@ -49,7 +50,8 @@ public final class StatController {
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
         List<Stat> result = statService.getAllStatsOfPlayer(playerId);
-        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/match/{matchId}")
@@ -57,7 +59,8 @@ public final class StatController {
         LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
         InputVerifier.validateMatchId(matchId);
         List<Stat> result = statService.getAllStatsOfMatch(new ObjectId(matchId));
-        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{playerId}/{matchId}")

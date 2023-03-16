@@ -36,7 +36,8 @@ public final class PlayerController {
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
         List<Player> result = playerService.getAllPlayers();
-        return ResponseEntity.ok(result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{playerId}")
