@@ -69,7 +69,7 @@ public final class MatchController {
 
     @GetMapping("/team/team-name")
     public ResponseEntity<List<MatchResponseDto>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/matches/team/byName for \"" + requestBody.getTeamName() +
+        LOGGER.info("GET call received : http://localhost:3004/matches/team/team-name for \"" + requestBody.getTeamName() +
                     '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();

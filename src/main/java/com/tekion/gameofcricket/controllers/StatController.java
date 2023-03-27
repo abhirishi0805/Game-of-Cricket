@@ -46,7 +46,7 @@ public final class StatController {
     @GetMapping("/player-name")
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
-                "GET call received : http://localhost:3004/stats/byName for \"" + requestBody.getPlayerName() + '\"');
+                "GET call received : http://localhost:3004/stats/player-name for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
         List<Stat> result = statService.getAllStatsOfPlayer(playerId);
@@ -76,7 +76,7 @@ public final class StatController {
     @GetMapping("/player-name/{matchId}")
     private ResponseEntity<StatResponseDto> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
                                                                  @PathVariable String matchId) {
-        LOGGER.info("GET call received : http://localhost:3004/stats/byName/" + matchId + " for \"" +
+        LOGGER.info("GET call received : http://localhost:3004/stats/player-name/" + matchId + " for \"" +
                     requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         InputVerifier.validateMatchId(matchId);
