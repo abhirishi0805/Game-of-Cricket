@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.exceptionhandling;
+package com.tekion.gameofcricket.utility.exception;
 
 import com.tekion.gameofcricket.responsebody.GenericResponseDto;
 import com.tekion.gameofcricket.utility.enums.ResponseStatus;

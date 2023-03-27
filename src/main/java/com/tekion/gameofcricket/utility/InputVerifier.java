@@ -4,9 +4,9 @@ import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
 import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
 import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
 import com.tekion.gameofcricket.requestbody.TeamRequestDto;
-import com.tekion.gameofcricket.utility.exceptionhandling.InvalidDateException;
-import com.tekion.gameofcricket.utility.exceptionhandling.InvalidObjectIdException;
-import com.tekion.gameofcricket.utility.exceptionhandling.InvalidRequestBodyException;
+import com.tekion.gameofcricket.utility.exception.InvalidDateException;
+import com.tekion.gameofcricket.utility.exception.InvalidObjectIdException;
+import com.tekion.gameofcricket.utility.exception.InvalidRequestBodyException;
 import org.bson.types.ObjectId;
 
 /**

@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Innings {
+public class Inning {
 
     private int runsScored = 0;
     private int ballsThrown = 0;
     private int wicketsFallen = 0;
 
-    public Innings() {
+    public Inning() {
     }
 
-    public Innings(int runsScored, int ballsThrown, int wicketsFallen) {
+    public Inning(int runsScored, int ballsThrown, int wicketsFallen) {
         this.runsScored = runsScored;
         this.ballsThrown = ballsThrown;
         this.wicketsFallen = wicketsFallen;

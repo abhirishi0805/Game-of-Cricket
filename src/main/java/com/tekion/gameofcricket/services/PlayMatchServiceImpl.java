@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.helperbeans.Innings;
+import com.tekion.gameofcricket.helperbeans.Inning;
 import com.tekion.gameofcricket.helperbeans.OngoingMatchData;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Player;
@@ -54,8 +54,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         configureMatchData();
         matchData.resetInnings();
         generatePlayerStatMap();
-        simulateInnings(true);
-        simulateInnings(false);
+        simulateInnings();
         generateResult();
         storeMatchData();
         return getResponseDTO();
@@ -82,33 +81,37 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         });
     }
 
-    private void simulateInnings(boolean isFirstInnings) {
-        Innings currentInnings = isFirstInnings ? matchData.getFirstInnings() : matchData.getSecondInnings();
-        Team battingTeam = isFirstInnings ? team1 : team2;
-        Team bowlingTeam = isFirstInnings ? team2 : team1;
+    private void simulateInnings() {
+        // first inning
+        simulateInningsHelper(matchData.getFirstInning(), team1, team2, Integer.MAX_VALUE);
+        // second inning
+        simulateInningsHelper(matchData.getSecondInning(), team2, team1,
+                matchData.getFirstInning().getRunsScored() + 1);
+    }
 
-        int target = isFirstInnings ? Integer.MAX_VALUE : matchData.getFirstInnings().getRunsScored() + 1;
-
+    private void simulateInningsHelper(Inning currentInning, Team battingTeam, Team bowlingTeam, int target) {
         int ballsSimulated = 0;
+
         while (ballsSimulated++ < MATCH_LENGTH_IN_BALLS) {
             // every batting team player bats in order, every bowling team player take turn to bowl an over
-            ObjectId batsmanId = battingTeam.getPlayerIds().get(currentInnings.getWicketsFallen());
-            ObjectId bowlerId = bowlingTeam.getPlayerIds().get((currentInnings.getBallsThrown() / 6) % TEAM_SIZE);
+            ObjectId batsmanId = battingTeam.getPlayerIds().get(currentInning.getWicketsFallen());
+            ObjectId bowlerId = bowlingTeam.getPlayerIds().get((currentInning.getBallsThrown() / 6) % TEAM_SIZE);
 
             // 0..6 --> equal run scored,   7 --> wicket falls
             int outcome = ThreadLocalRandom.current().nextInt(8);
-            currentInnings.addBall(outcome);
+            currentInning.addBall(outcome);
 
             updateBattingFigure(playerMatchStatMap.get(batsmanId), outcome);
             updateBowlingFigure(playerMatchStatMap.get(bowlerId), outcome);
 
             // batting team gets all out or chasing team achieves the target
-            if (currentInnings.getWicketsFallen() == TEAM_SIZE || currentInnings.getRunsScored() >= target) {
+            if (currentInning.getWicketsFallen() == TEAM_SIZE || currentInning.getRunsScored() >= target) {
                 break;
             }
         }
-        LOGGER.info(battingTeam.getTeamName() + " : " + currentInnings.getRunsScored() + '/' +
-                    currentInnings.getWicketsFallen());
+
+        LOGGER.info(battingTeam.getTeamName() + " : " + currentInning.getRunsScored() + '/' +
+                    currentInning.getWicketsFallen());
     }
 
     private void updateBattingFigure(Stat stat, int outcome) {
@@ -134,10 +137,10 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     }
 
     private void generateResult() {
-        if (matchData.getFirstInnings().getRunsScored() > matchData.getSecondInnings().getRunsScored()) {
+        if (matchData.getFirstInning().getRunsScored() > matchData.getSecondInning().getRunsScored()) {
             LOGGER.info("Result : " + team1.getTeamName() + " won!");
             match.setResult(MatchResult.TEAM_1_WON);
-        } else if (matchData.getFirstInnings().getRunsScored() < matchData.getSecondInnings().getRunsScored()) {
+        } else if (matchData.getFirstInning().getRunsScored() < matchData.getSecondInning().getRunsScored()) {
             LOGGER.info("Result : " + team2.getTeamName() + " won!");
             match.setResult(MatchResult.TEAM_2_WON);
         } else {
@@ -180,10 +183,10 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
 
     private PlayMatchResponseDto getResponseDTO() {
 
-        String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInnings().getRunsScored() + '/' +
-                              matchData.getFirstInnings().getWicketsFallen();
-        String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInnings().getRunsScored() + '/' +
-                               matchData.getSecondInnings().getWicketsFallen();
+        String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInning().getRunsScored() + '/' +
+                              matchData.getFirstInning().getWicketsFallen();
+        String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInning().getRunsScored() + '/' +
+                               matchData.getSecondInning().getWicketsFallen();
         String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!"
                                                                     : (match.getResult() == MatchResult.TEAM_2_WON ?
                                                                        team2.getTeamName() + " won!" : "Match drawn!");

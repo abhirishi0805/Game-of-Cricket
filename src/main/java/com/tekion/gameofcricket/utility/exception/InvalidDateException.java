@@ -1,4 +1,4 @@
-package com.tekion.gameofcricket.utility.exceptionhandling;
+package com.tekion.gameofcricket.utility.exception;
 
 /**
  * This is a user-defined exception for date related anomalies
