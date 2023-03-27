@@ -3,10 +3,7 @@ package com.tekion.gameofcricket.controllers;
 import com.tekion.gameofcricket.models.Match;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.responsebody.MatchResponseDto;
-import com.tekion.gameofcricket.services.MatchService;
-import com.tekion.gameofcricket.services.PlayMatchService;
-import com.tekion.gameofcricket.services.TeamService;
-import com.tekion.gameofcricket.services.ResponseMappingServiceImpl;
+import com.tekion.gameofcricket.services.*;
 import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.requestbody.PlayMatchRequestDto;
 import com.tekion.gameofcricket.requestbody.TeamRequestDto;
@@ -31,16 +28,18 @@ public final class MatchController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchController.class);
 
-    @Autowired
-    private MatchService matchService;
-    @Autowired
-    @Lazy
-    private PlayMatchService playMatchService;
-    @Autowired
-    @Lazy
-    private TeamService teamService;
-    @Autowired
-    private ResponseMappingServiceImpl responseMappingService;
+    private final MatchService matchService;
+    private final ResponseMappingService responseMappingService;
+    private final PlayMatchService playMatchService;
+    private final TeamService teamService;
+
+    public MatchController(MatchService matchService, ResponseMappingService responseMappingService,
+                           @Lazy PlayMatchService playMatchService, @Lazy TeamService teamService) {
+        this.matchService = matchService;
+        this.responseMappingService = responseMappingService;
+        this.playMatchService = playMatchService;
+        this.teamService = teamService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<MatchResponseDto>> getAllMatches() {
@@ -69,8 +68,9 @@ public final class MatchController {
 
     @GetMapping("/team/team-name")
     public ResponseEntity<List<MatchResponseDto>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/matches/team/team-name for \"" + requestBody.getTeamName() +
-                    '\"');
+        LOGGER.info(
+                "GET call received : http://localhost:3004/matches/team/team-name for \"" + requestBody.getTeamName() +
+                '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Match> result = matchService.getMatchByTeam(teamId);

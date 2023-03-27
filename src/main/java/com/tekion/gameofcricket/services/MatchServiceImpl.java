@@ -17,12 +17,16 @@ import java.util.Optional;
  * This is a concrete implementation for the MatchService interface
  */
 @Service
+@Lazy
 public final class MatchServiceImpl implements MatchService {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchServiceImpl.class);
+    private final MatchRepository matchRepository;
+
     @Autowired
-    private MatchRepository matchRepository;
+    public MatchServiceImpl(MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
 
     @Override
     public List<Match> getAllMatches() {

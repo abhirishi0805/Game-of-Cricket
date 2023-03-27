@@ -1,14 +1,13 @@
 package com.tekion.gameofcricket.services;
 
-import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.repositories.TeamRepository;
+import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +21,17 @@ import java.util.stream.Collectors;
  * This is a concrete implementation for the TeamService interface
  */
 @Service
+@Lazy
 public final class TeamServiceImpl implements TeamService {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamServiceImpl.class);
-    @Autowired
-    private TeamRepository teamRepository;
-    @Autowired
-    @Lazy
-    private PlayerService playerService;
-    @Autowired
-    @Lazy
-    private ApplicationContext applicationContext;
+    private final TeamRepository teamRepository;
+    private final PlayerService playerService;
+
+    public TeamServiceImpl(TeamRepository teamRepository, @Lazy PlayerService playerService) {
+        this.teamRepository = teamRepository;
+        this.playerService = playerService;
+    }
 
     @Override
     public List<Team> getAllTeams() {

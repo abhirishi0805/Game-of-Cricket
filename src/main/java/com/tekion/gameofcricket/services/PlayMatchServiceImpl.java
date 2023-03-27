@@ -7,7 +7,6 @@ import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
-import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
 import com.tekion.gameofcricket.utility.DateUtils;
 import com.tekion.gameofcricket.utility.enums.MatchResult;
 import org.bson.types.ObjectId;
@@ -28,23 +27,28 @@ import static com.tekion.gameofcricket.utility.Constants.TEAM_SIZE;
  * This is a concrete implementation for the PlayMatchService interface
  */
 @Service
+@Lazy
 public final class PlayMatchServiceImpl implements PlayMatchService {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayMatchServiceImpl.class);
-    @Autowired
-    private TeamService teamService;
-    @Autowired
-    private StatService statService;
-    @Autowired
-    private MatchService matchService;
-    @Autowired
-    private PlayerService playerService;
+    private final TeamService teamService;
+    private final StatService statService;
+    private final MatchService matchService;
+    private final PlayerService playerService;
     @Autowired
     private OngoingMatchData matchData;
     private Match match;
     private Team team1, team2;
     private Map<ObjectId, Stat> playerMatchStatMap;
+
+    @Autowired
+    public PlayMatchServiceImpl(TeamService teamService, StatService statService, MatchService matchService,
+                                PlayerService playerService) {
+        this.teamService = teamService;
+        this.statService = statService;
+        this.matchService = matchService;
+        this.playerService = playerService;
+    }
 
     @Override
     public PlayMatchResponseDto playMatch(Team team1, Team team2) {

@@ -4,6 +4,7 @@ import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.repositories.StatRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,15 @@ import java.util.List;
  * This is a concrete implementation for the PlayerMatchStatService interface
  */
 @Service
+@Lazy
 public final class StatServiceImpl implements StatService {
 
+    private final StatRepository statRepository;
+
     @Autowired
-    private StatRepository statRepository;
+    public StatServiceImpl(StatRepository statRepository) {
+        this.statRepository = statRepository;
+    }
 
     @Override
     public List<Stat> getAllStatsOfPlayer(ObjectId playerId) {

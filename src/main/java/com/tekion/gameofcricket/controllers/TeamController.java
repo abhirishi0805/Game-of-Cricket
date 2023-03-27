@@ -2,15 +2,15 @@ package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Team;
+import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
+import com.tekion.gameofcricket.requestbody.TeamRequestDto;
+import com.tekion.gameofcricket.responsebody.GenericResponseDto;
 import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
 import com.tekion.gameofcricket.responsebody.TeamResponseDto;
 import com.tekion.gameofcricket.services.ResponseMappingService;
 import com.tekion.gameofcricket.services.TeamService;
-import com.tekion.gameofcricket.responsebody.GenericResponseDto;
-import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import com.tekion.gameofcricket.utility.InputVerifier;
-import com.tekion.gameofcricket.requestbody.CreateTeamRequestDto;
-import com.tekion.gameofcricket.requestbody.TeamRequestDto;
+import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +29,14 @@ import java.util.stream.Collectors;
 public final class TeamController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamController.class);
+    private final TeamService teamService;
+    private final ResponseMappingService responseMappingService;
+
     @Autowired
-    private TeamService teamService;
-    @Autowired
-    private ResponseMappingService responseMappingService;
+    public TeamController(TeamService teamService, ResponseMappingService responseMappingService) {
+        this.teamService = teamService;
+        this.responseMappingService = responseMappingService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<TeamResponseDto>> getAllTeams() {
@@ -52,7 +56,8 @@ public final class TeamController {
 
     @GetMapping("/team-name")
     public ResponseEntity<TeamResponseDto> getTeamByName(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/teams/team-name for \"" + requestBody.getTeamName() + '\"');
+        LOGGER.info(
+                "GET call received : http://localhost:3004/teams/team-name for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         Team result = teamService.getTeamByName(requestBody.getTeamName());
         return ResponseEntity.ok(responseMappingService.mapTeam(result));

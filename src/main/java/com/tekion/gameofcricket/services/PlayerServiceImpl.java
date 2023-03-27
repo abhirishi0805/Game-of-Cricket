@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +17,16 @@ import java.util.Optional;
  * This is a concrete implementation for the PlayerService interface
  */
 @Service
+@Lazy
 public final class PlayerServiceImpl implements PlayerService {
 
-    @Lazy
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerServiceImpl.class);
+    private final PlayerRepository playerRepository;
+
     @Autowired
-    private PlayerRepository playerRepository;
-    @Autowired
-    @Lazy
-    private ApplicationContext applicationContext;
+    public PlayerServiceImpl(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     @Override
     public List<Player> getAllPlayers() {

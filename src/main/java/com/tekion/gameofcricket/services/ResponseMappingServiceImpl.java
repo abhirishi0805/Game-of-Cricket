@@ -5,8 +5,8 @@ import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.responsebody.MatchResponseDto;
-import com.tekion.gameofcricket.responsebody.StatResponseDto;
 import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
+import com.tekion.gameofcricket.responsebody.StatResponseDto;
 import com.tekion.gameofcricket.responsebody.TeamResponseDto;
 import com.tekion.gameofcricket.utility.enums.MatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +20,22 @@ import java.util.stream.Collectors;
  * This is a concrete implementation for the ModelToResponseMappingService interface
  */
 @Service
+@Lazy
 public final class ResponseMappingServiceImpl implements ResponseMappingService {
 
+    private final PlayerService playerService;
+    private final TeamService teamService;
+
     @Autowired
-    private PlayerService playerService;
-    @Autowired
-    @Lazy
-    private TeamService teamService;
+    public ResponseMappingServiceImpl(@Lazy PlayerService playerService, @Lazy TeamService teamService) {
+        this.playerService = playerService;
+        this.teamService = teamService;
+    }
 
     @Override
     public PlayerResponseDto mapPlayer(Player player) {
-        return new PlayerResponseDto(
-                player.getPlayerName(),
-                player.getTotalRunsScored(),
-                player.getTotalWicketsTaken(),
-                player.getGamesPlayed()
-        );
+        return new PlayerResponseDto(player.getPlayerName(), player.getTotalRunsScored(), player.getTotalWicketsTaken(),
+                player.getGamesPlayed());
     }
 
     @Override
@@ -43,28 +43,18 @@ public final class ResponseMappingServiceImpl implements ResponseMappingService 
         List<String> players = team.getPlayerIds().stream()
                                    .map(playerId -> playerService.getPlayerById(playerId).getPlayerName())
                                    .collect(Collectors.toList());
-        return new TeamResponseDto(
-                team.getTeamName(),
-                players,
-                team.getGamesWon(),
-                team.getGamesDrawn(),
-                team.getGamesLost()
-        );
+        return new TeamResponseDto(team.getTeamName(), players, team.getGamesWon(), team.getGamesDrawn(),
+                team.getGamesLost());
     }
 
     @Override
     public MatchResponseDto mapMatch(Match match) {
         String team1Name = teamService.getTeamById(match.getTeam1Id()).getTeamName();
         String team2Name = teamService.getTeamById(match.getTeam2Id()).getTeamName();
-        String result = match.getResult() == MatchResult.TEAM_1_WON ?
-                        team1Name + " won!" : (match.getResult() == MatchResult.TEAM_2_WON ?
-                                               team2Name + " won!" : "Match drawn!");
-        return new MatchResponseDto(
-                team1Name,
-                team2Name,
-                result,
-                match.getMatchDate()
-        );
+        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1Name + " won!"
+                                                                    : (match.getResult() == MatchResult.TEAM_2_WON ?
+                                                                       team2Name + " won!" : "Match drawn!");
+        return new MatchResponseDto(team1Name, team2Name, result, match.getMatchDate());
     }
 
     @Override

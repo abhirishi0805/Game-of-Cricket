@@ -26,13 +26,16 @@ import java.util.stream.Collectors;
 public final class StatController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatController.class);
-    @Autowired
-    private StatService statService;
-    @Autowired
-    @Lazy
-    private PlayerService playerService;
-    @Autowired
-    private ResponseMappingService responseMappingService;
+    private final StatService statService;
+    private final ResponseMappingService responseMappingService;
+    private final PlayerService playerService;
+
+    public StatController(StatService statService, ResponseMappingService responseMappingService,
+                          @Lazy PlayerService playerService) {
+        this.statService = statService;
+        this.responseMappingService = responseMappingService;
+        this.playerService = playerService;
+    }
 
     @GetMapping("/{playerId}")
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@PathVariable String playerId) {
@@ -45,8 +48,8 @@ public final class StatController {
 
     @GetMapping("/player-name")
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@RequestBody PlayerRequestDto requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/stats/player-name for \"" + requestBody.getPlayerName() + '\"');
+        LOGGER.info("GET call received : http://localhost:3004/stats/player-name for \"" + requestBody.getPlayerName() +
+                    '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
         List<Stat> result = statService.getAllStatsOfPlayer(playerId);

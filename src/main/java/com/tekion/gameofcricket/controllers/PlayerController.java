@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +27,13 @@ import java.util.stream.Collectors;
 public final class PlayerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerController.class);
+    private final PlayerService playerService;
+    private final ResponseMappingService responseMappingService;
 
-    @Autowired
-    private PlayerService playerService;
-    @Autowired
-    private ResponseMappingService responseMappingService;
+    public PlayerController(PlayerService playerService, @Lazy ResponseMappingService responseMappingService) {
+        this.playerService = playerService;
+        this.responseMappingService = responseMappingService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers() {
@@ -51,7 +54,8 @@ public final class PlayerController {
     @GetMapping("/player-name")
     public ResponseEntity<PlayerResponseDto> getPlayerByName(@RequestBody PlayerRequestDto requestBody) {
         LOGGER.info(
-                "GET call received : http://localhost:3004/players/player-name for \"" + requestBody.getPlayerName() + '\"');
+                "GET call received : http://localhost:3004/players/player-name for \"" + requestBody.getPlayerName() +
+                '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         Player result = playerService.getPlayerByName(requestBody.getPlayerName());
         return ResponseEntity.ok(responseMappingService.mapPlayer(result));
