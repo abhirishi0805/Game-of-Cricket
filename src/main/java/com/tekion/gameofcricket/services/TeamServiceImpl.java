@@ -68,12 +68,10 @@ public final class TeamServiceImpl implements TeamService {
 
     @Override
     public void addTeam(CreateTeamRequestDto requestBody) {
-        Team team = applicationContext.getBean(Team.class);
-        team.setTeamName(requestBody.getTeamName());
         List<ObjectId> playerIds = requestBody.getPlayerNames().stream()
                                               .map(playerName -> playerService.getPlayerByName(playerName).getId())
                                               .collect(Collectors.toList());
-        team.setPlayerIds(playerIds);
+        Team team = new Team(requestBody.getTeamName(), playerIds);
         teamRepository.save(team);
         LOGGER.info("New team created : " + team);
     }

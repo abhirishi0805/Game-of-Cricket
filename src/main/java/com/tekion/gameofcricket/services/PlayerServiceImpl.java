@@ -53,8 +53,7 @@ public final class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void addPlayer(String playerName) {
-        Player player = applicationContext.getBean(Player.class);
-        player.setPlayerName(playerName);
+        Player player = new Player(playerName);
         playerRepository.save(player);
         LOGGER.info("New player created : " + player);
     }

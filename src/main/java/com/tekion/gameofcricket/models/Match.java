@@ -1,6 +1,7 @@
 package com.tekion.gameofcricket.models;
 
 import com.tekion.gameofcricket.utility.enums.MatchResult;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Component;
  * Not a final class as in future it can be extended to One Day Match, T20 Match, Test Match
  */
 @Document(collection = "matches")
-@Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Getter
-@Setter
+@Data
 public class Match {
 
     @Id
@@ -31,12 +29,11 @@ public class Match {
     public Match() {
     }
 
-    public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, String matchDate, MatchResult result) {
+    public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, String matchDate) {
         this.id = id;
         this.team1Id = team1Id;
         this.team2Id = team2Id;
         this.matchDate = matchDate;
-        this.result = result;
     }
 
     @Override

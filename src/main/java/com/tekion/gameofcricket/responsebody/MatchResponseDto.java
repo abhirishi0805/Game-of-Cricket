@@ -1,12 +1,12 @@
 package com.tekion.gameofcricket.responsebody;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * This represents the response body returned whenever client fetches a match
  */
-@Builder
+@AllArgsConstructor
 @Getter
 public class MatchResponseDto {
 

@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -13,28 +14,21 @@ import org.springframework.stereotype.Component;
  * This is the model class to represent a player
  */
 @Document(collection = "players")
-@Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Getter
-@Setter
+@Data
 public final class Player {
 
     @Id
     private ObjectId id;
     private String playerName;
-    private int totalRunsScored = 0;
-    private int totalWicketsTaken = 0;
-    private int gamesPlayed = 0;
+    private int totalRunsScored;
+    private int totalWicketsTaken;
+    private int gamesPlayed;
 
     public Player() {
     }
 
-    public Player(ObjectId id, String playerName, int totalRunsScored, int totalWicketsTaken, int gamesPlayed) {
-        this.id = id;
+    public Player(String playerName) {
         this.playerName = playerName;
-        this.totalRunsScored = totalRunsScored;
-        this.totalWicketsTaken = totalWicketsTaken;
-        this.gamesPlayed = gamesPlayed;
     }
 
     @Override

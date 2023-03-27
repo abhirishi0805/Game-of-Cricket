@@ -62,8 +62,6 @@ public final class PlayerController {
         LOGGER.info("POST call received : http://localhost:3004/players");
         InputVerifier.validatePlayerRequestBody(requestBody);
         playerService.addPlayer(requestBody.getPlayerName());
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.SUCCESS)
-                                                        .message("Player successfully " + "created").build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new GenericResponseDto(ResponseStatus.SUCCESS, "Player successfully created"));
     }
 }

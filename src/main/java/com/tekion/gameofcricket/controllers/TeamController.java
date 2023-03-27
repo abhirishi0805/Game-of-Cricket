@@ -84,8 +84,6 @@ public final class TeamController {
         LOGGER.info("POST call received : http://localhost:3004/teams");
         InputVerifier.validateCreateTeamRequestBody(requestBody);
         teamService.addTeam(requestBody);
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.SUCCESS)
-                                                        .message("Team successfully " + "created").build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new GenericResponseDto(ResponseStatus.SUCCESS, "Team successfully created"));
     }
 }

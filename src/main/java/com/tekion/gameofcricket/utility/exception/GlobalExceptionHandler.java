@@ -22,48 +22,39 @@ public final class GlobalExceptionHandler {
     @ExceptionHandler(InvalidObjectIdException.class)
     public ResponseEntity<GenericResponseDto> handleInvalidObjectIdException(InvalidObjectIdException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.FAILED)
-                                                        .message(exception.getTitle()).build();
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest().body(new GenericResponseDto(ResponseStatus.FAILED, exception.getTitle()));
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<GenericResponseDto> handleNoSuchElementException(NoSuchElementException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.SUCCESS)
-                                                        .message(exception.getMessage()).build();
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new GenericResponseDto(ResponseStatus.SUCCESS, exception.getMessage()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidRequestBodyException.class)
     public ResponseEntity<GenericResponseDto> handleInvalidRequestBodyException(InvalidRequestBodyException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.FAILED)
-                                                        .message(exception.getMessage()).build();
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest().body(new GenericResponseDto(ResponseStatus.FAILED, exception.getMessage()));
     }
 
     @ExceptionHandler(InvalidDateException.class)
     public ResponseEntity<GenericResponseDto> handleInvalidDateException(InvalidDateException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.FAILED)
-                                                        .message(exception.getMessage()).build();
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest().body(new GenericResponseDto(ResponseStatus.FAILED, exception.getMessage()));
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<GenericResponseDto> handleDuplicateKeyException(DuplicateKeyException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.FAILED).message(
-                "This name has already been used. Try something different").build();
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(new GenericResponseDto(ResponseStatus.FAILED,
+                "This name has already been used. Try something different"));
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<GenericResponseDto> handleRemainingExceptions(RuntimeException exception) {
         exception.printStackTrace();
-        GenericResponseDto response = GenericResponseDto.builder().status(ResponseStatus.FAILED)
-                                                        .message("Some error occurred!").build();
-        return ResponseEntity.internalServerError().body(response);
+        return ResponseEntity.internalServerError()
+                             .body(new GenericResponseDto(ResponseStatus.FAILED, "Some error occurred!"));
     }
 }

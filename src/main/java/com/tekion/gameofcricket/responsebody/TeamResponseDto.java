@@ -1,6 +1,6 @@
 package com.tekion.gameofcricket.responsebody;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This represents the response body returned whenever client fetches a team
  */
-@Builder
+@AllArgsConstructor
 @Getter
 public class TeamResponseDto {
 

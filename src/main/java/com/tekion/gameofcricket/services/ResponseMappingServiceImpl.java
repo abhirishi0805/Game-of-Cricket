@@ -30,9 +30,12 @@ public final class ResponseMappingServiceImpl implements ResponseMappingService 
 
     @Override
     public PlayerResponseDto mapPlayer(Player player) {
-        return PlayerResponseDto.builder().playerName(player.getPlayerName()).gamesPlayed(player.getGamesPlayed())
-                                .totalRunsScored(player.getTotalRunsScored())
-                                .totalWicketsTaken(player.getTotalWicketsTaken()).build();
+        return new PlayerResponseDto(
+                player.getPlayerName(),
+                player.getTotalRunsScored(),
+                player.getTotalWicketsTaken(),
+                player.getGamesPlayed()
+        );
     }
 
     @Override
@@ -40,19 +43,28 @@ public final class ResponseMappingServiceImpl implements ResponseMappingService 
         List<String> players = team.getPlayerIds().stream()
                                    .map(playerId -> playerService.getPlayerById(playerId).getPlayerName())
                                    .collect(Collectors.toList());
-        return TeamResponseDto.builder().teamName(team.getTeamName()).players(players).gamesWon(team.getGamesWon())
-                              .gamesDrawn(team.getGamesDrawn()).gamesLost(team.getGamesLost()).build();
+        return new TeamResponseDto(
+                team.getTeamName(),
+                players,
+                team.getGamesWon(),
+                team.getGamesDrawn(),
+                team.getGamesLost()
+        );
     }
 
     @Override
     public MatchResponseDto mapMatch(Match match) {
         String team1Name = teamService.getTeamById(match.getTeam1Id()).getTeamName();
         String team2Name = teamService.getTeamById(match.getTeam2Id()).getTeamName();
-        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1Name + " won!"
-                                                                    : (match.getResult() == MatchResult.TEAM_2_WON ?
-                                                                       team2Name + " won!" : "Match drawn!");
-        return MatchResponseDto.builder().team1(team1Name).team2(team2Name).result(result)
-                               .matchDate(match.getMatchDate()).build();
+        String result = match.getResult() == MatchResult.TEAM_1_WON ?
+                        team1Name + " won!" : (match.getResult() == MatchResult.TEAM_2_WON ?
+                                               team2Name + " won!" : "Match drawn!");
+        return new MatchResponseDto(
+                team1Name,
+                team2Name,
+                result,
+                match.getMatchDate()
+        );
     }
 
     @Override

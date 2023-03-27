@@ -1,5 +1,6 @@
 package com.tekion.gameofcricket.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -15,30 +16,23 @@ import java.util.List;
  * This is the model class to represent a team
  */
 @Document(collection = "teams")
-@Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Getter
-@Setter
+@Data
 public final class Team {
 
     @Id
     private ObjectId id;
     private String teamName;
     private List<ObjectId> playerIds;
-    private int gamesWon = 0;
-    private int gamesDrawn = 0;
-    private int gamesLost = 0;
+    private int gamesWon;
+    private int gamesDrawn;
+    private int gamesLost;
 
     public Team() {
     }
 
-    public Team(ObjectId id, String teamName, List<ObjectId> playerIds, int gamesWon, int gamesDrawn, int gamesLost) {
-        this.id = id;
+    public Team(String teamName, List<ObjectId> playerIds) {
         this.teamName = teamName;
         this.playerIds = playerIds;
-        this.gamesWon = gamesWon;
-        this.gamesDrawn = gamesDrawn;
-        this.gamesLost = gamesLost;
     }
 
     @Override

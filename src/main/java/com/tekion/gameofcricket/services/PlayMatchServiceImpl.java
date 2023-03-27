@@ -7,6 +7,7 @@ import com.tekion.gameofcricket.models.Player;
 import com.tekion.gameofcricket.models.Stat;
 import com.tekion.gameofcricket.models.Team;
 import com.tekion.gameofcricket.responsebody.PlayMatchResponseDto;
+import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
 import com.tekion.gameofcricket.utility.DateUtils;
 import com.tekion.gameofcricket.utility.enums.MatchResult;
 import org.bson.types.ObjectId;
@@ -41,7 +42,6 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private PlayerService playerService;
     @Autowired
     private OngoingMatchData matchData;
-    @Autowired
     private Match match;
     private Team team1, team2;
     private Map<ObjectId, Stat> playerMatchStatMap;
@@ -52,7 +52,6 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         this.team1 = team1;
         this.team2 = team2;
         configureMatchData();
-        matchData.resetInnings();
         generatePlayerStatMap();
         simulateInnings();
         generateResult();
@@ -61,24 +60,16 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     }
 
     private void configureMatchData() {
-        match.setId(ObjectId.get());
-        match.setTeam1Id(team1.getId());
-        match.setTeam2Id(team2.getId());
-        match.setMatchDate(DateUtils.getCurrentDate());
+        match = new Match(ObjectId.get(), team1.getId(), team2.getId(), DateUtils.getCurrentDate());
+        matchData.resetInnings();
     }
 
     private void generatePlayerStatMap() {
         playerMatchStatMap = new HashMap<>();
-        team1.getPlayerIds().forEach(playerId -> {
-            Stat stat = Stat.builder().playerId(playerId).teamId(team1.getId()).opponentTeamId(team2.getId())
-                            .matchId(match.getId()).build();
-            playerMatchStatMap.put(playerId, stat);
-        });
-        team2.getPlayerIds().forEach(playerId -> {
-            Stat stat = Stat.builder().playerId(playerId).teamId(team2.getId()).opponentTeamId(team1.getId())
-                            .matchId(match.getId()).build();
-            playerMatchStatMap.put(playerId, stat);
-        });
+        team1.getPlayerIds().forEach(playerId -> playerMatchStatMap.put(playerId,
+                new Stat(playerId, team1.getId(), team2.getId(), match.getId())));
+        team2.getPlayerIds().forEach(playerId -> playerMatchStatMap.put(playerId,
+                new Stat(playerId, team2.getId(), team1.getId(), match.getId())));
     }
 
     private void simulateInnings() {
@@ -182,7 +173,6 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     }
 
     private PlayMatchResponseDto getResponseDTO() {
-
         String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInning().getRunsScored() + '/' +
                               matchData.getFirstInning().getWicketsFallen();
         String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInning().getRunsScored() + '/' +
@@ -191,7 +181,6 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
                                                                     : (match.getResult() == MatchResult.TEAM_2_WON ?
                                                                        team2.getTeamName() + " won!" : "Match drawn!");
 
-        return PlayMatchResponseDto.builder().firstInnings(firstInnings).secondInnings(secondInnings).result(result)
-                                   .build();
+        return new PlayMatchResponseDto(firstInnings, secondInnings, result);
     }
 }
