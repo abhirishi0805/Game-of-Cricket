@@ -12,7 +12,6 @@ import java.util.List;
  */
 @Repository
 public interface StatRepository extends MongoRepository<Stat, ObjectId> {
-
     List<Stat> findPlayerMatchStatsByPlayerId(ObjectId playerId);
 
     Stat findPlayerMatchStatByPlayerIdAndMatchId(ObjectId playerId, ObjectId matchId);

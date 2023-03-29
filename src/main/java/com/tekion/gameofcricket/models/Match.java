@@ -2,14 +2,9 @@ package com.tekion.gameofcricket.models;
 
 import com.tekion.gameofcricket.utility.enums.MatchResult;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 /**
  * This is the model class to represent a match
@@ -26,8 +21,7 @@ public class Match {
     private String matchDate;
     private MatchResult result;
 
-    public Match() {
-    }
+    public Match() { }
 
     public Match(ObjectId id, ObjectId team1Id, ObjectId team2Id, String matchDate) {
         this.id = id;
@@ -38,7 +32,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" + "id=" + id + ", team1Id=" + team1Id + ", team2Id=" + team2Id + ", matchDate='" + matchDate +
-               '\'' + ", result=" + result + '}';
+        return "Match {" + "id=" + id + ", team1Id=" + team1Id + ", team2Id=" + team2Id + ", matchDate='" + matchDate
+                + '\'' + ", result=" + result + '}';
     }
 }

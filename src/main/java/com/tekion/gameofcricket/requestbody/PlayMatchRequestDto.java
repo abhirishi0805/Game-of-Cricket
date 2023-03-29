@@ -7,7 +7,6 @@ import lombok.Getter;
  */
 @Getter
 public final class PlayMatchRequestDto {
-
     private String team1Name;
     private String team2Name;
 

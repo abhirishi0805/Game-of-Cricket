@@ -9,7 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public final class PlayerResponseDto {
-
     private String playerName;
     private int totalRunsScored;
     private int totalWicketsTaken;

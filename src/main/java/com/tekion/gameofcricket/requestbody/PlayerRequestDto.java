@@ -7,6 +7,5 @@ import lombok.Getter;
  */
 @Getter
 public final class PlayerRequestDto {
-
     private String playerName;
 }

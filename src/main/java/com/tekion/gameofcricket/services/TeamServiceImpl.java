@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 @Lazy
 public final class TeamServiceImpl implements TeamService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamServiceImpl.class);
     private final TeamRepository teamRepository;
     private final PlayerService playerService;

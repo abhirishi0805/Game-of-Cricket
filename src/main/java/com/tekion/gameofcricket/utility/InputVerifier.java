@@ -16,27 +16,23 @@ import org.bson.types.ObjectId;
 public final class InputVerifier {
 
     // private constructor to make this class non-instantiable
-    private InputVerifier() {
-    }
+    private InputVerifier() { }
 
     public static void validatePlayerId(String playerId) {
         if (!ObjectId.isValid(playerId)) {
-            throw new InvalidObjectIdException("Invalid player ID",
-                    "invalid hexadecimal representation of an " + "ObjectId: [" + playerId + "]");
+            throw new InvalidObjectIdException("Invalid player ID", "invalid hexadecimal representation of an " + "ObjectId: [" + playerId + "]");
         }
     }
 
     public static void validateTeamId(String teamId) {
         if (!ObjectId.isValid(teamId)) {
-            throw new InvalidObjectIdException("Invalid team ID",
-                    "invalid hexadecimal representation of an " + "ObjectId: [" + teamId + "]");
+            throw new InvalidObjectIdException("Invalid team ID", "invalid hexadecimal representation of an " + "ObjectId: [" + teamId + "]");
         }
     }
 
     public static void validateMatchId(String matchId) {
         if (!ObjectId.isValid(matchId)) {
-            throw new InvalidObjectIdException("Invalid match ID",
-                    "invalid hexadecimal representation of an " + "ObjectId: [" + matchId + "]");
+            throw new InvalidObjectIdException("Invalid match ID", "invalid hexadecimal representation of an " + "ObjectId: [" + matchId + "]");
         }
     }
 

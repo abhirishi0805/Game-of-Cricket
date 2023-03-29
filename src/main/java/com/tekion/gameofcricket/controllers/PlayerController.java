@@ -1,17 +1,16 @@
 package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Player;
-import com.tekion.gameofcricket.services.PlayerService;
-import com.tekion.gameofcricket.responsebody.GenericResponseDto;
-import com.tekion.gameofcricket.services.ResponseMappingService;
-import com.tekion.gameofcricket.utility.enums.ResponseStatus;
-import com.tekion.gameofcricket.utility.InputVerifier;
 import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
+import com.tekion.gameofcricket.responsebody.GenericResponseDto;
 import com.tekion.gameofcricket.responsebody.PlayerResponseDto;
+import com.tekion.gameofcricket.services.PlayerService;
+import com.tekion.gameofcricket.services.ResponseMappingService;
+import com.tekion.gameofcricket.utility.InputVerifier;
+import com.tekion.gameofcricket.utility.enums.ResponseStatus;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +38,7 @@ public final class PlayerController {
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers() {
         LOGGER.info("GET call received : http://localhost:3004/players");
         List<Player> result = playerService.getAllPlayers();
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{playerId}")
@@ -53,9 +51,7 @@ public final class PlayerController {
 
     @GetMapping("/player-name")
     public ResponseEntity<PlayerResponseDto> getPlayerByName(@RequestBody PlayerRequestDto requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/players/player-name for \"" + requestBody.getPlayerName() +
-                '\"');
+        LOGGER.info("GET call received : http://localhost:3004/players/player-name for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         Player result = playerService.getPlayerByName(requestBody.getPlayerName());
         return ResponseEntity.ok(responseMappingService.mapPlayer(result));

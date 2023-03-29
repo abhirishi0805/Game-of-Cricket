@@ -1,16 +1,15 @@
 package com.tekion.gameofcricket.controllers;
 
 import com.tekion.gameofcricket.models.Stat;
+import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
 import com.tekion.gameofcricket.responsebody.StatResponseDto;
-import com.tekion.gameofcricket.services.StatService;
 import com.tekion.gameofcricket.services.PlayerService;
 import com.tekion.gameofcricket.services.ResponseMappingService;
+import com.tekion.gameofcricket.services.StatService;
 import com.tekion.gameofcricket.utility.InputVerifier;
-import com.tekion.gameofcricket.requestbody.PlayerRequestDto;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,8 @@ public final class StatController {
     private final ResponseMappingService responseMappingService;
     private final PlayerService playerService;
 
-    public StatController(StatService statService, ResponseMappingService responseMappingService,
+    public StatController(StatService statService,
+                          ResponseMappingService responseMappingService,
                           @Lazy PlayerService playerService) {
         this.statService = statService;
         this.responseMappingService = responseMappingService;
@@ -42,19 +42,16 @@ public final class StatController {
         LOGGER.info("GET call received : http://localhost:3004/stats/" + playerId);
         InputVerifier.validatePlayerId(playerId);
         List<Stat> result = statService.getAllStatsOfPlayer(new ObjectId(playerId));
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/player-name")
     private ResponseEntity<List<StatResponseDto>> getAllStatsOfPlayer(@RequestBody PlayerRequestDto requestBody) {
-        LOGGER.info("GET call received : http://localhost:3004/stats/player-name for \"" + requestBody.getPlayerName() +
-                    '\"');
+        LOGGER.info("GET call received : http://localhost:3004/stats/player-name for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();
         List<Stat> result = statService.getAllStatsOfPlayer(playerId);
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/match/{matchId}")
@@ -62,8 +59,7 @@ public final class StatController {
         LOGGER.info("GET call received : http://localhost:3004/stats/match/" + matchId);
         InputVerifier.validateMatchId(matchId);
         List<Stat> result = statService.getAllStatsOfMatch(new ObjectId(matchId));
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapStat).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{playerId}/{matchId}")
@@ -79,8 +75,7 @@ public final class StatController {
     @GetMapping("/player-name/{matchId}")
     private ResponseEntity<StatResponseDto> getPlayerStatByMatch(@RequestBody PlayerRequestDto requestBody,
                                                                  @PathVariable String matchId) {
-        LOGGER.info("GET call received : http://localhost:3004/stats/player-name/" + matchId + " for \"" +
-                    requestBody.getPlayerName() + '\"');
+        LOGGER.info("GET call received : http://localhost:3004/stats/player-name/" + matchId + " for \"" + requestBody.getPlayerName() + '\"');
         InputVerifier.validatePlayerRequestBody(requestBody);
         InputVerifier.validateMatchId(matchId);
         ObjectId playerId = playerService.getPlayerByName(requestBody.getPlayerName()).getId();

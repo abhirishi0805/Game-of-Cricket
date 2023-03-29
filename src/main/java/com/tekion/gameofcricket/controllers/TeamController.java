@@ -42,8 +42,7 @@ public final class TeamController {
     public ResponseEntity<List<TeamResponseDto>> getAllTeams() {
         LOGGER.info("GET call received : http://localhost:3004/teams");
         List<Team> result = teamService.getAllTeams();
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapTeam).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapTeam).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{teamId}")
@@ -56,8 +55,7 @@ public final class TeamController {
 
     @GetMapping("/team-name")
     public ResponseEntity<TeamResponseDto> getTeamByName(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/teams/team-name for \"" + requestBody.getTeamName() + '\"');
+        LOGGER.info("GET call received : http://localhost:3004/teams/team-name for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         Team result = teamService.getTeamByName(requestBody.getTeamName());
         return ResponseEntity.ok(responseMappingService.mapTeam(result));
@@ -68,20 +66,16 @@ public final class TeamController {
         LOGGER.info("GET call received : http://localhost:3004/teams/" + teamId + "/players");
         InputVerifier.validateTeamId(teamId);
         List<Player> result = teamService.getTeamPlayers(new ObjectId(teamId));
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/team-name/players")
     public ResponseEntity<List<PlayerResponseDto>> getTeamPlayers(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/teams/team-name/players for \"" + requestBody.getTeamName() +
-                '\"');
+        LOGGER.info("GET call received : http://localhost:3004/teams/team-name/players for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Player> result = teamService.getTeamPlayers(teamId);
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapPlayer).collect(Collectors.toUnmodifiableList()));
     }
 
     @PostMapping()

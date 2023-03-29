@@ -35,8 +35,10 @@ public final class MatchController {
     private final PlayMatchService playMatchService;
     private final TeamService teamService;
 
-    public MatchController(MatchService matchService, ResponseMappingService responseMappingService,
-                           @Lazy PlayMatchService playMatchService, @Lazy TeamService teamService) {
+    public MatchController(MatchService matchService,
+                           ResponseMappingService responseMappingService,
+                           @Lazy PlayMatchService playMatchService,
+                           @Lazy TeamService teamService) {
         this.matchService = matchService;
         this.responseMappingService = responseMappingService;
         this.playMatchService = playMatchService;
@@ -47,8 +49,7 @@ public final class MatchController {
     public ResponseEntity<List<MatchResponseDto>> getAllMatches() {
         LOGGER.info("GET call received : http://localhost:3004/matches");
         List<Match> result = matchService.getAllMatches();
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/{matchId}")
@@ -64,20 +65,16 @@ public final class MatchController {
         LOGGER.info("GET call received : http://localhost:3004/matches/team/" + teamId);
         InputVerifier.validateTeamId(teamId);
         List<Match> result = matchService.getMatchByTeam(new ObjectId(teamId));
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/team/team-name")
     public ResponseEntity<List<MatchResponseDto>> getMatchByTeamName(@RequestBody TeamRequestDto requestBody) {
-        LOGGER.info(
-                "GET call received : http://localhost:3004/matches/team/team-name for \"" + requestBody.getTeamName() +
-                '\"');
+        LOGGER.info("GET call received : http://localhost:3004/matches/team/team-name for \"" + requestBody.getTeamName() + '\"');
         InputVerifier.validateTeamRequestBody(requestBody);
         ObjectId teamId = teamService.getTeamByName(requestBody.getTeamName()).getId();
         List<Match> result = matchService.getMatchByTeam(teamId);
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
     }
 
     @GetMapping("/date/{date}")
@@ -85,8 +82,7 @@ public final class MatchController {
         LOGGER.info("GET call received : http://localhost:3004/matches/date/" + date);
         InputVerifier.validateDate(date);
         List<Match> result = matchService.getMatchByDate(date);
-        return ResponseEntity.ok(
-                result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
+        return ResponseEntity.ok(result.stream().map(responseMappingService::mapMatch).collect(Collectors.toUnmodifiableList()));
     }
 
     @PostMapping("/play")

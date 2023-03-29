@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TeamRepository extends MongoRepository<Team, ObjectId> {
-
     Team getTeamByTeamNameEqualsIgnoreCase(String teamName);
 }

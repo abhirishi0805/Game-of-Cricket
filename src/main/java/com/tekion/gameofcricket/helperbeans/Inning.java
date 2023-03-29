@@ -16,8 +16,7 @@ public class Inning {
     private int ballsThrown = 0;
     private int wicketsFallen = 0;
 
-    public Inning() {
-    }
+    public Inning() { }
 
     public Inning(int runsScored, int ballsThrown, int wicketsFallen) {
         this.runsScored = runsScored;

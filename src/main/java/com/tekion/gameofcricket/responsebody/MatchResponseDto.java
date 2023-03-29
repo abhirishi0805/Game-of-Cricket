@@ -9,7 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class MatchResponseDto {
-
     private String team1;
     private String team2;
     private String result;

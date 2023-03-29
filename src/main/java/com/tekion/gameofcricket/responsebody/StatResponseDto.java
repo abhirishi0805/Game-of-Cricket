@@ -9,7 +9,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class StatResponseDto {
-
     private String team;
     private String opponent;
     private int runsScored;

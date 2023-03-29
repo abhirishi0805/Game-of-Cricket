@@ -29,7 +29,6 @@ import static com.tekion.gameofcricket.utility.Constants.TEAM_SIZE;
 @Service
 @Lazy
 public final class PlayMatchServiceImpl implements PlayMatchService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayMatchServiceImpl.class);
     private final TeamService teamService;
     private final StatService statService;
@@ -42,7 +41,9 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     private Map<ObjectId, Stat> playerMatchStatMap;
 
     @Autowired
-    public PlayMatchServiceImpl(TeamService teamService, StatService statService, MatchService matchService,
+    public PlayMatchServiceImpl(TeamService teamService,
+                                StatService statService,
+                                MatchService matchService,
                                 PlayerService playerService) {
         this.teamService = teamService;
         this.statService = statService;
@@ -80,8 +81,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
         // first inning
         simulateInningsHelper(matchData.getFirstInning(), team1, team2, Integer.MAX_VALUE);
         // second inning
-        simulateInningsHelper(matchData.getSecondInning(), team2, team1,
-                matchData.getFirstInning().getRunsScored() + 1);
+        simulateInningsHelper(matchData.getSecondInning(), team2, team1, matchData.getFirstInning().getRunsScored() + 1);
     }
 
     private void simulateInningsHelper(Inning currentInning, Team battingTeam, Team bowlingTeam, int target) {
@@ -105,8 +105,7 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
             }
         }
 
-        LOGGER.info(battingTeam.getTeamName() + " : " + currentInning.getRunsScored() + '/' +
-                    currentInning.getWicketsFallen());
+        LOGGER.info(battingTeam.getTeamName() + " : " + currentInning.getRunsScored() + '/' + currentInning.getWicketsFallen());
     }
 
     private void updateBattingFigure(Stat stat, int outcome) {
@@ -177,13 +176,10 @@ public final class PlayMatchServiceImpl implements PlayMatchService {
     }
 
     private PlayMatchResponseDto getResponseDTO() {
-        String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInning().getRunsScored() + '/' +
-                              matchData.getFirstInning().getWicketsFallen();
-        String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInning().getRunsScored() + '/' +
-                               matchData.getSecondInning().getWicketsFallen();
-        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!"
-                                                                    : (match.getResult() == MatchResult.TEAM_2_WON ?
-                                                                       team2.getTeamName() + " won!" : "Match drawn!");
+        String firstInnings = team1.getTeamName() + " : " + matchData.getFirstInning().getRunsScored() + '/' + matchData.getFirstInning().getWicketsFallen();
+        String secondInnings = team2.getTeamName() + " : " + matchData.getSecondInning().getRunsScored() + '/' + matchData.getSecondInning().getWicketsFallen();
+        String result = match.getResult() == MatchResult.TEAM_1_WON ? team1.getTeamName() + " won!" :
+                (match.getResult() == MatchResult.TEAM_2_WON ? team2.getTeamName() + " won!" : "Match drawn!");
 
         return new PlayMatchResponseDto(firstInnings, secondInnings, result);
     }

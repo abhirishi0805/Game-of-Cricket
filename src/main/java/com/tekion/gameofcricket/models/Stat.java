@@ -1,15 +1,9 @@
 package com.tekion.gameofcricket.models;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 /**
  * This is the model class to represent any player's performance stat of a particular match
@@ -41,7 +35,7 @@ public final class Stat {
 
     @Override
     public String toString() {
-        return "PlayerMatchStat{" + "id=" + id + ", playerId=" + playerId + ", matchId=" + matchId + ", teamId=" +
+        return "PlayerMatchStat {" + "id=" + id + ", playerId=" + playerId + ", matchId=" + matchId + ", teamId=" +
                teamId + ", opponentTeamId=" + opponentTeamId + ", runsScored=" + runsScored + ", ballsFaced=" +
                ballsFaced + ", sixesHit=" + sixesHit + ", foursHit=" + foursHit + ", ballsThrown=" + ballsThrown +
                ", wicketsTaken=" + wicketsTaken + ", runsConceded=" + runsConceded + '}';

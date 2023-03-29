@@ -9,7 +9,6 @@ import java.util.List;
  */
 @Getter
 public final class CreateTeamRequestDto {
-
     private String teamName;
     List<String> playerNames;
 }

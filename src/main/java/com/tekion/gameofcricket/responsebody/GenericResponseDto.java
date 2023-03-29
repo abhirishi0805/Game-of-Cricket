@@ -10,7 +10,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public final class GenericResponseDto {
-
     private ResponseStatus status;
     private String message;
 }

@@ -1,14 +1,9 @@
 package com.tekion.gameofcricket.models;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -37,7 +32,7 @@ public final class Team {
 
     @Override
     public String toString() {
-        return "Team{id=" + id + ", teamName='" + teamName + '\'' + ", gamesWon=" + gamesWon + ", gamesDrawn=" +
+        return "Team {id=" + id + ", teamName='" + teamName + '\'' + ", gamesWon=" + gamesWon + ", gamesDrawn=" +
                gamesDrawn + ", gamesLost=" + gamesLost + ", playerIds=" + playerIds + '}';
     }
 }

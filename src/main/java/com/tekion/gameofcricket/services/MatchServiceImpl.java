@@ -19,7 +19,6 @@ import java.util.Optional;
 @Service
 @Lazy
 public final class MatchServiceImpl implements MatchService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchServiceImpl.class);
     private final MatchRepository matchRepository;
 

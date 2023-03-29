@@ -19,7 +19,6 @@ import java.util.Optional;
 @Service
 @Lazy
 public final class PlayerServiceImpl implements PlayerService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerServiceImpl.class);
     private final PlayerRepository playerRepository;
 

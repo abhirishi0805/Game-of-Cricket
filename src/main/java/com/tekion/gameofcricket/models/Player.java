@@ -1,14 +1,9 @@
 package com.tekion.gameofcricket.models;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 /**
  * This is the model class to represent a player
@@ -24,8 +19,7 @@ public final class Player {
     private int totalWicketsTaken;
     private int gamesPlayed;
 
-    public Player() {
-    }
+    public Player() { }
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -33,7 +27,7 @@ public final class Player {
 
     @Override
     public String toString() {
-        return "Player{id=" + id + ", playerName='" + playerName + '\'' + ", gamesPlayed=" + gamesPlayed +
+        return "Player {id=" + id + ", playerName='" + playerName + '\'' + ", gamesPlayed=" + gamesPlayed +
                ", totalRunsScored=" + totalRunsScored + ", totalWicketsTaken=" + totalWicketsTaken + '}';
     }
 }

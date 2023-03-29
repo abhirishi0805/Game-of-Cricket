@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class TeamResponseDto {
-
     private String teamName;
     private List<String> players;
     private int gamesWon;

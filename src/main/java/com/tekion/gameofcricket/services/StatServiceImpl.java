@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @Lazy
 public final class StatServiceImpl implements StatService {
-
     private final StatRepository statRepository;
 
     @Autowired

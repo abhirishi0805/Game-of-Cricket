@@ -26,8 +26,7 @@ public final class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<GenericResponseDto> handleNoSuchElementException(NoSuchElementException exception) {
-        return new ResponseEntity<>(new GenericResponseDto(ResponseStatus.SUCCESS, exception.getMessage()),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new GenericResponseDto(ResponseStatus.SUCCESS, exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidRequestBodyException.class)
@@ -42,14 +41,12 @@ public final class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<GenericResponseDto> handleDuplicateKeyException(DuplicateKeyException exception) {
-        return ResponseEntity.ok().body(new GenericResponseDto(ResponseStatus.FAILED,
-                "This name has already been used. Try something different"));
+        return ResponseEntity.ok().body(new GenericResponseDto(ResponseStatus.FAILED, "This name has already been used. Try something different"));
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<GenericResponseDto> handleRemainingExceptions(RuntimeException exception) {
         exception.printStackTrace();
-        return ResponseEntity.internalServerError()
-                             .body(new GenericResponseDto(ResponseStatus.FAILED, "Some error occurred!"));
+        return ResponseEntity.internalServerError().body(new GenericResponseDto(ResponseStatus.FAILED, "Some error occurred!"));
     }
 }
